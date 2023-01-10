@@ -76,6 +76,7 @@ columns=fullflexible
 \newcommand{\rect}{\mathop{\mathrm{rect}}}
 \newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
+\providecommand{\inp}[2]{\ensuremath{\langle#1,#2\rangle}}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
 \providecommand{\norm}[1]{\lVert#1\rVert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
@@ -111,22 +112,22 @@ columns=fullflexible
 
     \solution We write the direction vectors of the three sides as
     \begin{align}
-        \vec{c} &= \vec{AB} = \vec{B} - \vec{A} = \myvec{-1\\3\\5} \\
-        \vec{a} &= \vec{BC} = \vec{C} - \vec{B} = \myvec{-1\\-2\\-6} \\
-        \vec{b} &= \vec{AC} = \vec{C} - \vec{A} = \myvec{-2\\1\\-1}
+        \vec{c} &= \vec{B} - \vec{A} = \myvec{-1\\3\\5} \\
+        \vec{a} &= \vec{C} - \vec{B} = \myvec{-1\\-2\\-6} \\
+        \vec{b} &= \vec{C} - \vec{A} = \myvec{-2\\1\\-1}
         \label{eq:dir-vec}
     \end{align}
 
-    Taking the dot product of each pair of vectors,
+    Taking the inner product of each pair of vectors,
     \begin{align}
-        \vec{AB}.\vec{BC} &= \vec{c}^T\vec{a} = -35 \\
-        \vec{AC}.\vec{BC} &= \vec{b}^T\vec{a} = 6 \\
-        \vec{AB}.\vec{AC} &= \vec{c}^T\vec{b} = 0
-        \label{eq:dot-prod}
+        \inp{\vec{c}}{\vec{a}} &= \vec{c}^\top\vec{a} = -35 \\
+        \inp{\vec{a}}{\vec{b}} &= \vec{a}^\top\vec{b} = 6 \\
+        \inp{\vec{b}}{\vec{c}} &= \vec{b}^\top\vec{c} = 0
+        \label{eq:inner-prod}
     \end{align}
 
-    From \eqref{eq:dot-prod}, $\vec{AB}.\vec{AC} = 0$, which implies that $\vec{AB} \perp
-    \vec{AC}$. Hence, $\Delta ABC$ is right angled at $A$. The Python code
-    \texttt{codes/perp.py} verifies the answer.
+    From \eqref{eq:inner-prod}, $\inp{\vec{b}}{\vec{c}} = 0$, which implies 
+    that $\vec{b} \perp \vec{c}$. Hence, $\Delta ABC$ is right angled at $A$. 
+    The Python code \texttt{codes/perp.py} verifies the answer.
 \end{enumerate}
 \end{document}
