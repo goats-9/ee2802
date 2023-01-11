@@ -76,7 +76,6 @@ columns=fullflexible
 \newcommand{\rect}{\mathop{\mathrm{rect}}}
 \newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
-\providecommand{\inp}[2]{\ensuremath{\langle#1,#2\rangle}}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
 \providecommand{\norm}[1]{\lVert#1\rVert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
@@ -119,14 +118,14 @@ columns=fullflexible
 
     Taking the inner product of each pair of vectors,
     \begin{align}
-        \inp{\vec{c}}{\vec{a}} &= \vec{c}^\top\vec{a} = -35 \\
-        \inp{\vec{a}}{\vec{b}} &= \vec{a}^\top\vec{b} = 6 \\
-        \inp{\vec{b}}{\vec{c}} &= \vec{b}^\top\vec{c} = 0
+        \vec{c}^\top\vec{a} &= -35 \\
+        \vec{a}^\top\vec{b} &= 6 \\
+        \vec{b}^\top\vec{c} &= 0
         \label{eq:inner-prod}
     \end{align}
 
-    From \eqref{eq:inner-prod}, $\inp{\vec{b}}{\vec{c}} = 0$, which implies 
-    that $\vec{b} \perp \vec{c}$. Hence, $\Delta ABC$ is right angled at $A$. 
+    From \eqref{eq:inner-prod}, $\vec{b}^\top\vec{c} = 0$, which implies 
+    that $\vec{b} \perp \vec{c}$. Hence, $\triangle ABC$ is right angled at $A$. 
     The Python code \texttt{codes/perp.py} verifies the answer.
 \end{enumerate}
 \end{document}
