@@ -113,13 +113,27 @@ columns=fullflexible
     
     \solution The points are plotted in Fig. \ref{fig:quad}. The plot is 
     generated using the Python code \texttt{codes/quad.py}.
-    \begin{figure}[!ht]
+
+    The area of the quadrilateral is given by
+    \begin{align}
+        &\textrm{ar}\brak{ABCD} = \textrm{ar}\brak{\triangle ABC} + 
+        \textrm{ar}\brak{\triangle ACD} \\
+        &= \frac{1}{2}\brak{\brak{\vec{B}-\vec{A}}\times\brak{\vec{C}-\vec{A}} + 
+        \brak{\vec{C}-\vec{A}}\times\brak{\vec{D}-\vec{A}}} \\
+        &= \frac{1}{2}\brak{\brak{\vec{C}-\vec{A}}\times
+        \brak{\vec{D}-\vec{A}+\vec{A}-\vec{B}}} \\
+        &= \frac{1}{2}\brak{\brak{\vec{C}-\vec{A}}\times\brak{\vec{D}-\vec{B}}} \\
+        &= \frac{1}{2}\mydet{9&-4\\-10&-9} = \frac{121}{2} = 60.5\ \textrm{sq. units.}
+        \label{eq:area-diag} 
+    \end{align}
+
+    This is verified in the Python code \texttt{codes/area.py}.
+
+    \begin{figure}[!htb]
         \centering
         \includegraphics[width=\columnwidth]{figs/quad.png}
         \caption{Plot of quadrilateral $ABCD$}
         \label{fig:quad}
     \end{figure}
-
-    We compute 
 \end{enumerate}
 \end{document}
