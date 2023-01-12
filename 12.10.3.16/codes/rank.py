@@ -10,7 +10,7 @@ r = np.linalg.matrix_rank(np.hstack((A,B,C)))
 
 #Check collinearity
 print("Points are", end=" ")
-if r == 2:
+if r < 3:
     print("collinear")
 else:
     print("non-collinear")
