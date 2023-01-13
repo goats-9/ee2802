@@ -138,10 +138,10 @@ columns=fullflexible
     \end{align}
     the intersection of the lines is
     \begin{align}
-        \vec{a} = \frac{1}{17}\myvec{-1\\22}
+        \vec{A} = \frac{1}{17}\myvec{-1\\22}
     \end{align}
     Clearly, the man should follow the path perpendicular to \eqref{eq:L3} from
-    $\vec{a}$ to reach it in the shortest time. The normal vector 
+    $\vec{A}$ to reach it in the shortest time. The normal vector 
     of \eqref{eq:L3} is 
     \begin{align}
         \vec{m} = \myvec{6\\-7}
@@ -155,12 +155,13 @@ columns=fullflexible
     \end{align}
     and hence, the equation of the line is
     \begin{align}
-        \vec{n}^\top\vec{x} &= \vec{n}^\top\vec{a} \\
+        \vec{n}^\top\vec{x} &= \vec{n}^\top\vec{A} \\
         \implies \myvec{7&6}\vec{x} &= \frac{1}{17}\myvec{7&6}\myvec{-1\\22} = \frac{125}{17}
         \label{eq:L4}
     \end{align}
     The Python code \texttt{codes/crossing.py} verifies the solution and depicts
-    the situation in Fig. \ref{fig:crossing}.
+    the situation in Fig. \ref{fig:crossing}. In this figure $\vec{F}$ represents 
+    the foot of the prependicular drawn from $\vec{A}$ onto \eqref{eq:L3}.
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=\columnwidth]{figs/crossing.png}
