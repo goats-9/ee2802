@@ -77,7 +77,7 @@ columns=fullflexible
 \newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
-\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\norm}[1]{\left\Vert#1\right\Vert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
 \providecommand{\mean}[1]{E\left[ #1 \right]}
 \providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
@@ -115,7 +115,8 @@ columns=fullflexible
     generated using the Python code \texttt{codes/quad.py}.
 
     The area vector (denoted by $\vec{R_X}$ for region $X$) of the quadrilateral 
-    is given by
+    is perpendicular to the plane of the quadrilateral and its orientation is 
+    assumed to be in the positive $z$-direction here.
     \begin{align}
         &\vec{R_{ABCD}} = \vec{R_{ABC}} + \vec{R_{ACD}} \\
         &= \frac{1}{2}\brak{\brak{\vec{B}-\vec{A}}\times\brak{\vec{C}-\vec{A}} + 
