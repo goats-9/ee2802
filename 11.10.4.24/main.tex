@@ -136,13 +136,24 @@ columns=fullflexible
                       &\xleftrightarrow[]{\substack{R_1\rightarrow\frac{R_1}{17}\\R_2\rightarrow\frac{R_2}{17}}} \myaugvec{2}{1&0&-\frac{1}{17}\\0&1&\frac{22}{17}}
         \label{eq:intersect}
     \end{align}
-    the intersection of the lines is $\vec{a} = \frac{1}{17}\myvec{-1\\22}$.
-
+    the intersection of the lines is
+    \begin{align}
+        \vec{a} = \frac{1}{17}\myvec{-1\\22}
+    \end{align}
     Clearly, the man should follow the path perpendicular to \eqref{eq:L3} from
     $\vec{a}$ to reach it in the shortest time. The normal vector 
-    of \eqref{eq:L3} is $\vec{m} = \myvec{6\\-7}$, which is consequently the 
-    direction vector of the required line. Therefore, the required normal vector
-    is given by $\vec{n} = \myvec{7\\6}$, and hence, the equation of the line is
+    of \eqref{eq:L3} is 
+    \begin{align}
+        \vec{m} = \myvec{6\\-7}
+        \label{eq:L3-norm}
+    \end{align}
+    which is consequently the direction vector of the required line. Therefore, 
+    the required normal vector is given by
+    \begin{align}
+        \vec{n} = \myvec{7\\6}
+        \label{eq:L4-norm}
+    \end{align}
+    and hence, the equation of the line is
     \begin{align}
         \vec{n}^\top\vec{x} &= \vec{n}^\top\vec{a} \\
         \implies \myvec{7&6}\vec{x} &= \frac{1}{17}\myvec{7&6}\myvec{-1\\22} = \frac{125}{17}
