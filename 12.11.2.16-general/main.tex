@@ -125,17 +125,28 @@ columns=fullflexible
     From \eqref{eq:A-def} and \eqref{eq:B-def}, define the real-valued function
     $f$ as
     \begin{align}
-        f\brak{\vec{\lambda}} \triangleq \norm{\vec{A}-\vec{B}}^2 = \norm{\vec{M}\vec{\lambda}-\vec{x}}^2
+        f\brak{\vec{\lambda}} &\triangleq \norm{\vec{A}-\vec{B}} \\
+                              &= \norm{\vec{M}\vec{\lambda}-\vec{x}} \\
+                              &= \sqrt{\brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}}
         \label{eq:f-def}
     \end{align}
-    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus,
+    We show that $f$ is convex. Indeed, consider $\vec{\lambda_1}$ and 
+    $\vec{\lambda_2}$ and let $0 \le \mu \le 1$. Then,
     \begin{align}
-        \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{d}{d\vec{\lambda}}\brak{\brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}} \\
-                                                      &= \vec{M}^\top\brak{\vec{M\lambda}-\vec{x}} + \brak{\vec{M\lambda}-\vec{x}}^\top\vec{M} \\
-                                                      &= 2\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}
+        &f\brak{\mu\vec{\lambda_1}+\brak{1-\mu}\vec{\lambda_2}} \\
+        &= \norm{\vec{M}\brak{\mu\vec{\lambda_1}+\brak{1-\mu}\vec{\lambda_2}}-\vec{x}} \\
+        &= \norm{\mu\brak{\vec{M}\vec{\lambda_1}-\vec{x}}+\brak{1-\mu}\brak{\vec{M}\vec{\lambda_2}-\vec{x}}} \\
+        &\le \mu\norm{\vec{M\lambda_1}-\vec{x}} + \brak{1-\mu}\norm{\vec{M\lambda_2}-\vec{x}}
+        \label{eq:triangle-ineq}
+    \end{align}
+    Where \eqref{eq:triangle-ineq} follows from the triangle inequality.
+    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, from
+    \eqref{eq:f-def},
+    \begin{align}
+    \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}}{\norm{\vec{M\lambda}-\vec{x}}}
         \label{eq:vec-min}
     \end{align}
-    Setting \eqref{eq:vec-min} to zero gives
+    using the chain rule. Setting \eqref{eq:vec-min} to zero gives
     \begin{align}
         \vec{M}^\top\vec{M\lambda} = \vec{M}^\top\vec{x}
         \label{eq:vec-eqn}
