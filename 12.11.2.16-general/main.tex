@@ -133,12 +133,23 @@ columns=fullflexible
     Note that the norm function obeys the triangle inequality, which will be
     used later. To prove this, note that for vectors $\vec{a}$ and $\vec{b}$,
     \begin{align}
+        \norm{\vec{a}-\frac{\vec{a}^\top\vec{b}}{\norm{\vec{b}}^2}\vec{b}}^2 &\ge 0 \\
+        \implies \norm{\vec{a}}^2 - 2\frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} + \frac{\brak{\vec{a}^\top\vec{b}}}{\norm{\vec{b}}^2} &\ge 0 \\
+        \implies \norm{\vec{a}}^2 - \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} &\ge 0 \\
+        \implies \norm{\vec{a}}^2\norm{\vec{b}}^2 &\ge \brak{\vec{a}^\top\vec{b}}^2 \\
+        \implies \norm{\vec{a}}\norm{\vec{b}} &\ge \vec{a}^\top\vec{b}
+        \label{eq:dot-mag-ineq}
+    \end{align}
+    Using \eqref{eq:dot-mag-ineq} as follows
+    \begin{align}
         \vec{a}^\top\vec{b} &\le \norm{\vec{a}}\norm{\vec{b}} \\
         \norm{\vec{a}}^2 + 2\vec{a}^\top\vec{b} + \norm{\vec{b}}^2 &\le \norm{\vec{a}}^2 + 2\norm{\vec{a}}\norm{\vec{b}} + \norm{\vec{b}}^2 \\
         \norm{\vec{a}+\vec{b}}^2 &\le \brak{\norm{\vec{a}}+\norm{\vec{b}}}^2 \\
         \norm{\vec{a}+\vec{b}} &\le \norm{\vec{a}}+\norm{\vec{b}}
         \label{eq:triangle-ineq}
     \end{align}
+    This proves the triangle inequality.
+
     We now show that $f$ is convex. Indeed, consider $\vec{\lambda_1}$ and 
     $\vec{\lambda_2}$ and let $0 \le \mu \le 1$. Then,
     \begin{align}
@@ -149,13 +160,15 @@ columns=fullflexible
         \label{eq:convex-ineq}
     \end{align}
     Where \eqref{eq:convex-ineq} follows from \eqref{eq:triangle-ineq}.
-    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, differentiating
-    \eqref{eq:f-def},
+
+    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, 
+    differentiating \eqref{eq:f-def} using the chain rule,
     \begin{align}
-    \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}}{\norm{\vec{M\lambda}-\vec{x}}}
+        \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}+\vec{M}\brak{\vec{M\lambda}-\vec{x}}^\top}{2\norm{\vec{M\lambda}-\vec{x}}} \\
+                                                      &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}}{\norm{\vec{M\lambda}-\vec{x}}}
         \label{eq:vec-min}
     \end{align}
-    using the chain rule. Setting \eqref{eq:vec-min} to zero gives
+    Setting \eqref{eq:vec-min} to zero gives
     \begin{align}
         \vec{M}^\top\vec{M\lambda} = \vec{M}^\top\vec{x}
         \label{eq:vec-eqn}
