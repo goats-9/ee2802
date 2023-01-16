@@ -115,26 +115,30 @@ columns=fullflexible
     \begin{align}
         \vec{M} &\triangleq \myvec{\vec{m_1} & \vec{m_2}} \label{eq:M-def} \\
         \vec{\lambda} &\triangleq \myvec{\lambda_1\\-\lambda_2} \label{eq:lambda-def} \\
-        \vec{x} &\triangleq vec{x_2} - \vec{x_1} \label{eq:x-def}
+        \vec{x} &\triangleq \vec{x_2} - \vec{x_1} \label{eq:x-def}
     \end{align}
     Then, we have the following equations:
     \begin{align}
         \vec{A} = \vec{x_1} + \lambda_1\vec{m_1} \label{eq:A-def} \\
-        \vec{B} = \vec{x_2} + \lambda_2\vec{m_2} \label{eq:B-def} \\
-        \vec{m_1}^\top\brak{\vec{A}-\vec{B}} = 0 \label{eq:L1-perp} \\
-        \vec{m_2}^\top\brak{\vec{A}-\vec{B}} = 0 \label{eq:L2-perp}
+        \vec{B} = \vec{x_2} + \lambda_2\vec{m_2} \label{eq:B-def}
     \end{align}
-    \eqref{eq:L1-perp} and \eqref{eq:L2-perp} give
+    From \eqref{eq:A-def} and \eqref{eq:B-def}, define the real-valued function
+    $f$ as
     \begin{align}
-        \vec{M}^\top\brak{\vec{A}-\vec{B}} = \vec{O}
-        \label{eq:M-a-b-eqn}
+        f\brak{\vec{\lambda}} \triangleq \norm{\vec{A}-\vec{B}}^2 = \norm{\vec{M}\vec{\lambda}-\vec{x}}^2
+        \label{eq:f-def}
     \end{align}
-    where $\vec{O} \triangleq \myvec{0\\0}$. Substituting \eqref{eq:A-def} and 
-    \eqref{eq:B-def} into \eqref{eq:M-a-b-eqn}, and using \eqref{eq:M-def} and 
-    \eqref{eq:lambda-def},
+    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus,
     \begin{align}
-        \vec{M}^\top\vec{M}\vec{\lambda} = \vec{M}^\top\vec{x}
-        \label{eq:M-lambda-x-eqn}
+        \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{d}{d\vec{\lambda}}\brak{\brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}} \\
+                                                      &= \vec{M}^\top\brak{\vec{M\lambda}-\vec{x}} + \brak{\vec{M\lambda}-\vec{x}}^\top\vec{M} \\
+                                                      &= 2\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}
+        \label{eq:vec-min}
+    \end{align}
+    Setting \eqref{eq:vec-min} to zero gives
+    \begin{align}
+        \vec{M}^\top\vec{M\lambda} = \vec{M}^\top\vec{x}
+        \label{eq:vec-eqn}
     \end{align}
     We have the following cases:
     \begin{enumerate}
@@ -145,11 +149,11 @@ columns=fullflexible
             \implies \vec{x_1} + \lambda_1\vec{m_1} &= \vec{x_2} + \lambda_2\vec{m_2}
             \label{eq:intersect}
         \end{align}
-        Thus, both lines intersect at a point in this case, and the shortest
-        distance between them is trivially 0. To check whether such a $\vec{\lambda}$
-        exists, we can bring the augmented matrix $\myvec{\vec{M}&\vec{x}}$ into
-        row-reduced echelon form and check whether there is a pivot in the last
-        column.
+        Thus, both lines intersect at a point and the shortest
+        distance between them is 0. To check for the existence of such a 
+        $\vec{\lambda}$, we can bring the augmented matrix 
+        $\myvec{\vec{M}&\vec{x}}$ into row-reduced echelon form and check 
+        whether there is a pivot in the last column.
 
         \item $\vec{M}^\top\vec{M}$ is singular. Since $\vec{M}^\top\vec{M}$ is a 
         sqaure matrix of order 2, its rank must be 1. Further,
@@ -166,7 +170,7 @@ columns=fullflexible
         \end{align}
         which implies that both lines are parallel to each other. Setting 
         $\vec{m_2} = k\vec{m_1}, k\in\mathbb{R}\setminus\cbrak{0}$, we obtain one
-        equation from \eqref{eq:M-lambda-x-eqn}.
+        equation from \eqref{eq:vec-eqn}.
         \begin{align}
             \vec{m_1}^\top\vec{m_1}\brak{\lambda_1-k\lambda_2} = \vec{m_1}^\top\vec{x} \\
             \implies \lambda_1-k\lambda_2 = \frac{\vec{m_1}^\top\vec{x}}{\norm{\vec{m_1}}^2}
@@ -179,7 +183,7 @@ columns=fullflexible
         \end{align}
 
         \item $\vec{M}^\top\vec{M}$ is nonsinglar. This implies that the lines
-        are skew. From \eqref{eq:M-lambda-x-eqn},
+        are skew. From \eqref{eq:vec-eqn},
         \begin{align}
             \vec{\lambda} = \brak{\vec{M}^\top\vec{M}}^{-1}\vec{M}^\top\vec{x}
             \label{eq:lambda-skew}
@@ -189,7 +193,7 @@ columns=fullflexible
             \norm{\vec{A}-\vec{B}} &= \norm{\brak{\vec{M}\brak{\vec{M}^\top\vec{M}}^{-1}\vec{M}^\top - \vec{I_n}}\vec{x}} 
             \label{eq:dist-skew}
         \end{align}
-        where $\vec{I_n}$ denotes the identity matrix of order $n$.
+        where $\vec{I_n}$ is the identity matrix of order $n$.
     \end{enumerate}
 \end{enumerate}
 \end{document}
