@@ -130,17 +130,26 @@ columns=fullflexible
                               &= \sqrt{\brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}}
         \label{eq:f-def}
     \end{align}
-    We show that $f$ is convex. Indeed, consider $\vec{\lambda_1}$ and 
+    Note that the norm function obeys the triangle inequality, which will be
+    used later. To prove this, note that for vectors $\vec{a}$ and $\vec{b}$,
+    \begin{align}
+        \vec{a}^\top\vec{b} &\le \norm{\vec{a}}\norm{\vec{b}} \\
+        \norm{\vec{a}}^2 + 2\vec{a}^\top\vec{b} + \norm{\vec{b}}^2 &\le \norm{\vec{a}}^2 + 2\norm{\vec{a}}\norm{\vec{b}} + \norm{\vec{b}}^2 \\
+        \norm{\vec{a}+\vec{b}}^2 &\le \brak{\norm{\vec{a}}+\norm{\vec{b}}}^2 \\
+        \norm{\vec{a}+\vec{b}} &\le \norm{\vec{a}}+\norm{\vec{b}}
+        \label{eq:triangle-ineq}
+    \end{align}
+    We now show that $f$ is convex. Indeed, consider $\vec{\lambda_1}$ and 
     $\vec{\lambda_2}$ and let $0 \le \mu \le 1$. Then,
     \begin{align}
         &f\brak{\mu\vec{\lambda_1}+\brak{1-\mu}\vec{\lambda_2}} \\
         &= \norm{\vec{M}\brak{\mu\vec{\lambda_1}+\brak{1-\mu}\vec{\lambda_2}}-\vec{x}} \\
         &= \norm{\mu\brak{\vec{M}\vec{\lambda_1}-\vec{x}}+\brak{1-\mu}\brak{\vec{M}\vec{\lambda_2}-\vec{x}}} \\
         &\le \mu\norm{\vec{M\lambda_1}-\vec{x}} + \brak{1-\mu}\norm{\vec{M\lambda_2}-\vec{x}}
-        \label{eq:triangle-ineq}
+        \label{eq:convex-ineq}
     \end{align}
-    Where \eqref{eq:triangle-ineq} follows from the triangle inequality.
-    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, from
+    Where \eqref{eq:convex-ineq} follows from \eqref{eq:triangle-ineq}.
+    We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, differentiating
     \eqref{eq:f-def},
     \begin{align}
     \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}}{\norm{\vec{M\lambda}-\vec{x}}}
