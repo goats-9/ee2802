@@ -106,11 +106,11 @@ columns=fullflexible
 \begin{enumerate}
     \item Find the equation of the parabola with vertex
     \begin{align}
-        \vec{V} = \myvec{0\\0}
+        \vec{P} = \myvec{0\\0}
     \end{align}
     and passing through the point
     \begin{align}
-        \vec{P} = \myvec{5\\2}
+        \vec{Q} = \myvec{5\\2}
     \end{align}
     and symmetric to the $y$-axis.
 
@@ -136,17 +136,18 @@ columns=fullflexible
         \vec{u} &= c\myvec{0\\1} - \vec{F} \\
         f &= \norm{\vec{F}}^2 - c^2
     \end{align}
-    Putting $\myvec{0\\0}$ in \eqref{eq:conic-def} gives $f = 0$, thus 
+    Putting $\vec{x} = \vec{P}$ in \eqref{eq:conic-def} gives $f = 0$, thus 
     \begin{align}
         \norm{\vec{F}}^2 = c^2
         \label{eq:F-c}
     \end{align}
-    Putting $\myvec{5\\2}$ in \eqref{eq:conic-def} gives
+    Putting $\vec{x} = \vec{Q}$ in \eqref{eq:conic-def}, we get
     \begin{align}
         \vec{F}^\top\myvec{5\\2} &= \frac{25}{2} - 2c \label{eq:p1} \\
         \implies \vec{F} &= \myvec{0\\\frac{25}{4}-c} \label{eq:F-coords}
     \end{align}
-    Using \eqref{eq:F-c},
+    since $\vec{F}$ lies on the $y$-axis as remarked before. Using 
+    \eqref{eq:F-c},
     \begin{align}
         \frac{25}{4}-c\pm c &= 0 \\
         \implies c &= \frac{25}{8}
@@ -154,6 +155,15 @@ columns=fullflexible
     Thus,
     \begin{align}
         \vec{F} = \myvec{0\\\frac{25}{8}}
+    \end{align}
+    Substituting into \eqref{eq:u-def} and \eqref{eq:f-def},
+    \begin{align}
+        \vec{u} = \frac{25}{8}\myvec{0\\1} - \myvec{0\\\frac{25}{8}} = \vec{O} \\
+        f = \norm{\vec{F}}^2 - c^2 = 0
+    \end{align}
+    And the equation of the conic is given by
+    \begin{align}
+        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} = 0
     \end{align}
     The conic is plotted in Fig. \ref{fig:conic} using the Python code 
     \texttt{codes/conic.py}.
