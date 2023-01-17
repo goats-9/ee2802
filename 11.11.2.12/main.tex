@@ -128,9 +128,9 @@ columns=fullflexible
     \end{align}
     Since the conic is a parabola symmetric to the $y$-axis, we have
     \begin{align}
-        \vec{n} = \myvec{0\\1} \quad e = 1
+        \vec{n} = \myvec{0\\1},\ e = 1
     \end{align}
-    From \eqref{eq:V-def},
+    and also that $\vec{F}$ lies on the $y$-axis. From \eqref{eq:V-def},
     \begin{align}
         \vec{V} &= \vec{I} - \myvec{0&0\\0&1} = \myvec{1&0\\0&0} \\
         \vec{u} &= c\myvec{0\\1} - \vec{F} \\
@@ -141,17 +141,10 @@ columns=fullflexible
         \norm{\vec{F}}^2 = c^2
         \label{eq:F-c}
     \end{align}
-    Using the symmetry of the conic, we see that $\myvec{5\\2}$ and 
-    $\myvec{-5\\2}$ lie on the conic. Substituing both points, we get
+    Putting $\myvec{5\\2}$ in \eqref{eq:conic-def} gives
     \begin{align}
         \vec{F}^\top\myvec{5\\2} &= \frac{25}{2} - 2c \label{eq:p1} \\
-        \vec{F}^\top\myvec{-5\\2} &= \frac{25}{2} - 2c \label{eq:p2}
-    \end{align}
-    Adding and subtracting \eqref{eq:p1} and \eqref{eq:p2},
-    \begin{align}
-        \vec{F}^\top\myvec{0\\4} &= 25 - 4c \\
-        \vec{F}^\top\myvec{10\\0} &= 0 \\
-        \implies \vec{F} &= \myvec{0\\\frac{25}{4}-c}
+        \implies \vec{F} &= \myvec{0\\\frac{25}{4}-c} \label{eq:F-coords}
     \end{align}
     Using \eqref{eq:F-c},
     \begin{align}

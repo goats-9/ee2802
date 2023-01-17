@@ -114,21 +114,36 @@ columns=fullflexible
     \end{align}
     Now, since $P_1P_2P_3P_4$ form a parallelogram,
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_2}} &= \norm{\vec{P_3}-\vec{P_4}} \\
+        \norm{\vec{P_1}-\vec{P_2}} &= \norm{\vec{P_3}-\vec{P_4}} \label{eq:s1} \\
         \implies \vec{P_1}^\top\vec{P_2} &= \vec{P_3}^\top\vec{P_4}
         \label{eq:dot-prod-1}
     \end{align}
     and
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_4}} &= \norm{\vec{P_2}-\vec{P_3}} \\
+        \norm{\vec{P_1}-\vec{P_4}} &= \norm{\vec{P_2}-\vec{P_3}} \label{eq:s2} \\
         \implies \vec{P_1}^\top\vec{P_4} &= \vec{P_2}^\top\vec{P_3}
         \label{eq:dot-prod-2}
     \end{align}
     Also, it is given that the parallelogram is cyclic. So,
     \begin{align}
+        \angle{P_2P_1P_4} + \angle{P_2P_3P_4} &= \pi \\
+        \implies \angle{P_2P_1P_4} &= \pi - \angle{P_2P_3P_4} \\
+        \implies \cos\angle{P_2P_1P_4} &= -\cos\angle{P_2P_3P_4} \\
+        \implies \cos\angle{P_2P_1P_4} &+ \cos\angle{P_2P_3P_4} = 0
+        \label{eq:cyc-angle}
+    \end{align}
+    Using \eqref{eq:s1} and \eqref{eq:s2} and also the fact that
+    \begin{align}
+        \cos\theta = \frac{\vec{a}^\top\vec{b}}{\norm{\vec{a}}\norm{\vec{b}}}
+        \label{eq:dot-prod-gen}
+    \end{align}
+    where $\theta$ is the angle between the vectors $\vec{a}$ and $\vec{b}$, 
+    \eqref{eq:cyc-angle} implies
+    \begin{align}
         \brak{\vec{P_4}-\vec{P_1}}^\top\brak{\vec{P_1}-\vec{P_2}} + \brak{\vec{P_4}-\vec{P_3}}^\top\brak{\vec{P_3}-\vec{P_2}} = 0
         \label{eq:cyclic}
     \end{align}
+
     Using \eqref{eq:dot-prod-1} and \eqref{eq:dot-prod-2} in \eqref{eq:cyclic}, 
     and noting that $\vec{P_i}^\top\vec{P_i} = 1,\ 1 \le i \le 4$,
     \begin{align}
