@@ -107,44 +107,38 @@ columns=fullflexible
     \item Prove that a cyclic paralellogram is a rectangle.
 
     \solution Consider the points $\vec{P_i},\ 1 \le i \le 4$ on the 
-    unit circle, where
+    unit circle. Thus, for $1 \le i \le 4$,
     \begin{align}
-        \vec{P_i} \triangleq \myvec{\cos{\theta_i}\\\sin{\theta_i}}
-        \label{eq:P-def}
+        \norm{\vec{P_i}} = 1
+        \label{eq:vec-mod}
     \end{align}
-    Now, since $P_1P_2P_3P_4$ form a parallelogram,
+    Since $P_1P_2P_3P_4$ form a parallelogram,
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_2}} &= \norm{\vec{P_3}-\vec{P_4}} \label{eq:s1} \\
-        \implies \vec{P_1}^\top\vec{P_2} &= \vec{P_3}^\top\vec{P_4}
+        \norm{\vec{P_1}-\vec{P_2}}^2 &= \norm{\vec{P_3}-\vec{P_4}}^2 \label{eq:s1} \\
+        \norm{\vec{P_1}}^2 - 2\vec{P_1}^\top\vec{P_2} + \norm{\vec{P_2}}^2 &= \norm{\vec{P_3}}^2 - 2\vec{P_3}^\top\vec{P_4} \nonumber \\ &+ \norm{\vec{P_4}}^2 \\
+        \vec{P_1}^\top\vec{P_2} &= \vec{P_3}^\top\vec{P_4}
         \label{eq:dot-prod-1}
     \end{align}
-    and
+    Similarly,
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_4}} &= \norm{\vec{P_2}-\vec{P_3}} \label{eq:s2} \\
+        \norm{\vec{P_1}-\vec{P_4}}^2 &= \norm{\vec{P_2}-\vec{P_3}}^2 \label{eq:s2} \\
         \implies \vec{P_1}^\top\vec{P_4} &= \vec{P_2}^\top\vec{P_3}
         \label{eq:dot-prod-2}
     \end{align}
-    Also, it is given that the parallelogram is cyclic. So,
+    We know that
     \begin{align}
-        \angle{P_2P_1P_4} + \angle{P_2P_3P_4} &= \pi \\
-        \implies \angle{P_2P_1P_4} &= \pi - \angle{P_2P_3P_4} \\
-        \implies \cos\angle{P_2P_1P_4} &= -\cos\angle{P_2P_3P_4} \\
-        \implies \cos\angle{P_2P_1P_4} &+ \cos\angle{P_2P_3P_4} = 0
-        \label{eq:cyc-angle}
+        \cos\angle{P_4P_1P_2} = \frac{\brak{\vec{P_1}-\vec{P_2}}^\top\brak{\vec{P_1}-\vec{P_4}}}{\norm{\vec{P_1}-\vec{P_2}}\norm{\vec{P_1}-\vec{P_4}}}
+        \label{eq:angle-cyc}
     \end{align}
-    Using \eqref{eq:s1} and \eqref{eq:s2} and also the fact that
+    Using the fact that the opposite angles of a cyclic quadrilateral are 
+    supplementary, we see that the sum of the cosines of opposite angles is
+    zero. Combining this with \eqref{eq:s1} and \eqref{eq:s2},
     \begin{align}
-        \cos\theta = \frac{\vec{a}^\top\vec{b}}{\norm{\vec{a}}\norm{\vec{b}}}
-        \label{eq:dot-prod-gen}
-    \end{align}
-    where $\theta$ is the angle between the vectors $\vec{a}$ and $\vec{b}$, 
-    \eqref{eq:cyc-angle} implies
-    \begin{align}
-        \brak{\vec{P_4}-\vec{P_1}}^\top\brak{\vec{P_1}-\vec{P_2}} + \brak{\vec{P_4}-\vec{P_3}}^\top\brak{\vec{P_3}-\vec{P_2}} = 0
+        \frac{\brak{\vec{P_1}-\vec{P_4}}^\top\brak{\vec{P_1}-\vec{P_2}}}{\norm{\vec{P_1}-\vec{P_4}}\norm{\vec{P_1}-\vec{P_2}}} + \frac{\brak{\vec{P_3}-\vec{P_4}}^\top\brak{\vec{P_3}-\vec{P_2}}}{\norm{\vec{P_3}-\vec{P_4}}\norm{\vec{P_3}-\vec{P_2}}} = 0 \\
+        \brak{\vec{P_1}-\vec{P_4}}^\top\brak{\vec{P_1}-\vec{P_2}} + \brak{\vec{P_3}-\vec{P_4}}^\top\brak{\vec{P_3}-\vec{P_2}} = 0
         \label{eq:cyclic}
     \end{align}
-
-    Using \eqref{eq:dot-prod-1} and \eqref{eq:dot-prod-2} in \eqref{eq:cyclic}, 
+    Using \eqref{eq:dot-prod-1} and \eqref{eq:dot-prod-2} in \eqref{eq:cyclic},
     and noting that $\vec{P_i}^\top\vec{P_i} = 1,\ 1 \le i \le 4$,
     \begin{align}
         \vec{P_4}^\top\vec{P_1}-\vec{P_4}^\top\vec{P_2}+\vec{P_1}^\top\vec{P_2}-1 &= 0 \\
