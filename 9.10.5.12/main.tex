@@ -109,44 +109,57 @@ columns=fullflexible
     \solution Consider the points $\vec{P_i},\ 1 \le i \le 4$ on the 
     unit circle. Thus, for $1 \le i \le 4$,
     \begin{align}
-        \norm{\vec{P_i}} = 1
-        \label{eq:vec-mod}
+        \vec{P_i} \triangleq \myvec{\cos\theta_i\\\sin\theta_i}
+        \label{eq:vec-form}
     \end{align}
-    Since $P_1P_2P_3P_4$ form a parallelogram,
+    where all the $\theta_i$'s are distinct. Choose the axes in such a way that 
+    $P_1P_4$ and $P_2P_3$ are parallel to the $x$-axis. Suppose $P_1P_4$ lies 
+    on the line
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_2}}^2 &= \norm{\vec{P_3}-\vec{P_4}}^2 \label{eq:s1} \\
-        \norm{\vec{P_1}}^2 - 2\vec{P_1}^\top\vec{P_2} + \norm{\vec{P_2}}^2 &= \norm{\vec{P_3}}^2 - 2\vec{P_3}^\top\vec{P_4} \nonumber \\ &+ \norm{\vec{P_4}}^2 \\
-        \vec{P_1}^\top\vec{P_2} &= \vec{P_3}^\top\vec{P_4}
-        \label{eq:dot-prod-1}
+        \vec{n}^\top\vec{x} = c
+        \label{eq:x-line}
     \end{align}
-    Similarly,
+    where
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_4}}^2 &= \norm{\vec{P_2}-\vec{P_3}}^2 \label{eq:s2} \\
-        \implies \vec{P_1}^\top\vec{P_4} &= \vec{P_2}^\top\vec{P_3}
-        \label{eq:dot-prod-2}
+        \vec{n} = \myvec{0\\1}
     \end{align}
-    We know that
+    Since $\vec{P_1}$ and $\vec{P_4}$ also lie on the unit circle, substituting
+    $\vec{P_1}$ and $\vec{P_4}$ into \eqref{eq:x-line} gives
     \begin{align}
-        \cos\angle{P_4P_1P_2} = \frac{\brak{\vec{P_1}-\vec{P_2}}^\top\brak{\vec{P_1}-\vec{P_4}}}{\norm{\vec{P_1}-\vec{P_2}}\norm{\vec{P_1}-\vec{P_4}}}
-        \label{eq:angle-cyc}
+        c = \sin\theta_1 = \sin\theta_4
+        \label{eq:sin-1-4}
     \end{align}
-    Using the fact that the opposite angles of a cyclic quadrilateral are 
-    supplementary, we see that the sum of the cosines of opposite angles is
-    zero. Combining this with \eqref{eq:s1} and \eqref{eq:s2},
+    Similarly for $\vec{P_2}$ and $\vec{P_3}$,
     \begin{align}
-        \frac{\brak{\vec{P_1}-\vec{P_4}}^\top\brak{\vec{P_1}-\vec{P_2}}}{\norm{\vec{P_1}-\vec{P_4}}\norm{\vec{P_1}-\vec{P_2}}} + \frac{\brak{\vec{P_3}-\vec{P_4}}^\top\brak{\vec{P_3}-\vec{P_2}}}{\norm{\vec{P_3}-\vec{P_4}}\norm{\vec{P_3}-\vec{P_2}}} = 0 \\
-        \brak{\vec{P_1}-\vec{P_4}}^\top\brak{\vec{P_1}-\vec{P_2}} + \brak{\vec{P_3}-\vec{P_4}}^\top\brak{\vec{P_3}-\vec{P_2}} = 0
-        \label{eq:cyclic}
+        \sin\theta_2 = \sin\theta_3
+        \label{eq:sin-2-3}
     \end{align}
-    Using \eqref{eq:dot-prod-1} and \eqref{eq:dot-prod-2} in \eqref{eq:cyclic},
-    and noting that $\vec{P_i}^\top\vec{P_i} = 1,\ 1 \le i \le 4$,
+    From \eqref{eq:sin-1-4} and \eqref{eq:sin-2-3}, we can also write, since 
+    all the $\theta_i$'s are distinct,
     \begin{align}
-        \vec{P_4}^\top\vec{P_1}-\vec{P_4}^\top\vec{P_2}+\vec{P_1}^\top\vec{P_2}-1 &= 0 \\
-        \vec{P_4}^\top\vec{P_1}-\vec{P_4}^\top\vec{P_2}+\vec{P_1}^\top\vec{P_2}-\vec{P_1}^\top\vec{P_1} &= 0 \\
-        \brak{\vec{P_4}-\vec{P_1}}^\top\brak{\vec{P_1}-\vec{P_2}} &= 0
-        \label{eq:ortho}
+        \cos\theta_1 = -\cos\theta_4 \label{eq:cos-1-4} \\
+        \cos\theta_2 = -\cos\theta_3 \label{eq:cos-2-3}
     \end{align}
-    Hence $P_1P_2 \perp P_1P_4$, and thus, the parallelogram is indeed a rectangle.
+    Since $P_1P_2P_3P_4$ form a parallelogram, $P_1P_2\ \|\ P_3P_4$. Equating
+    direction vectors and using equations \eqref{eq:sin-1-4} to \eqref{eq:cos-2-3},
+    \begin{align}
+        \myvec{\cos\theta_1-\cos\theta_2\\\sin\theta_1-\sin\theta_2} &= 
+        \myvec{\cos\theta_4-\cos\theta_3\\\sin\theta_4-\sin\theta_3} \\
+        \implies \cos\theta_1-\cos\theta_2 &= \cos\theta_4-\cos\theta_3 \\
+        \implies 2\cos\theta_1&=2\cos\theta_2 \\
+        \implies \cos\theta_1&=\cos\theta_2
+        \label{eq:perp}
+    \end{align}
+    Using \eqref{eq:perp}, the direction vector of $P_1P_2$ is
+    \begin{align}
+        \vec{P_1} - \vec{P_2} &= \myvec{\cos\theta_1-\cos\theta_2\\\sin\theta_1-\sin\theta_2} \\
+                              &= \myvec{0\\\sin\theta_1-\sin\theta_2}
+                              \label{eq:y-line}
+    \end{align}
+    Equation \eqref{eq:y-line} clearly shows that $P_1P_2$ is parallel to the 
+    y-axis. Thus, $P_1P_2 \perp P_1P_4$ and therefore, $P_1P_2P_3P_4$ is
+    a rectangle, as required.
+
     The situation is demonstrated in Fig. \ref{fig:circle}, plotted by the Python
     code \texttt{codes/circle.py}.
     \begin{figure}[!ht]

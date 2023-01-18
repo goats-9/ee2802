@@ -46,7 +46,7 @@ columns=fullflexible
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{problem}{Problem}
 \newtheorem{proposition}{Proposition}[section]
-\newtheorem{lemma}{Lemma}[section]
+\newtheorem{lemma}{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{example}{Example}[section]
 \newtheorem{definition}{Definition}[section]
@@ -125,41 +125,72 @@ columns=fullflexible
     From \eqref{eq:A-def} and \eqref{eq:B-def}, define the real-valued function
     $f$ as
     \begin{align}
-        f\brak{\vec{\lambda}} &\triangleq \norm{\vec{A}-\vec{B}} \\
-                              &= \norm{\vec{M}\vec{\lambda}-\vec{x}} \\
-                              &= \sqrt{\brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}}
+        f\brak{\vec{\lambda}} &\triangleq \norm{\vec{A}-\vec{B}}^2 \\
+                              &= \norm{\vec{M}\vec{\lambda}-\vec{x}}^2 \\
+                              &= \brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}
         \label{eq:f-def}
     \end{align}
-    Note that the norm function obeys the triangle inequality, which will be
-    used later. To prove this, note that for vectors $\vec{a}$ and $\vec{b}$,
+    We prove a useful lemma here.
+    \begin{lemma}
+        For any two vectors $\vec{a}$ and $\vec{b}$, we have
+        \begin{align}
+            \vec{a}^\top\vec{b} \le \norm{\vec{a}}\norm{\vec{b}}
+            \label{eq:dot-mag}
+        \end{align}
+        \label{lem:dot-mag}
+    \end{lemma}
+    \begin{proof}
+        Note that
+        \begin{align}
+            \norm{\vec{a}-\frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2}\vec{b}} &\ge 0 \\
+            \norm{\vec{a}}^2 - 2\frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} + \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} &\ge 0
+            \norm{\vec{a}}^2 &\ge \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} \\
+            \norm{\vec{a}\vec{b}} &\ge \vec{a}^\top\vec{b}
+            \label{eq:proof-dot-mag}
+        \end{align}
+        as required.
+    \end{proof}
+    We show that $f$ is convex by computing the Hessian matrix of $f$. For
+    a real-valued function $f(\vec{x})$ where $\vec{x} = \myvec{x_1\\x_2}$,
     \begin{align}
-        \norm{\vec{a}-\frac{\vec{a}^\top\vec{b}}{\norm{\vec{b}}^2}\vec{b}}^2 &\ge 0 \\
-        \implies \norm{\vec{a}}^2 - 2\frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} + \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} &\ge 0 \\
-        \implies \norm{\vec{a}}^2 - \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} &\ge 0 \\
-        \implies \norm{\vec{a}}^2\norm{\vec{b}}^2 &\ge \brak{\vec{a}^\top\vec{b}}^2 \\
-        \implies \norm{\vec{a}}\norm{\vec{b}} &\ge \vec{a}^\top\vec{b}
-        \label{eq:dot-mag-ineq}
+        \vec{H}_f \triangleq \myvec{\frac{\partial^2f}{\partial x_1^2}&\frac{\partial^2f}{\partial x_1x_2}\\\frac{\partial^2f}{\partial x_2x_1}&\frac{\partial^2f}{\partial x_2^2}}
+        \label{eq:H-def}
     \end{align}
-    Using \eqref{eq:dot-mag-ineq} as follows
+    Here, taking $\vec{x} = \vec{\lambda} = \myvec{\lambda_1\\-\lambda_2}$ and
+    $f$ as defined in \eqref{eq:f-def}, we compute the partial derivatives and
+    double derivatives of $f$.
     \begin{align}
-        \vec{a}^\top\vec{b} &\le \norm{\vec{a}}\norm{\vec{b}} \\
-        \norm{\vec{a}}^2 + 2\vec{a}^\top\vec{b} + \norm{\vec{b}}^2 &\le \norm{\vec{a}}^2 + 2\norm{\vec{a}}\norm{\vec{b}} + \norm{\vec{b}}^2 \\
-        \norm{\vec{a}+\vec{b}}^2 &\le \brak{\norm{\vec{a}}+\norm{\vec{b}}}^2 \\
-        \norm{\vec{a}+\vec{b}} &\le \norm{\vec{a}}+\norm{\vec{b}}
-        \label{eq:triangle-ineq}
+        \frac{\partial f}{\partial\lambda_1} &= 2\vec{m_1}^\top\brak{\vec{M\lambda}-\vec{x}} \label{eq:dx} \\
+        \frac{\partial f}{\partial\brak{-\lambda_2}} &= 2\vec{m_2}^\top\brak{\vec{M\lambda}-\vec{x}} \label{eq:dy}
     \end{align}
-    This proves the triangle inequality.
-
-    We now show that $f$ is convex. Indeed, consider $\vec{\lambda_1}$ and 
-    $\vec{\lambda_2}$ and let $0 \le \mu \le 1$. Then,
+    Hence,
     \begin{align}
-        &f\brak{\mu\vec{\lambda_1}+\brak{1-\mu}\vec{\lambda_2}} \\
-        &= \norm{\vec{M}\brak{\mu\vec{\lambda_1}+\brak{1-\mu}\vec{\lambda_2}}-\vec{x}} \\
-        &= \norm{\mu\brak{\vec{M}\vec{\lambda_1}-\vec{x}}+\brak{1-\mu}\brak{\vec{M}\vec{\lambda_2}-\vec{x}}} \\
-        &\le \mu\norm{\vec{M\lambda_1}-\vec{x}} + \brak{1-\mu}\norm{\vec{M\lambda_2}-\vec{x}}
-        \label{eq:convex-ineq}
+        \frac{\partial^2f}{\partial\lambda_1^2} &= 2\norm{\vec{m_1}}^2 \label{eq:d2x} \\
+        \frac{\partial^2f}{\partial\lambda_1\brak{-\lambda_2}} &= 2\vec{m_1}^\top\vec{m_2} \label{eq:dxdy} \\ 
+        \frac{\partial^2f}{\partial\brak{-\lambda_2}\lambda_1} &= 2\vec{m_2}^\top\vec{m_1} = 2\vec{m_1}^\top\vec{m_2} \label{eq:dydx} \\
+        \frac{\partial^2f}{\partial\brak{-\lambda_2}^2} &= 2\norm{\vec{m_2}}^2 \label{eq:d2y}
     \end{align}
-    Where \eqref{eq:convex-ineq} follows from \eqref{eq:triangle-ineq}.
+    Therefore, the Hessian matrix of $f$ is
+    \begin{align}
+        \vec{H}_f = 2\myvec{\norm{\vec{m_1}}^2&\vec{m_1}^\top\vec{m_2}\\\vec{m_1}^\top\vec{m_2}&\norm{\vec{m_2}}^2}
+        \label{eq:H-f}
+    \end{align}
+    The characteristic polynomial of $\vec{H}_f$ is
+    \begin{align}
+        \textrm{char}_x\brak{\vec{H}_f} &= x^2 - 2\brak{\norm{\vec{m_1}}^2+\norm{\vec{m_2}}^2}x \nonumber \\
+                                        &+ 4\brak{\norm{\vec{m_1}}^2\norm{\vec{m_2}}^2 - \brak{\vec{m_1}^\top\vec{m_2}}}
+                                        \label{eq:char-H-f}
+    \end{align}
+    Notice that the minima of the characteristic polynomial is at 
+    $x_m = \brak{\norm{\vec{m_1}}^2+\norm{\vec{m_2}}^2}$. Also, using Lemma
+    \ref{lem:dot-mag},
+    \begin{align}
+        \textrm{char}_x\brak{\vec{H}_f}\brak{0} &= 4\brak{\norm{\vec{m_1}}^2\norm{\vec{m_2}}^2 - \brak{\vec{m_1}^\top\vec{m_2}}} \\
+        &\ge 0
+    \end{align}
+    Thus, the zeros of $\textrm{char}_x\brak{\vec{H}_f}$, or the eigenvalues 
+    of $\vec{H}_f$ are nonnegative. This implies that $\vec{H}_f$ is
+    positive definite, and so $f$ is convex.
 
     We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, 
     differentiating \eqref{eq:f-def} using the chain rule,

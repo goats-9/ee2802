@@ -141,29 +141,31 @@ columns=fullflexible
         \norm{\vec{F}}^2 = c^2
         \label{eq:F-c}
     \end{align}
-    Putting $\vec{x} = \vec{Q}$ in \eqref{eq:conic-def}, we get
+    Putting $\vec{x} = \vec{Q}$ in \eqref{eq:conic-def} and noting that $f = 0$, 
+    we get
     \begin{align}
-        \vec{F}^\top\myvec{5\\2} &= \frac{25}{2} - 2c \label{eq:p1} \\
-        \implies \vec{F} &= \myvec{0\\\frac{25}{4}-c} \label{eq:F-coords}
+        &\myvec{5&2}\myvec{1&0\\0&0}\myvec{5\\2} + 2\brak{c\myvec{0&1}-\vec{F}^\top}\myvec{5\\2} = 0 \\
+        &\implies 25 + 4c - 2\vec{F}^\top\myvec{5\\2} = 0 \\
+        &\implies \vec{F}^\top\myvec{5\\2} = \frac{25}{2} + 2c \label{eq:p1} \\
+        &\implies \vec{F} = \myvec{0\\\frac{25}{4}+c} \label{eq:F-coords}
     \end{align}
     since $\vec{F}$ lies on the $y$-axis as remarked before. Using 
     \eqref{eq:F-c},
     \begin{align}
-        \frac{25}{4}-c\pm c &= 0 \\
-        \implies c &= \frac{25}{8}
+        \frac{25}{4}+c\pm c &= 0 \\
+        \implies c &= -\frac{25}{8}
     \end{align}
     Thus,
     \begin{align}
         \vec{F} = \myvec{0\\\frac{25}{8}}
     \end{align}
-    Substituting into \eqref{eq:u-def} and \eqref{eq:f-def},
+    Substituting into \eqref{eq:u-def},
     \begin{align}
-        \vec{u} = \frac{25}{8}\myvec{0\\1} - \myvec{0\\\frac{25}{8}} = \vec{O} \\
-        f = \norm{\vec{F}}^2 - c^2 = 0
+        \vec{u} = -\frac{25}{8}\myvec{0\\1} - \myvec{0\\\frac{25}{8}} = \myvec{0\\-\frac{25}{4}}
     \end{align}
     And the equation of the conic is given by
     \begin{align}
-        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} = 0
+        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} - \frac{25}{2}\myvec{0&1}\vec{x} = 0
     \end{align}
     The conic is plotted in Fig. \ref{fig:conic} using the Python code 
     \texttt{codes/conic.py}.
