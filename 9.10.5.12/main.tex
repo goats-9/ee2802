@@ -134,14 +134,26 @@ columns=fullflexible
         \sin\theta_2 = \sin\theta_3
         \label{eq:sin-2-3}
     \end{align}
-    From \eqref{eq:sin-1-4} and \eqref{eq:sin-2-3}, we can also write, since 
-    all the $\theta_i$'s are distinct,
+    From \eqref{eq:sin-1-4},
     \begin{align}
-        \cos\theta_1 = -\cos\theta_4 \label{eq:cos-1-4} \\
-        \cos\theta_2 = -\cos\theta_3 \label{eq:cos-2-3}
+        \cos^2\theta_1 &= 1 - \sin^2\theta_1 \\
+                       &= 1 - \sin^2\theta_4 \\
+                       &= \cos^2\theta_4
+    \end{align}
+    Thus $\cos\theta_1 = \pm\cos\theta_4$. But since $\theta_1 \neq \theta_4$,
+    we must have 
+    \begin{align}
+        \cos\theta_1 = -\cos\theta_4
+        \label{eq:cos-1-4}
+    \end{align}
+    Similarly, we have
+    \begin{align}
+        \cos\theta_2 = -\cos\theta_3
+        \label{eq:cos-2-3}
     \end{align}
     Since $P_1P_2P_3P_4$ form a parallelogram, $P_1P_2\ \|\ P_3P_4$. Equating
-    direction vectors and using equations \eqref{eq:sin-1-4} to \eqref{eq:cos-2-3},
+    direction vectors and using equations \eqref{eq:sin-1-4}, \eqref{eq:sin-2-3},
+    \eqref{eq:cos-1-4} and \eqref{eq:cos-2-3},
     \begin{align}
         \myvec{\cos\theta_1-\cos\theta_2\\\sin\theta_1-\sin\theta_2} &= 
         \myvec{\cos\theta_4-\cos\theta_3\\\sin\theta_4-\sin\theta_3} \\
