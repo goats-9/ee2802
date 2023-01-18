@@ -132,8 +132,8 @@ columns=fullflexible
     \end{align}
     and also that $\vec{F}$ lies on the $y$-axis. From \eqref{eq:V-def},
     \begin{align}
-        \vec{V} &= \vec{I} - \myvec{0&0\\0&1} = \myvec{1&0\\0&0} \\
-        \vec{u} &= c\myvec{0\\1} - \vec{F} \\
+        \vec{V} &= \vec{I} - \myvec{0&0\\0&1} = \myvec{1&0\\0&0} \label{eq:V-val} \\
+        \vec{u} &= c\myvec{0\\1} - \vec{F} \label{eq:u-val} \\
         f &= \norm{\vec{F}}^2 - c^2
     \end{align}
     Putting $\vec{x} = \vec{P}$ in \eqref{eq:conic-def} gives $f = 0$, thus 
@@ -141,8 +141,8 @@ columns=fullflexible
         \norm{\vec{F}}^2 = c^2
         \label{eq:F-c}
     \end{align}
-    Putting $\vec{x} = \vec{Q}$ in \eqref{eq:conic-def} and noting that $f = 0$, 
-    we get
+    Putting $\vec{x} = \vec{Q}$ in \eqref{eq:conic-def}, using \eqref{eq:V-val}, 
+    \eqref{eq:u-val} and noting that $f = 0$, we get
     \begin{align}
         &\myvec{5&2}\myvec{1&0\\0&0}\myvec{5\\2} + 2\brak{c\myvec{0&1}-\vec{F}^\top}\myvec{5\\2} = 0 \\
         &\implies 25 + 4c - 2\vec{F}^\top\myvec{5\\2} = 0 \\
