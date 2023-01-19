@@ -127,76 +127,24 @@ columns=fullflexible
     \begin{align}
         f\brak{\vec{\lambda}} &\triangleq \norm{\vec{A}-\vec{B}}^2 \\
                               &= \norm{\vec{M}\vec{\lambda}-\vec{x}}^2 \\
-                              &= \brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}}
+                              &= \brak{\vec{M\lambda}-\vec{x}}^\top\brak{\vec{M\lambda}-\vec{x}} \\
+                              &= \vec{\lambda}^\top\brak{\vec{M}^\top\vec{M}}\vec{\lambda} - 2\vec{x}^\top\vec{M\lambda} + \norm{\vec{x}}^2
         \label{eq:f-def}
     \end{align}
-    We prove a useful lemma here.
-    \begin{lemma}
-        For any two vectors $\vec{a}$ and $\vec{b}$, we have
-        \begin{align}
-            \vec{a}^\top\vec{b} \le \norm{\vec{a}}\norm{\vec{b}}
-            \label{eq:dot-mag}
-        \end{align}
-        \label{lem:dot-mag}
-    \end{lemma}
-    \begin{proof}
-        Note that
-        \begin{align}
-            \norm{\vec{a}-\frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2}\vec{b}} &\ge 0 \\
-            \norm{\vec{a}}^2 - 2\frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} + \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} &\ge 0
-            \norm{\vec{a}}^2 &\ge \frac{\brak{\vec{a}^\top\vec{b}}^2}{\norm{\vec{b}}^2} \\
-            \norm{\vec{a}\vec{b}} &\ge \vec{a}^\top\vec{b}
-            \label{eq:proof-dot-mag}
-        \end{align}
-        as required.
-    \end{proof}
-    We show that $f$ is convex by computing the Hessian matrix of $f$. For
-    a real-valued function $f(\vec{x})$ where $\vec{x} = \myvec{x_1\\x_2}$,
+    From \eqref{eq:f-def}, we see that $f$ is quadratic in $\vec{\lambda}$. 
+    Thus, we show that $f$ is convex by showing that $\vec{M}^\top\vec{M}$ is
+    positive semi-definite. Indeed, for any $\vec{p} \triangleq \myvec{x\\y}$,
     \begin{align}
-        \vec{H}_f \triangleq \myvec{\frac{\partial^2f}{\partial x_1^2}&\frac{\partial^2f}{\partial x_1x_2}\\\frac{\partial^2f}{\partial x_2x_1}&\frac{\partial^2f}{\partial x_2^2}}
-        \label{eq:H-def}
+        \vec{p}^\top\vec{M}^\top\vec{Mp} = \norm{\vec{Mp}}^2 \ge 0
+        \label{eq:psd}
     \end{align}
-    Here, taking $\vec{x} = \vec{\lambda} = \myvec{\lambda_1\\-\lambda_2}$ and
-    $f$ as defined in \eqref{eq:f-def}, we compute the partial derivatives and
-    double derivatives of $f$.
-    \begin{align}
-        \frac{\partial f}{\partial\lambda_1} &= 2\vec{m_1}^\top\brak{\vec{M\lambda}-\vec{x}} \label{eq:dx} \\
-        \frac{\partial f}{\partial\brak{-\lambda_2}} &= 2\vec{m_2}^\top\brak{\vec{M\lambda}-\vec{x}} \label{eq:dy}
-    \end{align}
-    Hence,
-    \begin{align}
-        \frac{\partial^2f}{\partial\lambda_1^2} &= 2\norm{\vec{m_1}}^2 \label{eq:d2x} \\
-        \frac{\partial^2f}{\partial\lambda_1\brak{-\lambda_2}} &= 2\vec{m_1}^\top\vec{m_2} \label{eq:dxdy} \\ 
-        \frac{\partial^2f}{\partial\brak{-\lambda_2}\lambda_1} &= 2\vec{m_2}^\top\vec{m_1} = 2\vec{m_1}^\top\vec{m_2} \label{eq:dydx} \\
-        \frac{\partial^2f}{\partial\brak{-\lambda_2}^2} &= 2\norm{\vec{m_2}}^2 \label{eq:d2y}
-    \end{align}
-    Therefore, the Hessian matrix of $f$ is
-    \begin{align}
-        \vec{H}_f = 2\myvec{\norm{\vec{m_1}}^2&\vec{m_1}^\top\vec{m_2}\\\vec{m_1}^\top\vec{m_2}&\norm{\vec{m_2}}^2}
-        \label{eq:H-f}
-    \end{align}
-    The characteristic polynomial of $\vec{H}_f$ is
-    \begin{align}
-        \textrm{char}_x\brak{\vec{H}_f} &= x^2 - 2\brak{\norm{\vec{m_1}}^2+\norm{\vec{m_2}}^2}x \nonumber \\
-                                        &+ 4\brak{\norm{\vec{m_1}}^2\norm{\vec{m_2}}^2 - \brak{\vec{m_1}^\top\vec{m_2}}}
-                                        \label{eq:char-H-f}
-    \end{align}
-    Notice that the minima of the characteristic polynomial is at 
-    $x_m = \brak{\norm{\vec{m_1}}^2+\norm{\vec{m_2}}^2}$. Also, using Lemma
-    \ref{lem:dot-mag},
-    \begin{align}
-        \textrm{char}_x\brak{\vec{H}_f}\brak{0} &= 4\brak{\norm{\vec{m_1}}^2\norm{\vec{m_2}}^2 - \brak{\vec{m_1}^\top\vec{m_2}}} \\
-        &\ge 0
-    \end{align}
-    Thus, the zeros of $\textrm{char}_x\brak{\vec{H}_f}$, or the eigenvalues 
-    of $\vec{H}_f$ are nonnegative. This implies that $\vec{H}_f$ is
-    positive definite, and so $f$ is convex.
+    and thus, $f$ is convex.
 
     We need to minimize $f$ as a function of $\vec{\lambda}$. Thus, 
     differentiating \eqref{eq:f-def} using the chain rule,
     \begin{align}
-        \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}+\vec{M}\brak{\vec{M\lambda}-\vec{x}}^\top}{2\norm{\vec{M\lambda}-\vec{x}}} \\
-                                                      &= \frac{\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}}{\norm{\vec{M\lambda}-\vec{x}}}
+        \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}+\vec{M}\brak{\vec{M\lambda}-\vec{x}}^\top \\
+                                                      &= 2\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}
         \label{eq:vec-min}
     \end{align}
     Setting \eqref{eq:vec-min} to zero gives
