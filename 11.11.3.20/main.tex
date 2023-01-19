@@ -145,13 +145,13 @@ columns=fullflexible
     \begin{align}
         \vec{c}^\top\vec{Vp} + \vec{u}^\top\vec{p} &= 0 \\
         \implies \brak{\vec{Vc} + \vec{u}}^\top\vec{p} &= 0 \\
-        \implies \vec{Vc} + \vec{u} = \vec{O} \label{eq:p-arb} \\
+        \implies \vec{Vc} + \vec{u} = \vec{0} \label{eq:p-arb} \\
         \implies \vec{c} = -\vec{V}^{-1}\vec{u}
         \label{eq:center}
     \end{align}
     where \eqref{eq:p-arb} follows since $\vec{p}$ can be arbitrary. Since
-    $\vec{V} \neq \vec{O}$, it follows from \eqref{eq:center} that $\vec{u}
-    = \vec{O}$. Thus, from \eqref{eq:u-val},
+    $\vec{V} \neq \vec{0}$, it follows from \eqref{eq:center} that $\vec{u}
+    = \vec{0}$. Thus, from \eqref{eq:u-val},
     \begin{align}
         \vec{F} = \myvec{ce^2\\0}
         \label{eq:F-c-e}
@@ -172,8 +172,13 @@ columns=fullflexible
         \myvec{6&2}\myvec{1-e^2&0\\0&1}\myvec{6\\2} + f &= 0 \\
         \implies 36e^2 - f = 40 \label{eq:e2}
     \end{align}
-    The equations \eqref{eq:e1} and \eqref{eq:e2} can be solved using the 
-    augmented matrix as follows:
+    The equations \eqref{eq:e1} and \eqref{eq:e2} can be formulated as
+    a matrix equation
+    \begin{align}
+        \myvec{16&-1\\36&-1}\myvec{e^2\\f} = \myvec{25\\40}
+        \label{eq:mtx-eqn}
+    \end{align}
+    and can be solved using the augmented matrix.
     \begin{align}
         \myvec{16&-1&25\\36&-1&40} &\xleftrightarrow[]{R_1\leftarrow R_1-R_2} \myvec{-20&0&-15\\36&-1&40} \\
                  &\xleftrightarrow[]{\substack{R_1\leftarrow\frac{R_1}{-5}\\R_2\leftarrow -R_2}} \myvec{4&0&3\\-36&1&-40} \\
