@@ -131,9 +131,38 @@ columns=fullflexible
                               &= \vec{\lambda}^\top\brak{\vec{M}^\top\vec{M}}\vec{\lambda} - 2\vec{x}^\top\vec{M\lambda} + \norm{\vec{x}}^2
         \label{eq:f-def}
     \end{align}
-    From \eqref{eq:f-def}, we see that $f$ is quadratic in $\vec{\lambda}$. 
-    Thus, we show that $f$ is convex by showing that $\vec{M}^\top\vec{M}$ is
-    positive semi-definite. Indeed, for any $\vec{p} \triangleq \myvec{x\\y}$,
+    From \eqref{eq:f-def}, we see that $f$ is quadratic in $\vec{\lambda}$.
+
+    We now prove a useful lemma here.
+    \begin{lemma}
+        The quadratic form
+        \begin{align}
+            q\brak{\vec{x}} \triangleq \vec{x}^\top\vec{Ax} + \vec{b}^\top\vec{x} + c
+            \label{eq:quad-x}
+        \end{align}
+        is convex iff $\vec{A}$ is positive semi-definite.
+    \end{lemma}
+    \begin{proof}
+        Consider two points $\vec{x_1}$ and $\vec{x_2}$, and a real constant
+        $0 \le \mu \le 1$. Then,
+        \begin{align}
+            &\mu f\brak{\vec{x_1}} + \brak{1-\mu}f\brak{\vec{x_2}} - f\brak{\mu\vec{x_1}+\brak{1-\mu}\vec{x_2}} \nonumber \\
+            &= \brak{\mu-\mu^2}\vec{x_1}^\top\vec{Ax_1} + \brak{1-\mu-\brak{1-\mu}^2}\vec{x_2}^\top\vec{Ax_2} \nonumber \\
+            &- 2\mu\brak{1-\mu}\vec{x_1}^\top\vec{Ax_2} \\
+            &= \mu\brak{1-\mu}\brak{\vec{x_1}^\top\vec{Ax_1}-2\vec{x_1}^\top\vec{Ax_2}+\vec{x_2}^\top\vec{Ax_2}} \\
+            &= \mu\brak{1-\mu}\brak{\vec{x_1}-\vec{x_2}}^\top\vec{A}\brak{\vec{x_1}-\vec{x_2}}
+            \label{eq:psd-iff}
+        \end{align}
+        Since $\vec{x_1}$ and $\vec{x_2}$ are arbitrary, it follows from 
+        \eqref{eq:psd-iff} that
+        \begin{align}
+            \mu f\brak{\vec{x_1}} + \brak{1-\mu}f\brak{\vec{x_2}} \ge f\brak{\mu\vec{x_1}+\brak{1-\mu}\vec{x_2}}
+        \end{align}
+        iff $\vec{A}$ is positive semi-definite, as required.
+    \end{proof}
+    Using the above lemma, we show that $f$ is convex by showing that 
+    $\vec{M}^\top\vec{M}$ is positive semi-definite. Indeed, for any 
+    $\vec{p} \triangleq \myvec{x\\y}$,
     \begin{align}
         \vec{p}^\top\vec{M}^\top\vec{Mp} = \norm{\vec{Mp}}^2 \ge 0
         \label{eq:psd}
