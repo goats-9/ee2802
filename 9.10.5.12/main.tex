@@ -109,68 +109,30 @@ columns=fullflexible
     \solution Consider the points $\vec{P_i},\ 1 \le i \le 4$ on the 
     unit circle. Thus, for $1 \le i \le 4$,
     \begin{align}
-        \vec{P_i} \triangleq \myvec{\cos\theta_i\\\sin\theta_i}
-        \label{eq:vec-form}
+        \norm{\vec{P_i}}^2 = 1
+        \label{eq:circ-point}
     \end{align}
-    where all the $\theta_i$'s are distinct. Choose the axes in such a way that 
-    $P_1P_4$ and $P_2P_3$ are parallel to the $x$-axis. Suppose $P_1P_4$ lies 
-    on the line
+    Since $P_1P_2P_3P_4$ is a parallelogram, its diagonals bisect each other.
+    Thus,
     \begin{align}
-        \vec{n}^\top\vec{x} = c
-        \label{eq:x-line}
+        \frac{\vec{P_1}+\vec{P_3}}{2} &= \frac{\vec{P_2}+\vec{P_4}}{2} \\
+        \implies \vec{P_1}+\vec{P_3} &= \vec{P_2}+\vec{P_4} \\
+        \implies \norm{\vec{P_1}+\vec{P_3}}^2 &= \norm{\vec{P_2}+\vec{P_4}}^2
+        \label{eq:norm-diag}
     \end{align}
-    where
+    Using \eqref{eq:circ-point}, \eqref{eq:norm-diag} becomes
     \begin{align}
-        \vec{n} = \myvec{0\\1}
+        \vec{P_1}^\top\vec{P_3} = \vec{P_2}^\top\vec{P_4}
+        \label{eq:inner-diag}
     \end{align}
-    Since $\vec{P_1}$ and $\vec{P_4}$ also lie on the unit circle, substituting
-    $\vec{P_1}$ and $\vec{P_4}$ into \eqref{eq:x-line} gives
+    Hence, using \eqref{eq:circ-point} and \eqref{eq:inner-diag}
     \begin{align}
-        c = \sin\theta_1 = \sin\theta_4
-        \label{eq:sin-1-4}
+        \norm{\vec{P_1}-\vec{P_3}}^2 &= \norm{\vec{P_1}}^2 - 2\vec{P_1}^\top\vec{P_3} + \norm{\vec{P_3}}^2 \\
+        &= \norm{\vec{P_2}}^2 - 2\vec{P_2}^\top\vec{P_4} + \norm{\vec{P_4}}^2 \\
+        &= \norm{\vec{P_2}-\vec{P_4}}^2 \label{eq:diag-equal}
     \end{align}
-    Similarly for $\vec{P_2}$ and $\vec{P_3}$,
-    \begin{align}
-        \sin\theta_2 = \sin\theta_3
-        \label{eq:sin-2-3}
-    \end{align}
-    From \eqref{eq:sin-1-4},
-    \begin{align}
-        \cos^2\theta_1 &= 1 - \sin^2\theta_1 \\
-                       &= 1 - \sin^2\theta_4 \\
-                       &= \cos^2\theta_4
-    \end{align}
-    Thus $\cos\theta_1 = \pm\cos\theta_4$. But since $\theta_1 \neq \theta_4$,
-    we must have 
-    \begin{align}
-        \cos\theta_1 = -\cos\theta_4
-        \label{eq:cos-1-4}
-    \end{align}
-    Similarly, we have
-    \begin{align}
-        \cos\theta_2 = -\cos\theta_3
-        \label{eq:cos-2-3}
-    \end{align}
-    Since $P_1P_2P_3P_4$ form a parallelogram, $P_1P_2\ \|\ P_3P_4$. Equating
-    direction vectors and using equations \eqref{eq:sin-1-4}, \eqref{eq:sin-2-3},
-    \eqref{eq:cos-1-4} and \eqref{eq:cos-2-3},
-    \begin{align}
-        \myvec{\cos\theta_1-\cos\theta_2\\\sin\theta_1-\sin\theta_2} &= 
-        \myvec{\cos\theta_4-\cos\theta_3\\\sin\theta_4-\sin\theta_3} \\
-        \implies \cos\theta_1-\cos\theta_2 &= \cos\theta_4-\cos\theta_3 \\
-        \implies 2\cos\theta_1&=2\cos\theta_2 \\
-        \implies \cos\theta_1&=\cos\theta_2
-        \label{eq:perp}
-    \end{align}
-    Using \eqref{eq:perp}, the direction vector of $P_1P_2$ is
-    \begin{align}
-        \vec{P_1} - \vec{P_2} &= \myvec{\cos\theta_1-\cos\theta_2\\\sin\theta_1-\sin\theta_2} \\
-                              &= \myvec{0\\\sin\theta_1-\sin\theta_2}
-                              \label{eq:y-line}
-    \end{align}
-    Equation \eqref{eq:y-line} clearly shows that $P_1P_2$ is parallel to the 
-    y-axis. Thus, $P_1P_2 \perp P_1P_4$ and therefore, $P_1P_2P_3P_4$ is
-    a rectangle, as required.
+    From \eqref{eq:diag-equal}, we see that $P_1P_3 = P_2P_4$, or the diagonals
+    of the parallelogram are equal. Thus, $P_1P_2P_3P_4$ is in fact a rectangle.
 
     The situation is demonstrated in Fig. \ref{fig:circle}, plotted by the Python
     code \texttt{codes/circle.py}.

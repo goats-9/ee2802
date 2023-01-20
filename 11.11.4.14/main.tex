@@ -99,15 +99,16 @@ columns=fullflexible
 \bigskip
 
 \begin{abstract}
-    This document contains the solution to Question 20 of Exercise 3 in Chapter
+    This document contains the solution to Question 14 of Exercise 4 in Chapter
     11 of the class 11 NCERT textbook.
 \end{abstract}
 
 \begin{enumerate}
-    \item Find the equation of the ellipse whose major axis is the $x$-axis and
-    passes through the points
+    \item Find the equation of the hyperbola eccentricity is $e = \frac{4}{3}$
+    and whose vertices are
     \begin{align}
-        \vec{P} = \myvec{4\\3},\ \vec{Q} = \myvec{6\\2}
+        \vec{P_1} = \myvec{7\\0},\ \vec{P_2} = \myvec{-7\\0}
+        \label{eq:vert}
     \end{align}
 
     \solution Let the equation of the conic with focus $\vec{F}$, directrix
@@ -122,7 +123,9 @@ columns=fullflexible
         \vec{u} &\triangleq ce^2\vec{n} - \norm{\vec{n}}^2\vec{F} \label{eq:u-def} \\
         f &\triangleq \norm{\vec{n}}^2\norm{\vec{F}}^2 - c^2e^2 \label{eq:f-def}
     \end{align}
-    Since the conic is an ellipse whose major axis is along the $x$-axis, we have
+    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert},
+    the major axis is the $x$-axis and the directrix is parallel to the $y$-axis.
+    Hence,
     \begin{align}
         \vec{n} = \myvec{1\\0}
     \end{align}
@@ -148,44 +151,26 @@ columns=fullflexible
         f = c^2e^2\brak{e^2-1}
         \label{eq:f-c-e}
     \end{align}
-    Putting $\vec{x} = \vec{P}$ in \eqref{eq:conic-def} and using \eqref{eq:F-c-e}
-    and \eqref{eq:f-c-e},
+    Putting $\vec{x} = \vec{P_1}$ or $\vec{x} = \vec{P_2}$ in \eqref{eq:conic-def} 
+    and using \eqref{eq:F-c-e} and \eqref{eq:f-c-e},
     \begin{align}
-        \myvec{4&3}\myvec{1-e^2&0\\0&1}\myvec{4\\3} + f &= 0 \\
-        \implies 16e^2 - f = 25 \label{eq:e1}
+        \myvec{\pm7&0}\myvec{1-e^2&0\\0&1}\myvec{0\\\pm7} + f &= 0 \\
+        \implies 49e^2 - f = 49 \label{eq:e1}
     \end{align}
-    Putting $\vec{x} = \vec{Q}$ in \eqref{eq:conic-def}, we get
+    Since $e = \frac{4}{3}$, \eqref{eq:e1} implies
     \begin{align}
-        \myvec{6&2}\myvec{1-e^2&0\\0&1}\myvec{6\\2} + f &= 0 \\
-        \implies 36e^2 - f = 40 \label{eq:e2}
+        f = 49\brak{e^2-1} = \frac{343}{9}
     \end{align}
-    The equations \eqref{eq:e1} and \eqref{eq:e2} can be formulated as
-    a matrix equation
+    Therefore, the equation of the conic is
     \begin{align}
-        \myvec{16&-1\\36&-1}\myvec{e^2\\f} = \myvec{25\\40}
-        \label{eq:mtx-eqn}
+        \vec{x}^\top\myvec{-\frac{7}{9}&0\\0&1}\vec{x} + \frac{343}{9} = 0
     \end{align}
-    and can be solved using the augmented matrix.
-    \begin{align}
-        \myvec{16&-1&25\\36&-1&40} &\xleftrightarrow[]{R_1\leftarrow R_1-R_2} \myvec{-20&0&-15\\36&-1&40} \\
-                 &\xleftrightarrow[]{\substack{R_1\leftarrow\frac{R_1}{-5}\\R_2\leftarrow -R_2}} \myvec{4&0&3\\-36&1&-40} \\
-                 &\xleftrightarrow[]{R_2\leftarrow R_2+9R_1}\myvec{4&0&3\\0&1&-13} \\
-                 &\xleftrightarrow[]{R_1\leftarrow\frac{R_1}{4}}\myvec{1&0&\frac{3}{4}\\0&1&-13}
-    \end{align}
-    Thus,
-    \begin{align}
-        e^2 = \frac{3}{4},\ f = -13
-    \end{align}
-    And the equation of the conic is given by
-    \begin{align}
-        \vec{x}^\top\myvec{\frac{1}{4}&0\\0&1}\vec{x} - 13 = 0
-    \end{align}
-    The situation is illustrated in Fig. \ref{fig:ellipse}
+    The situation is illustrated in Fig. \ref{fig:hyperbola}.
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/ellipse.png}
-        \caption{Locus of the required ellipse.}
-        \label{fig:ellipse}
+        \includegraphics[width=\columnwidth]{figs/hyperbola.png}
+        \caption{Locus of the required hyperbola.}
+        \label{fig:hyperbola}
     \end{figure}
 \end{enumerate}
 \end{document}
