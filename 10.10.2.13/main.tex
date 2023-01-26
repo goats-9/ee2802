@@ -77,7 +77,7 @@ columns=fullflexible
 \newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
-\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\norm}[1]{\left\Vert#1\right\Vert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
 \providecommand{\mean}[1]{E\left[ #1 \right]}
 \providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
@@ -93,90 +93,109 @@ columns=fullflexible
      \def\midbox#1{\raisebox{-0.5\baselineskip}[0in][0in]{#1}}
 
 \vspace{3cm}
-\title{Conic Assignment}
+\title{Circle Assignment}
 \author{Gautam Singh}
 \maketitle
 \bigskip
 
 \begin{abstract}
-    This document contains the solution to Question 14 of Exercise 4 in Chapter
-    11 of the class 11 NCERT textbook.
+    This document contains the solution to Question 13 of 
+    Exercise 2 in Chapter 10 of the class 10 NCERT textbook.
 \end{abstract}
 
 \begin{enumerate}
-    \item Find the equation of the hyperbola eccentricity is $e = \frac{4}{3}$
-    and whose vertices are
-    \begin{align}
-        \vec{P_1} = \myvec{7\\0},\ \vec{P_2} = \myvec{-7\\0}
-        \label{eq:vert}
-    \end{align}
+    \item Prove that opposite sides of a quadrilateral circumscribing a circle 
+    subtend supplementary angles at the centre of the circle.
 
-    \solution Let the equation of the conic with focus $\vec{F}$, directrix
-    $\vec{n}^\top\vec{x} = c$ and eccentricity $e$ be
+    \solution We begin by proving a useful lemma.
+    \begin{lemma}
+        The line joining the centre of the circle to an external point bisects
+        the angle subtended by the tangent chord at the centre.
+    \end{lemma}
+    \begin{proof}
+        Refer to Fig. \ref{fig:tangent}, generated using the Python code 
+        \texttt{codes/tangent.py}. Set $\vec{O}$ to be the origin. Since 
+        $OA \perp AP$,
+        \begin{align}
+            \vec{A}^\top\brak{\vec{A}-\vec{P}} &= 0 \\
+            \implies \vec{A}^\top\vec{P} &= \norm{\vec{A}}^2
+            \label{eq:a-p}
+        \end{align}
+        Similarly,
+        \begin{align}
+            \vec{B}^\top\vec{P} = \norm{\vec{B}}^2
+            \label{eq:b-p}
+        \end{align}
+        Since $\vec{A}$ and $\vec{B}$ lie on the circle, their norms are equal.
+        Thus, from \eqref{eq:a-p} and \eqref{eq:b-p},
+        \begin{align}
+            \vec{A}^\top\vec{P} = \vec{B}^\top\vec{P}
+        \end{align}
+        and the lemma follows.
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=\columnwidth]{figs/tangent.png}
+            \caption{$OP$ bisects $\angle AOB$.}
+            \label{fig:tangent}
+        \end{figure}
+    \end{proof}
+    Call the quadrilateral $ABCD$, where
     \begin{align}
-        \vec{x}^\top\vec{V}\vec{x} + 2\vec{u}^\top\vec{x} + f = 0
-        \label{eq:conic-def}
+        \vec{A} = \myvec{-2\\0},\ \vec{C} = \myvec{2\\0}
+        \label{eq:a-c-def}
     \end{align}
-    where
+    Suppose that $ABCD$ circumscribes the unit circle, given by
     \begin{align}
-        \vec{V} &\triangleq \norm{\vec{n}}^2\vec{I} - e^2\vec{n}\vec{n}^\top \label{eq:V-def} \\
-        \vec{u} &\triangleq ce^2\vec{n} - \norm{\vec{n}}^2\vec{F} \label{eq:u-def} \\
-        f &\triangleq \norm{\vec{n}}^2\norm{\vec{F}}^2 - c^2e^2 \label{eq:f-def}
+        \vec{x}^\top\vec{x} - 1 = 0
+        \label{eq:unit-circ}
     \end{align}
-    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert},
-    the major axis is the $x$-axis and the directrix is parallel to the $y$-axis.
-    Hence,
+    Comparing \eqref{eq:unit-circ} with the general equation of the circle,
     \begin{align}
-        \vec{n} = \myvec{1\\0}
+        \vec{u} = \vec{0},\ f = -1
+        \label{eq:u-f-val}
     \end{align}
-    Thus,
+    To find the points of contact from $\vec{A}$, we have
     \begin{align}
-        \vec{V} = \myvec{1-e^2&0\\0&1} \label{eq:V-val} \\
-        \vec{u} = ce^2\myvec{1\\0} - \vec{F} \label{eq:u-val} \\
-        f = \norm{\vec{F}}^2 - c^2e^2 \label{eq:f-val}
+        \vec{\Sigma} &= \brak{\vec{A}+\vec{u}}\brak{\vec{A}+\vec{u}}^\top - \brak{\vec{A}^\top\vec{A}+2\vec{u}^\top\vec{A} + f}\vec{I} \\
+                     &= \myvec{1&0\\0&-3}
+                     \label{eq:sigma}
     \end{align}
-    The centre of the conic is the midpoint of all chords that pass through
-    the centre. We know that the centre lies on the $x$-axis. Hence, $\vec{c}$
-    bisects $P_1P_2$, and so
+    The eigenvalues of $\vec{\Sigma}$ is
     \begin{align}
-        \vec{c} = \frac{\vec{P_1}+\vec{P_2}}{2} = \vec{0}
+        \lambda_1 = 1,\ \lambda_2 = -3
+        \label{eq:lambda}
     \end{align}
-    The general expression of the centre of the circle is given by
+    and
     \begin{align}
-        \vec{c} = -\vec{V}^{-1}\vec{u}
-        \label{eq:center}
+        \vec{n_1} = \myvec{1\\\sqrt{3}},\ \vec{n_2} = \myvec{1\\-\sqrt{3}}
+        \label{eq:n-sigma}
     \end{align}
-    Since $\vec{c} = \vec{0}$ and $\vec{V}^{-1} \neq \vec{0}$, it follows from 
-    \eqref{eq:center} that $\vec{u} = \vec{0}$. Thus, from \eqref{eq:u-val},
+    Thus, the points of contact are given by
     \begin{align}
-        \vec{F} = \myvec{ce^2\\0}
-        \label{eq:F-c-e}
+        \vec{E} = \frac{1}{2}\myvec{-1\\\sqrt{3}},\ \vec{H} = \frac{1}{2}\myvec{-1\\-\sqrt{3}} \\
+        \vec{F} = \frac{1}{2}\myvec{1\\\sqrt{3}},\ \vec{G} = \frac{1}{2}\myvec{1\\-\sqrt{3}}
+        \label{eq:poc}
     \end{align}
-    and so,
+    Using the lemma we proved above, the direction vectors of $\vec{B}$ and 
+    $\vec{D}$ are
     \begin{align}
-        f = c^2e^2\brak{e^2-1}
-        \label{eq:f-c-e}
+        \vec{d_B} &= \vec{E} + \vec{F} = \myvec{0\\\sqrt{3}} \label{eq:d-B} \\
+        \vec{d_D} &= \vec{G} + \vec{H} = \myvec{0\\-\sqrt{3}} \label{eq:d-D}
     \end{align}
-    Putting $\vec{x} = \vec{P_1}$ or $\vec{x} = \vec{P_2}$ in \eqref{eq:conic-def} 
-    and using \eqref{eq:F-c-e} and \eqref{eq:f-c-e},
+    Clearly, from \eqref{eq:a-c-def}, \eqref{eq:d-B} and \eqref{eq:d-D},
     \begin{align}
-        \myvec{\pm7&0}\myvec{1-e^2&0\\0&1}\myvec{0\\\pm7} + f &= 0 \\
-        \implies 49e^2 - f = 49 \label{eq:e1}
+        \vec{A}^\top\vec{B} = 0 &\implies \angle AOB = \frac{\pi}{2} \\
+        \vec{C}^\top\vec{D} = 0 &\implies \angle COD = \frac{\pi}{2}
     \end{align}
-    Since $e = \frac{4}{3}$, \eqref{eq:e1} implies
-    \begin{align}
-        f = 49\brak{e^2-1} = \frac{343}{9}
-    \end{align}
-    Therefore, the equation of the conic is
-    \begin{align}
-        \vec{x}^\top\myvec{-\frac{7}{9}&0\\0&1}\vec{x} + \frac{343}{9} = 0
-    \end{align}
-    The situation is illustrated in Fig. \ref{fig:hyperbola}.
+    Hence, $\angle AOB + \angle COD = \pi$, as required.
+
+    The situation is illustrated in Fig. \ref{fig:quad-circ} plotted 
+    by the Python code \texttt{codes/quad\_circ.py}.
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/hyperbola.png}
-        \caption{Locus of the required hyperbola.}
-        \label{fig:hyperbola}
+        \includegraphics[width=\columnwidth]{figs/quad_circ.png}
+        \caption{Angles subtended by the opposite sides of a circumscribing quadrilateral at the center of its incircle are supplementary.}
+        \label{fig:quad-circ}
     \end{figure}
 \end{enumerate}
 \end{document}

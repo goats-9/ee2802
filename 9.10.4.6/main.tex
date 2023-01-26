@@ -77,7 +77,7 @@ columns=fullflexible
 \newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
-\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\norm}[1]{\left\Vert#1\right\Vert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
 \providecommand{\mean}[1]{E\left[ #1 \right]}
 \providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
@@ -93,90 +93,65 @@ columns=fullflexible
      \def\midbox#1{\raisebox{-0.5\baselineskip}[0in][0in]{#1}}
 
 \vspace{3cm}
-\title{Conic Assignment}
+\title{Circle Assignment}
 \author{Gautam Singh}
 \maketitle
 \bigskip
 
 \begin{abstract}
-    This document contains the solution to Question 14 of Exercise 4 in Chapter
-    11 of the class 11 NCERT textbook.
+    This document contains the solution to Question 6 of 
+    Exercise 4 in Chapter 10 of the class 9 NCERT textbook.
 \end{abstract}
 
 \begin{enumerate}
-    \item Find the equation of the hyperbola eccentricity is $e = \frac{4}{3}$
-    and whose vertices are
-    \begin{align}
-        \vec{P_1} = \myvec{7\\0},\ \vec{P_2} = \myvec{-7\\0}
-        \label{eq:vert}
-    \end{align}
+    \item A circular park of radius 20 m is situated in a colony. Three boys 
+    Ankur, Syed and David are sitting at equal distance on its boundary each 
+    having a toy telephone in his hands to talk each other. Find the length of 
+    the string of each phone.
 
-    \solution Let the equation of the conic with focus $\vec{F}$, directrix
-    $\vec{n}^\top\vec{x} = c$ and eccentricity $e$ be
+    \solution Let the position vectors of the boys be
     \begin{align}
-        \vec{x}^\top\vec{V}\vec{x} + 2\vec{u}^\top\vec{x} + f = 0
-        \label{eq:conic-def}
+        \vec{A} = \myvec{r\\0},\ \vec{S} = \myvec{r\cos\beta\\r\sin\beta},\ \vec{D} = \myvec{r\cos\gamma\\r\sin\gamma}
+        \label{eq:pos-vec-def}
     \end{align}
-    where
+    We have,
     \begin{align}
-        \vec{V} &\triangleq \norm{\vec{n}}^2\vec{I} - e^2\vec{n}\vec{n}^\top \label{eq:V-def} \\
-        \vec{u} &\triangleq ce^2\vec{n} - \norm{\vec{n}}^2\vec{F} \label{eq:u-def} \\
-        f &\triangleq \norm{\vec{n}}^2\norm{\vec{F}}^2 - c^2e^2 \label{eq:f-def}
+        \norm{\vec{A}-\vec{S}}^2 &= \norm{\vec{A}-\vec{D}}^2 \\
+        \implies \vec{A}^\top\vec{S} &= \vec{A}^\top\vec{D} \\
+        \implies \cos\beta &= \cos\gamma \label{eq:cos} \\
+        \implies \sin\beta &= -\sin\gamma \label{eq:sin}
     \end{align}
-    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert},
-    the major axis is the $x$-axis and the directrix is parallel to the $y$-axis.
-    Hence,
+    Since $\beta \neq \gamma$. We can also write using \eqref{eq:cos} and
+    \eqref{eq:sin},
     \begin{align}
-        \vec{n} = \myvec{1\\0}
+        &\norm{\vec{A}-\vec{S}}^2 = \norm{\vec{S}-\vec{D}}^2 \\
+        &\implies \vec{A}^\top\vec{S} = \vec{D}^\top\vec{S} \\
+        &\implies \cos\beta = \cos\brak{\beta-\gamma} \\
+        &\implies \cos\beta = \cos^2\beta - \sin^2\beta \\
+        &\implies 2\cos^2\beta - \cos\beta - 1 = 0 \\
+        &\implies \brak{2\cos\beta+1}\brak{\cos\beta-1} = 0
+        \label{eq:beta-gamma}
     \end{align}
-    Thus,
+    From \eqref{eq:beta-gamma}, if $\cos\beta = 1$, then
+    $\sin\beta = \sin\gamma = 0$, a contradiction. Therefore, since
+    $\beta, \gamma \le 2\pi$,
     \begin{align}
-        \vec{V} = \myvec{1-e^2&0\\0&1} \label{eq:V-val} \\
-        \vec{u} = ce^2\myvec{1\\0} - \vec{F} \label{eq:u-val} \\
-        f = \norm{\vec{F}}^2 - c^2e^2 \label{eq:f-val}
+        \cos\beta = \cos\gamma = -\frac{1}{2} \\
+        \implies \beta, \gamma \in \cbrak{\frac{2\pi}{3},\frac{4\pi}{3}}
     \end{align}
-    The centre of the conic is the midpoint of all chords that pass through
-    the centre. We know that the centre lies on the $x$-axis. Hence, $\vec{c}$
-    bisects $P_1P_2$, and so
+    Therefore, the length of the thread is
     \begin{align}
-        \vec{c} = \frac{\vec{P_1}+\vec{P_2}}{2} = \vec{0}
+        \norm{\vec{S}-\vec{D}} = 2r\sin\beta = r\sqrt{3}
     \end{align}
-    The general expression of the centre of the circle is given by
-    \begin{align}
-        \vec{c} = -\vec{V}^{-1}\vec{u}
-        \label{eq:center}
-    \end{align}
-    Since $\vec{c} = \vec{0}$ and $\vec{V}^{-1} \neq \vec{0}$, it follows from 
-    \eqref{eq:center} that $\vec{u} = \vec{0}$. Thus, from \eqref{eq:u-val},
-    \begin{align}
-        \vec{F} = \myvec{ce^2\\0}
-        \label{eq:F-c-e}
-    \end{align}
-    and so,
-    \begin{align}
-        f = c^2e^2\brak{e^2-1}
-        \label{eq:f-c-e}
-    \end{align}
-    Putting $\vec{x} = \vec{P_1}$ or $\vec{x} = \vec{P_2}$ in \eqref{eq:conic-def} 
-    and using \eqref{eq:F-c-e} and \eqref{eq:f-c-e},
-    \begin{align}
-        \myvec{\pm7&0}\myvec{1-e^2&0\\0&1}\myvec{0\\\pm7} + f &= 0 \\
-        \implies 49e^2 - f = 49 \label{eq:e1}
-    \end{align}
-    Since $e = \frac{4}{3}$, \eqref{eq:e1} implies
-    \begin{align}
-        f = 49\brak{e^2-1} = \frac{343}{9}
-    \end{align}
-    Therefore, the equation of the conic is
-    \begin{align}
-        \vec{x}^\top\myvec{-\frac{7}{9}&0\\0&1}\vec{x} + \frac{343}{9} = 0
-    \end{align}
-    The situation is illustrated in Fig. \ref{fig:hyperbola}.
+    Here, $r = 20$ m. Thus, the length is $20\sqrt{3}$ m.
+
+    The situation is demonstrated in Fig. \ref{fig:equilateral}, plotted by the Python
+    code \texttt{codes/equilateral.py}.
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/hyperbola.png}
-        \caption{Locus of the required hyperbola.}
-        \label{fig:hyperbola}
+        \includegraphics[width=\columnwidth]{figs/equilateral.png}
+        \caption{$ASD$ is an equilateral triangle of side $20\sqrt{3}$ m.}
+        \label{fig:equilateral}
     \end{figure}
 \end{enumerate}
 \end{document}

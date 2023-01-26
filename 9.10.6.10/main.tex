@@ -77,7 +77,7 @@ columns=fullflexible
 \newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
-\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\norm}[1]{\left\Vert#1\right\Vert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
 \providecommand{\mean}[1]{E\left[ #1 \right]}
 \providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
@@ -93,90 +93,82 @@ columns=fullflexible
      \def\midbox#1{\raisebox{-0.5\baselineskip}[0in][0in]{#1}}
 
 \vspace{3cm}
-\title{Conic Assignment}
+\title{Circle Assignment}
 \author{Gautam Singh}
 \maketitle
 \bigskip
 
 \begin{abstract}
-    This document contains the solution to Question 14 of Exercise 4 in Chapter
-    11 of the class 11 NCERT textbook.
+    This document contains the solution to Question 10 of 
+    Exercise 6 in Chapter 10 of the class 9 NCERT textbook.
 \end{abstract}
 
 \begin{enumerate}
-    \item Find the equation of the hyperbola eccentricity is $e = \frac{4}{3}$
-    and whose vertices are
+    \item In any $\triangle ABC$, if the angle bisector of $\angle A$ and 
+    perpendicular bisector of $BC$ intersect, prove that they intersect on 
+    the circumcircle of $\triangle ABC$.
+
+    \solution Let the position vectors of the points be
     \begin{align}
-        \vec{P_1} = \myvec{7\\0},\ \vec{P_2} = \myvec{-7\\0}
-        \label{eq:vert}
+        \vec{A} = \myvec{1\\0},\ \vec{B} = \myvec{\cos\beta\\\sin\beta},\ \vec{C} = \myvec{\cos\gamma\\\sin\gamma}
+        \label{eq:pts}
     \end{align}
 
-    \solution Let the equation of the conic with focus $\vec{F}$, directrix
-    $\vec{n}^\top\vec{x} = c$ and eccentricity $e$ be
+    Then, the equation of the perpendicular bisector of $BC$ is given by
     \begin{align}
-        \vec{x}^\top\vec{V}\vec{x} + 2\vec{u}^\top\vec{x} + f = 0
-        \label{eq:conic-def}
+        \norm{\vec{x}-\vec{B}}^2&=\norm{\vec{x}-\vec{C}}^2 \\
+        \implies \brak{\vec{B}-\vec{C}}^\top\vec{x} &= 0
+        \label{eq:perp-bisect}
     \end{align}
-    where
+    and the equation of the angle bisector of $\angle A$ is given by
     \begin{align}
-        \vec{V} &\triangleq \norm{\vec{n}}^2\vec{I} - e^2\vec{n}\vec{n}^\top \label{eq:V-def} \\
-        \vec{u} &\triangleq ce^2\vec{n} - \norm{\vec{n}}^2\vec{F} \label{eq:u-def} \\
-        f &\triangleq \norm{\vec{n}}^2\norm{\vec{F}}^2 - c^2e^2 \label{eq:f-def}
+        &\frac{\brak{\vec{B}-\vec{A}}^\top\brak{\vec{x}-\vec{A}}}{\norm{\vec{B}-\vec{A}}} = \frac{\brak{\vec{C}-\vec{A}}^\top\brak{\vec{x}-\vec{A}}}{\norm{\vec{C}-\vec{A}}} \\
+        &\brak{\frac{\vec{B}-\vec{A}}{\norm{\vec{B}-\vec{A}}}-\frac{\vec{C}-\vec{A}}{\norm{\vec{C}-\vec{A}}}}^\top\brak{\vec{x}-\vec{A}} = 0
+        \label{eq:angle-bisect}
     \end{align}
-    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert},
-    the major axis is the $x$-axis and the directrix is parallel to the $y$-axis.
-    Hence,
+    Note that from \eqref{eq:pts},
     \begin{align}
-        \vec{n} = \myvec{1\\0}
+        \frac{\vec{B}-\vec{A}}{\norm{\vec{B}-\vec{A}}} &= \frac{1}{\sqrt{2\brak{1-\cos\beta}}}\myvec{\cos\beta-1\\\sin\beta} \\
+                                                       &= \myvec{-\sin\frac{\beta}{2}\\\cos\frac{\beta}{2}}
+                                                       \label{eq:unit-vec}
     \end{align}
-    Thus,
+    Therefore, using \eqref{eq:pts} in \eqref{eq:perp-bisect} and
+    \eqref{eq:unit-vec} in \eqref{eq:angle-bisect},
     \begin{align}
-        \vec{V} = \myvec{1-e^2&0\\0&1} \label{eq:V-val} \\
-        \vec{u} = ce^2\myvec{1\\0} - \vec{F} \label{eq:u-val} \\
-        f = \norm{\vec{F}}^2 - c^2e^2 \label{eq:f-val}
+        \myvec{\cos\beta-\cos\gamma\\\sin\beta-\sin\gamma}^\top\vec{x} &= 0 \label{eq:e1} \\
+        \myvec{\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}\\\cos\frac{\beta}{2}-\cos\frac{\gamma}{2}}^\top\vec{x} &= \sin\frac{\gamma}{2}-\sin\frac{\beta}{2} \label{eq:e2}
     \end{align}
-    The centre of the conic is the midpoint of all chords that pass through
-    the centre. We know that the centre lies on the $x$-axis. Hence, $\vec{c}$
-    bisects $P_1P_2$, and so
+    Using \eqref{eq:e1} and \eqref{eq:e2}, we form the matrix equation
     \begin{align}
-        \vec{c} = \frac{\vec{P_1}+\vec{P_2}}{2} = \vec{0}
+        \myvec{\cos\beta-\cos\gamma&\sin\beta-\sin\gamma\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}&\cos\frac{\beta}{2}-\cos\frac{\gamma}{2}}\vec{x} = \myvec{0\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}}
+        \label{eq:mtx-eqn}
     \end{align}
-    The general expression of the centre of the circle is given by
+    Solving \eqref{eq:mtx-eqn} using the augmented matrix, and letting 
+    $\theta \triangleq \frac{\beta+\gamma}{2}$,
     \begin{align}
-        \vec{c} = -\vec{V}^{-1}\vec{u}
-        \label{eq:center}
+        &\myvec{\cos\beta-\cos\gamma&\sin\beta-\sin\gamma&0\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}&\cos\frac{\beta}{2}-\cos\frac{\gamma}{2}&\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}} \\
+        &\xleftrightarrow[]{\substack{R_1\leftarrow\frac{R_1}{\cos\beta-\cos\gamma}\\R_2\leftarrow\frac{R_2}{\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}}}}\myvec{1&-\cot\theta&0\\1&\tan\frac{\theta}{2}&1} \\
+        &\xleftrightarrow[]{R_2\leftarrow R_2-R_1}\myvec{1&-\cot\theta&0\\0&\tan\frac{\theta}{2}+\cot\theta&1} \\
+        &= \myvec{1&-\cot\theta&0\\0&\csc\theta&1} \\
+        &\xleftrightarrow[]{R_1\leftarrow R_1 + R_2\cos\theta}\myvec{1&0&\cos\theta\\0&\csc\theta&1} \\
+        &\xleftrightarrow[]{R_2\leftarrow R_2\sin\theta}\myvec{1&0&\cos\theta\\0&1&\sin\theta}
+        \label{eq:aug-mtx}
     \end{align}
-    Since $\vec{c} = \vec{0}$ and $\vec{V}^{-1} \neq \vec{0}$, it follows from 
-    \eqref{eq:center} that $\vec{u} = \vec{0}$. Thus, from \eqref{eq:u-val},
+    Thus, the intersection of the lines in \eqref{eq:e1} and \eqref{eq:e2} is
     \begin{align}
-        \vec{F} = \myvec{ce^2\\0}
-        \label{eq:F-c-e}
+        \vec{D} \triangleq \myvec{\cos\frac{\beta+\gamma}{2}\\\sin\frac{\beta+\gamma}{2}}
+        \label{eq:intersect-pt}
     \end{align}
-    and so,
-    \begin{align}
-        f = c^2e^2\brak{e^2-1}
-        \label{eq:f-c-e}
-    \end{align}
-    Putting $\vec{x} = \vec{P_1}$ or $\vec{x} = \vec{P_2}$ in \eqref{eq:conic-def} 
-    and using \eqref{eq:F-c-e} and \eqref{eq:f-c-e},
-    \begin{align}
-        \myvec{\pm7&0}\myvec{1-e^2&0\\0&1}\myvec{0\\\pm7} + f &= 0 \\
-        \implies 49e^2 - f = 49 \label{eq:e1}
-    \end{align}
-    Since $e = \frac{4}{3}$, \eqref{eq:e1} implies
-    \begin{align}
-        f = 49\brak{e^2-1} = \frac{343}{9}
-    \end{align}
-    Therefore, the equation of the conic is
-    \begin{align}
-        \vec{x}^\top\myvec{-\frac{7}{9}&0\\0&1}\vec{x} + \frac{343}{9} = 0
-    \end{align}
-    The situation is illustrated in Fig. \ref{fig:hyperbola}.
+    Hence, it is clear from \eqref{eq:intersect-pt} that $\vec{D}$ lies on the 
+    circumcircle of $\triangle ABC$, as required.
+
+    The situation is illustrated in Fig. \ref{fig:perp-angle-bisect} plotted 
+    by the Python code \texttt{codes/angle\_perp\_bisector.py}.
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/hyperbola.png}
-        \caption{Locus of the required hyperbola.}
-        \label{fig:hyperbola}
+        \includegraphics[width=\columnwidth]{figs/angle_perp_bisector.png}
+        \caption{The bisector of $\angle A$ and of $BC$ meet on the circumcircle at $D$.}
+        \label{fig:perp-angle-bisect}
     \end{figure}
 \end{enumerate}
 \end{document}

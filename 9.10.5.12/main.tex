@@ -106,26 +106,30 @@ columns=fullflexible
 \begin{enumerate}
     \item Prove that a cyclic paralellogram is a rectangle.
 
-    \solution Consider the points $\vec{P_i},\ 1 \le i \le 4$ on the 
-    unit circle. Thus, for $1 \le i \le 4$,
+    \solution Consider the points $\vec{P_i},\ 1 \le i \le 4$ in anticlockwise 
+    order on the unit circle. Thus, for $1 \le i \le 4$,
     \begin{align}
-        \norm{\vec{P_i}}^2 = 1
+        \vec{P_i} = \myvec{\cos\theta_i\\\sin\theta_i} 
         \label{eq:circ-point}
     \end{align}
-    Since $P_1P_2P_3P_4$ is a parallelogram, its diagonals bisect each other.
-    Thus,
+    where $\theta_i \in (0,2\pi]$. Since $P_1P_2P_3P_4$ is a parallelogram, 
+    its diagonals bisect each other. Thus, using \eqref{eq:circ-point}
     \begin{align}
         \frac{\vec{P_1}+\vec{P_3}}{2} &= \frac{\vec{P_2}+\vec{P_4}}{2} \\
         \implies \vec{P_1}+\vec{P_3} &= \vec{P_2}+\vec{P_4} \\
-        \implies \norm{\vec{P_1}+\vec{P_3}}^2 &= \norm{\vec{P_2}+\vec{P_4}}^2
+        \implies \myvec{\cos\theta_1+\cos\theta_3\\\sin\theta_1+\sin\theta_3} &= \myvec{\cos\theta_2+\cos\theta_4\\\sin\theta_2+\sin\theta_4}
         \label{eq:norm-diag}
     \end{align}
-    Using \eqref{eq:circ-point}, \eqref{eq:norm-diag} becomes
+    Using \eqref{eq:norm-diag}, we have
     \begin{align}
-        \vec{P_1}^\top\vec{P_3} = \vec{P_2}^\top\vec{P_4}
+        \brak{\cos\theta_1+\cos\theta_3}^2+\brak{\sin\theta_1+\sin\theta_3}^2 \nonumber \\
+        = \brak{\cos\theta_2+\cos\theta_4}^2+\brak{\sin\theta_2+\sin\theta_4}^2 \\
+        \implies \cos\brak{\theta_1-\theta_3}=\cos\brak{\theta_2-\theta_4} \\
+        \implies \brak{\theta_1-\theta_3} = \brak{\theta_2-\theta_4} + 2n\pi
         \label{eq:inner-diag}
     \end{align}
-    Hence, using \eqref{eq:circ-point} and \eqref{eq:inner-diag}
+    Since the points are taken in anticlockwise order, 
+    Hence, using \eqref{eq:circ-point} and \eqref{eq:inner-diag},
     \begin{align}
         \norm{\vec{P_1}-\vec{P_3}}^2 &= \norm{\vec{P_1}}^2 - 2\vec{P_1}^\top\vec{P_3} + \norm{\vec{P_3}}^2 \\
         &= \norm{\vec{P_2}}^2 - 2\vec{P_2}^\top\vec{P_4} + \norm{\vec{P_4}}^2 \\

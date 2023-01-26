@@ -99,84 +99,78 @@ columns=fullflexible
 \bigskip
 
 \begin{abstract}
-    This document contains the solution to Question 14 of Exercise 4 in Chapter
+    This document contains the solution to Question 6 of Exercise 5 in Chapter
     11 of the class 11 NCERT textbook.
 \end{abstract}
 
 \begin{enumerate}
-    \item Find the equation of the hyperbola eccentricity is $e = \frac{4}{3}$
-    and whose vertices are
+    \item Find the area of the triangle formed by the lines joining the vertex 
+    of the parabola 
     \begin{align}
-        \vec{P_1} = \myvec{7\\0},\ \vec{P_2} = \myvec{-7\\0}
-        \label{eq:vert}
+        x^2 = 12y
+        \label{eq:parabola}
     \end{align}
+    to the ends of its latus rectum.
 
-    \solution Let the equation of the conic with focus $\vec{F}$, directrix
-    $\vec{n}^\top\vec{x} = c$ and eccentricity $e$ be
+    \solution Rewriting \eqref{eq:parabola} in matrix form,
     \begin{align}
-        \vec{x}^\top\vec{V}\vec{x} + 2\vec{u}^\top\vec{x} + f = 0
-        \label{eq:conic-def}
+        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} + 2\myvec{0&-6}\vec{x} = 0
+        \label{eq:parabola-mtx}
     \end{align}
-    where
+    Since the parabola is clearly symmetric about the $y$-axis, we see that
+    the directrix is parallel to the $x$-axis, thus
     \begin{align}
-        \vec{V} &\triangleq \norm{\vec{n}}^2\vec{I} - e^2\vec{n}\vec{n}^\top \label{eq:V-def} \\
-        \vec{u} &\triangleq ce^2\vec{n} - \norm{\vec{n}}^2\vec{F} \label{eq:u-def} \\
-        f &\triangleq \norm{\vec{n}}^2\norm{\vec{F}}^2 - c^2e^2 \label{eq:f-def}
+        \vec{n} = \myvec{0\\1}
+        \label{eq:n}
     \end{align}
-    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert},
-    the major axis is the $x$-axis and the directrix is parallel to the $y$-axis.
-    Hence,
+    Using the standard definition of the conic and equating $\vec{u}$ and $f$,
     \begin{align}
-        \vec{n} = \myvec{1\\0}
+        \myvec{0\\-6} &= c\myvec{0\\1} - \vec{F} \label{eq:u-eqn} \\
+        0 &= \norm{\vec{F}}^2 - c^2 \label{eq:f-eqn}
+    \end{align}
+    From \eqref{eq:u-eqn}, we have
+    \begin{align}
+        \vec{F} = \myvec{0\\c+6}
+        \label{eq:F-c}
+    \end{align}
+    Using \eqref{eq:F-c} in \eqref{eq:f-eqn},
+    \begin{align}
+        \brak{c+6}^2&=c^2 \\
+        \implies c&=-3
+        \label{eq:c-sol}
     \end{align}
     Thus,
     \begin{align}
-        \vec{V} = \myvec{1-e^2&0\\0&1} \label{eq:V-val} \\
-        \vec{u} = ce^2\myvec{1\\0} - \vec{F} \label{eq:u-val} \\
-        f = \norm{\vec{F}}^2 - c^2e^2 \label{eq:f-val}
+        \vec{F} = \myvec{0\\3}
     \end{align}
-    The centre of the conic is the midpoint of all chords that pass through
-    the centre. We know that the centre lies on the $x$-axis. Hence, $\vec{c}$
-    bisects $P_1P_2$, and so
+    The latus rectum of the parabola is the chord passing through the focus 
+    parallel to the directrix. Its equation is given by
     \begin{align}
-        \vec{c} = \frac{\vec{P_1}+\vec{P_2}}{2} = \vec{0}
+        \myvec{0&1}\vec{x} = \myvec{0&1}\myvec{0\\3} = 3
+        \label{eq:latus-rectum}
     \end{align}
-    The general expression of the centre of the circle is given by
+    Adding \eqref{eq:parabola-mtx} to 12 times \eqref{eq:latus-rectum},
     \begin{align}
-        \vec{c} = -\vec{V}^{-1}\vec{u}
-        \label{eq:center}
+        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} &= 36
+        \label{eq:x-latus}
     \end{align}
-    Since $\vec{c} = \vec{0}$ and $\vec{V}^{-1} \neq \vec{0}$, it follows from 
-    \eqref{eq:center} that $\vec{u} = \vec{0}$. Thus, from \eqref{eq:u-val},
+    From \eqref{eq:x-latus} and \eqref{eq:latus-rectum}, the ends of the latus
+    rectum are given by
     \begin{align}
-        \vec{F} = \myvec{ce^2\\0}
-        \label{eq:F-c-e}
+        \vec{x} = \myvec{\pm 6\\3}
     \end{align}
-    and so,
+    Since the vertex of the parabola is at $\vec{P} = \myvec{0\\0}$,
+    we see that the area of the required triangle is
     \begin{align}
-        f = c^2e^2\brak{e^2-1}
-        \label{eq:f-c-e}
+        A = \frac{1}{2}\mydet{6&3\\-6&3} = 18\ \textrm{sq. units}
     \end{align}
-    Putting $\vec{x} = \vec{P_1}$ or $\vec{x} = \vec{P_2}$ in \eqref{eq:conic-def} 
-    and using \eqref{eq:F-c-e} and \eqref{eq:f-c-e},
-    \begin{align}
-        \myvec{\pm7&0}\myvec{1-e^2&0\\0&1}\myvec{0\\\pm7} + f &= 0 \\
-        \implies 49e^2 - f = 49 \label{eq:e1}
-    \end{align}
-    Since $e = \frac{4}{3}$, \eqref{eq:e1} implies
-    \begin{align}
-        f = 49\brak{e^2-1} = \frac{343}{9}
-    \end{align}
-    Therefore, the equation of the conic is
-    \begin{align}
-        \vec{x}^\top\myvec{-\frac{7}{9}&0\\0&1}\vec{x} + \frac{343}{9} = 0
-    \end{align}
-    The situation is illustrated in Fig. \ref{fig:hyperbola}.
+    The situation is illustrated in Fig. \ref{fig:parabola}, plotted using the
+    Python code \texttt{codes/parabola.py}.
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/hyperbola.png}
+        \includegraphics[width=\columnwidth]{figs/parabola.png}
         \caption{Locus of the required hyperbola.}
-        \label{fig:hyperbola}
+        \label{fig:parabola}
     \end{figure}
 \end{enumerate}
 \end{document}
