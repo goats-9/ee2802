@@ -123,8 +123,23 @@ columns=fullflexible
         \vec{u} &\triangleq ce^2\vec{n} - \norm{\vec{n}}^2\vec{F} \label{eq:u-def} \\
         f &\triangleq \norm{\vec{n}}^2\norm{\vec{F}}^2 - c^2e^2 \label{eq:f-def}
     \end{align}
-    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert},
-    the major axis is the $x$-axis and the directrix is parallel to the $y$-axis.
+    The major axis of a conic is the chord which passes through the vertices of the conic.
+    The direction vector of the major axis in this case is
+    \begin{align}
+        \vec{P_2}-\vec{P_1} = \myvec{14\\0}
+    \end{align}
+    Hence, the normal to the major axis $P_1P_2$ is
+    \begin{align}
+        \vec{n_M} = \vec{e_2} = \myvec{0\\1}
+    \end{align}
+    Thus, the equation of the major axis is
+    \begin{align}
+        \vec{e_2}^\top\vec{x} = \vec{e_2}^\top\myvec{7\\0} = 0
+    \end{align}
+    which is clearly the $x$-axis.
+
+    Since the conic is a hyperbola whose vertices are given by \eqref{eq:vert}
+    and the major axis is the $x$-axis, the directrix is parallel to the $y$-axis.
     Hence,
     \begin{align}
         \vec{n} = \myvec{1\\0}

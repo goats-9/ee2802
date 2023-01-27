@@ -116,7 +116,7 @@ columns=fullflexible
     \end{align}
     where
     \begin{align}
-        \beta, \gamma \in [0,2\pi),\ \beta, \gamma \neq 0
+        \beta, \gamma \in \brak{0,2\pi}
         \label{eq:int}
     \end{align}
     We have,
@@ -124,37 +124,26 @@ columns=fullflexible
         \norm{\vec{A}-\vec{S}}^2 &= \norm{\vec{A}-\vec{D}}^2 \\
         \implies \vec{A}^\top\vec{S} &= \vec{A}^\top\vec{D} \\
         \implies \cos\beta &= \cos\gamma \\
-        \implies \sin\frac{\beta+\gamma}{2}\sin\frac{\beta-\gamma}{2} &= 0
+        \implies \beta = 2n\pi \pm \gamma
+        \label{eq:bg-gen}
     \end{align}
-    Since $\beta \neq \gamma$ and from \eqref{eq:int}, 
-    $\frac{\beta-\gamma}{2} \in \brak{-\pi,\pi}$, we get that
+    where $n \in \mathbb{Z}$. From \eqref{eq:int}, we force $n = 1$
+    and consider the negative sign to get
     \begin{align}
-        \frac{\beta+\gamma}{2} &= n\pi \\
-        \implies \beta+\gamma &= 2n\pi
-        \label{eq:sum}
-    \end{align}
-    However, \eqref{eq:int} gives $\beta + \gamma \in \brak{0,4\pi}$, which forces
-    $n = 1$ in \eqref{eq:sum}, and thus
-    \begin{align}
-        \beta + \gamma = 2\pi
+        \beta+\gamma = 2\pi
         \label{eq:bg-sum}
     \end{align}
     Therefore, using \eqref{eq:bg-sum}
     \begin{align}
-        &\norm{\vec{A}-\vec{S}}^2 = \norm{\vec{S}-\vec{D}}^2 \\
-        &\implies \vec{A}^\top\vec{S} = \vec{D}^\top\vec{S} \\
-        &\implies \cos\beta = \cos\brak{\beta-\gamma} \\
-        &\implies \sin\frac{3\beta-2\pi}{2}\sin\frac{\gamma}{2} = 0
-        \label{eq:beta-gamma}
+        \norm{\vec{A}-\vec{S}}^2 &= \norm{\vec{S}-\vec{D}}^2 \\
+        \implies \vec{A}^\top\vec{S} &= \vec{D}^\top\vec{S} \\
+        \implies \cos\beta &= \cos\brak{\beta-\gamma} \\
+        \implies 2\beta-2\pi &= 2m\pi\pm\beta \\
+        \implies 2\beta\pm\beta &= 2k\pi
+        \label{eq:beta-eqn}
     \end{align}
-    From \eqref{eq:beta-gamma} and \eqref{eq:int},
-    \begin{align}
-        3\beta -2\pi &= 2m\pi \\
-        \implies 3\beta &= 2k\pi \\
-        \implies \beta &= \frac{2k\pi}{3}
-    \end{align}
-    where $k \in \mathbb{Z}$. From \eqref{eq:int}, $k \in \cbrak{1,2}$.
-    Thus,
+    where $k \in \mathbb{Z}$. From \eqref{eq:int}, we can only consider
+    the plus sign and $k \in \cbrak{1,2}$ to get
     \begin{align}
         \beta,\gamma \in \cbrak{\frac{2\pi}{3},\frac{4\pi}{3}}
         \label{eq:bg-sol}
@@ -167,7 +156,7 @@ columns=fullflexible
     Here, $r = 20$ m. Thus, the length is $20\sqrt{3}$ m.
 
     The situation is demonstrated in Fig. \ref{fig:equilateral}, plotted by the 
-    Python code \texttt{codes/equilateral.py}. Here, the values used for 
+    Python code \texttt{codes/equilateral.py}. The values used for 
     construction are shown in Table \eqref{tab:param}.
     \begin{table}[!ht]
         \centering
