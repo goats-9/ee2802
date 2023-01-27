@@ -28,7 +28,7 @@ def line_gen(A,B):
   return x_AB
 
 O = np.array([0.0,0.0])
-r = 1
+r = 20
 C = circ_gen(O,r)
 P1=polar_to_rect(r,0)
 P2=polar_to_rect(r,120)

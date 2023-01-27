@@ -135,19 +135,27 @@ columns=fullflexible
         \vec{u} = ce^2\myvec{1\\0} - \vec{F} \label{eq:u-val} \\
         f = \norm{\vec{F}}^2 - c^2e^2 \label{eq:f-val}
     \end{align}
-    The centre of the conic is the midpoint of all chords that pass through
-    the centre. We know that the centre lies on the $x$-axis. Hence, $\vec{c}$
-    bisects $P_1P_2$, and so
+    Substituting $\vec{P_1}$ and $\vec{P_2}$ in \eqref{eq:conic-def},
     \begin{align}
-        \vec{c} = \frac{\vec{P_1}+\vec{P_2}}{2} = \vec{0}
+        \vec{P_1}^\top\vec{VP_1} + 2\vec{u}^\top\vec{P_1} + f &= 0 \label{eq:ep1} \\
+        \vec{P_2}^\top\vec{VP_2} + 2\vec{u}^\top\vec{P_2} + f &= 0 \label{eq:ep2}
     \end{align}
+    Subtracting \eqref{eq:ep2} from \eqref{eq:ep1}, and noting that $\vec{P_2} = -\vec{P_1}$,
+    \begin{align}
+        \vec{u}^\top\vec{P_1} = 0
+        \label{eq:u-exp}
+    \end{align}
+    Hence, from \eqref{eq:vert}, we see that $\vec{u}$ lies on the $y$-axis.
     The general expression of the centre of the circle is given by
     \begin{align}
-        \vec{c} = -\vec{V}^{-1}\vec{u}
+        \vec{c} &= -\vec{V}^{-1}\vec{u} \\
+                &= \frac{1}{e^2-1}\myvec{1&0\\0&1-e^2}\vec{u} \\
+                &= -\vec{u}
         \label{eq:center}
     \end{align}
-    Since $\vec{c} = \vec{0}$ and $\vec{V}^{-1} \neq \vec{0}$, it follows from 
-    \eqref{eq:center} that $\vec{u} = \vec{0}$. Thus, from \eqref{eq:u-val},
+    and so, $\vec{c}$ lies on the $y$-axis. However, $\vec{c}$ also lies on the
+    $x$-axis since it is the major axis. Therefore, $\vec{c} = -\vec{u} = \vec{0}$.
+    Thus, from \eqref{eq:u-val},
     \begin{align}
         \vec{F} = \myvec{ce^2\\0}
         \label{eq:F-c-e}

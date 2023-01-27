@@ -46,7 +46,7 @@ columns=fullflexible
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{problem}{Problem}
 \newtheorem{proposition}{Proposition}[section]
-\newtheorem{lemma}{Lemma}[section]
+\newtheorem{lemma}{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{example}{Example}[section]
 \newtheorem{definition}{Definition}[section]
@@ -189,8 +189,25 @@ columns=fullflexible
     \end{align}
     Hence, $\angle AOB + \angle COD = \pi$, as required.
 
-    The situation is illustrated in Fig. \ref{fig:quad-circ} plotted 
-    by the Python code \texttt{codes/quad\_circ.py}.
+    The situation is illustrated in Fig. \ref{fig:quad-circ} plotted by the 
+    Python code \texttt{codes/quad\_circ.py}. The numerical parameters used 
+    in the construction are shown in Table \ref{tab:param}.
+    \begin{table}[!ht]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Parameter} & \textbf{Value} \\
+            \hline
+            $r$ & 1 \\
+            \hline
+            $\vec{A}$ & $\myvec{-2\\0}$ \\
+            \hline
+            $\vec{C}$ & $\myvec{2\\0}$ \\
+            \hline
+        \end{tabular}
+        \caption{Parameters used in the construction of Fig. \ref{fig:quad-circ}.}
+        \label{tab:param}
+    \end{table}
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=\columnwidth]{figs/quad_circ.png}
