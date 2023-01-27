@@ -151,18 +151,17 @@ columns=fullflexible
     \end{align}
     Adding \eqref{eq:parabola-mtx} to 12 times \eqref{eq:latus-rectum},
     \begin{align}
-        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} &= 36
+        \vec{x}^\top\myvec{1&0\\0&0}\vec{x} &= 36 \\
+        \implies \myvec{\vec{x}^\top\myvec{1\\0} 0}\vec{x} &= 36 \\
+        \implies \vec{x}^\top\myvec{1\\0}\brak{\myvec{1&0}\vec{x}} &= 36 \\
+        \implies \brak{\myvec{1&0}\vec{x}}^2 &= 36 \\
+        \implies \myvec{1&0}\vec{x} &= \pm 6
         \label{eq:x-latus}
     \end{align}
-    Letting $\vec{x} \triangleq \myvec{x\\y}$, \eqref{eq:latus-rectum} and
-    \eqref{eq:x-latus} respectively give
+    Combining \eqref{eq:latus-rectum} and \eqref{eq:x-latus}, the ends of the 
+    latus rectum are
     \begin{align}
-        y &= 3 \\
-        x^2 = 36 &\implies x = \pm 6
-    \end{align}
-    Thus, the ends of the latus rectum are
-    \begin{align}
-        \vec{x} = \myvec{\pm 6\\3}
+        \vec{x} = \myvec{1&0\\0&1}\vec{x} = \myvec{\pm 6\\3}
     \end{align}
     Since the vertex of the parabola is at $\vec{P} = \myvec{0\\0}$,
     we see that the area of the required triangle is
