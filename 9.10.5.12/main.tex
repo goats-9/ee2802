@@ -112,34 +112,92 @@ columns=fullflexible
         \vec{P_i} = \myvec{\cos\theta_i\\\sin\theta_i} 
         \label{eq:circ-point}
     \end{align}
-    where $\theta_i \in (0,2\pi]$. Since $P_1P_2P_3P_4$ is a parallelogram, 
-    its diagonals bisect each other. Thus, using \eqref{eq:circ-point}
+    where 
+    \begin{align}
+        \theta_i \in [0,2\pi),\ i \neq j \iff \theta_i \neq \theta_j
+        \label{eq:theta-cond}
+    \end{align}
+    Without loss of generality, suppose that $P_1P_2$ and $P_3P_4$ are parallel 
+    to the $x$-axis. Since
+    \begin{align}
+        \vec{P_1}-\vec{P_2} &= \myvec{\cos\theta_1-\cos\theta_2\\\sin\theta_1-\sin\theta_2} \\
+        \vec{P_3}-\vec{P_4} &= \myvec{\cos\theta_4-\cos\theta_4\\\sin\theta_3-\sin\theta_4}
+    \end{align}
+    we have
+    \begin{align}
+        \sin\theta_1-\sin\theta_2 &= 0 \\
+        \implies \sin\frac{\theta_1-\theta_2}{2}\cos\frac{\theta_1+\theta_2}{2} &= 0
+        \label{eq:x-par}
+    \end{align}
+    However, from \eqref{eq:theta-cond}, we see that
+    \begin{align}
+        \theta_1-\theta_2 &\in \brak{-2\pi,2\pi} \\
+        \implies \sin\frac{\theta_1-\theta_2}{2} &\neq 0 \\
+        \implies \cos\frac{\theta_1+\theta_2}{2} &= 0 \\
+        \implies \theta_1+\theta_2 &\in \brak{\pi,3\pi}
+        \label{eq:theta-12}
+    \end{align}
+    Similarly,
+    \begin{align}
+        \theta_3+\theta_4 \in \brak{\pi,3\pi}
+        \label{eq:theta-34}
+    \end{align}
+    Since $P_1P_2P_3P_4$ is a parallelogram, its diagonals bisect each other. 
+    Thus, using \eqref{eq:theta-12} and \eqref{eq:theta-34},
     \begin{align}
         \frac{\vec{P_1}+\vec{P_3}}{2} &= \frac{\vec{P_2}+\vec{P_4}}{2} \\
         \implies \vec{P_1}+\vec{P_3} &= \vec{P_2}+\vec{P_4} \\
-        \implies \myvec{\cos\theta_1+\cos\theta_3\\\sin\theta_1+\sin\theta_3} &= \myvec{\cos\theta_2+\cos\theta_4\\\sin\theta_2+\sin\theta_4}
-        \label{eq:norm-diag}
+        \implies \myvec{\cos\theta_1+\cos\theta_3\\\sin\theta_1+\sin\theta_3} &= \myvec{\cos\theta_2+\cos\theta_4\\\sin\theta_2+\sin\theta_4} \\
+        \implies \cos\theta_1+\cos\theta_3 &= \cos\theta_2+\cos\theta_4 \\
+                                           &= -\brak{\cos\theta_1+\cos\theta_3} \\
+        \implies \cos\theta_1+\cos\theta_3 &= \cos\theta_2+\cos\theta_4 = 0
+        \label{eq:cos-diag}
     \end{align}
-    Using \eqref{eq:norm-diag}, we have
+    Using \eqref{eq:cos-diag}, \eqref{eq:theta-12} and \eqref{eq:theta-34}, we have
     \begin{align}
-        \brak{\cos\theta_1+\cos\theta_3}^2+\brak{\sin\theta_1+\sin\theta_3}^2 \nonumber \\
-        = \brak{\cos\theta_2+\cos\theta_4}^2+\brak{\sin\theta_2+\sin\theta_4}^2 \\
-        \implies \cos\brak{\theta_1-\theta_3}=\cos\brak{\theta_2-\theta_4} \\
-        \implies \brak{\theta_1-\theta_3} = \brak{\theta_2-\theta_4} + 2n\pi
-        \label{eq:inner-diag}
+        \cos\theta_1 &= -\cos\theta_3 = \cos\theta_4 \\
+        \cos\theta_2 &= -\cos\theta_4 = \cos\theta_3
+        \label{eq:theta-14-23}
     \end{align}
-    Since the points are taken in anticlockwise order, 
-    Hence, using \eqref{eq:circ-point} and \eqref{eq:inner-diag},
+    Thus,
     \begin{align}
-        \norm{\vec{P_1}-\vec{P_3}}^2 &= \norm{\vec{P_1}}^2 - 2\vec{P_1}^\top\vec{P_3} + \norm{\vec{P_3}}^2 \\
-        &= \norm{\vec{P_2}}^2 - 2\vec{P_2}^\top\vec{P_4} + \norm{\vec{P_4}}^2 \\
-        &= \norm{\vec{P_2}-\vec{P_4}}^2 \label{eq:diag-equal}
+        \vec{P_1} - \vec{P_4} &= \myvec{\cos\theta_1-\cos\theta_4\\\sin\theta_1-\sin\theta_4} \\
+                              &= \myvec{0\\\sin\theta_1-\sin\theta_4}
+                              \label{eq:p1p4}
     \end{align}
-    From \eqref{eq:diag-equal}, we see that $P_1P_3 = P_2P_4$, or the diagonals
-    of the parallelogram are equal. Thus, $P_1P_2P_3P_4$ is in fact a rectangle.
+    Thus, from \eqref{eq:p1p4},
+    \begin{align}
+        &\brak{\vec{P_1}-\vec{P_2}}^\top\brak{\vec{P_1}-\vec{P_4}} \nonumber \\
+        &= \myvec{\cos\theta_1-\cos\theta_2&0}\myvec{0\\\sin\theta_1-\sin\theta_4} = 0
+        \label{eq:adj-perp}
+    \end{align}
+    From \eqref{eq:adj-perp}, we see that $P_1P_2 \perp P_1P_4$. Hence, $P_1P_2P_3P_4$ is
+    a rectangle.
 
     The situation is demonstrated in Fig. \ref{fig:circle}, plotted by the Python
-    code \texttt{codes/circle.py}.
+    code \texttt{codes/circle.py}. The various input parameters are shown in Table
+    \ref{tab:param}.
+    \begin{table}[!ht]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Parameter} & \textbf{Value} \\
+            \hline
+            $r$ & 1 \\
+            \hline
+            $\theta_1$ & $\frac{\pi}{6}$ \\
+            \hline
+            $\theta_2$ & $\frac{5\pi}{6}$ \\
+            \hline
+            $\theta_3$ & $\frac{7\pi}{6}$ \\
+            \hline
+            $\theta_4$ & $\frac{11\pi}{6}$ \\
+            \hline
+        \end{tabular}
+        \caption{Parameters used in the construction of Fig. \ref{fig:circle}.}
+        \label{tab:param}
+    \end{table}
+    
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=\columnwidth]{figs/circle.png}

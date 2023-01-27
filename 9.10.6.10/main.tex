@@ -140,7 +140,8 @@ columns=fullflexible
     \end{align}
     Using \eqref{eq:e1} and \eqref{eq:e2}, we form the matrix equation
     \begin{align}
-        \myvec{\cos\beta-\cos\gamma&\sin\beta-\sin\gamma\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}&\cos\frac{\beta}{2}-\cos\frac{\gamma}{2}}\vec{x} = \myvec{0\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}}
+        \myvec{\cos\beta-\cos\gamma&\sin\beta-\sin\gamma\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}&\cos\frac{\beta}{2}-\cos\frac{\gamma}{2}}\vec{x} \nonumber \\
+        = \myvec{0\\\sin\frac{\gamma}{2}-\sin\frac{\beta}{2}}
         \label{eq:mtx-eqn}
     \end{align}
     Solving \eqref{eq:mtx-eqn} using the augmented matrix, and letting 
@@ -162,13 +163,30 @@ columns=fullflexible
     Hence, it is clear from \eqref{eq:intersect-pt} that $\vec{D}$ lies on the 
     circumcircle of $\triangle ABC$, as required.
 
-    The situation is illustrated in Fig. \ref{fig:perp-angle-bisect} plotted 
-    by the Python code \texttt{codes/angle\_perp\_bisector.py}.
+    The situation is illustrated in Fig. \ref{fig:bisector} plotted 
+    by the Python code \texttt{codes/bisector.py}. The parameters
+    used in the construction are shown in Table \ref{tab:param}.
+    \begin{table}[!ht]
+        \centering
+        \begin{tabular}{|c|c|}
+            \hline
+            \textbf{Parameter} & \textbf{Value} \\
+            \hline
+            $r$ & 1 \\
+            \hline
+            $\beta$ & 100$^{\circ}$ \\
+            \hline
+            $\gamma$ & 200$^{\circ}$ \\
+            \hline
+        \end{tabular}
+        \caption{Parameters used in the construction of Fig. \ref{fig:bisector}.}
+        \label{tab:param}
+    \end{table}
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/angle_perp_bisector.png}
+        \includegraphics[width=\columnwidth]{figs/bisector.png}
         \caption{The bisector of $\angle A$ and of $BC$ meet on the circumcircle at $D$.}
-        \label{fig:perp-angle-bisect}
+        \label{fig:bisector}
     \end{figure}
 \end{enumerate}
 \end{document}
