@@ -137,96 +137,68 @@ columns=fullflexible
     \end{align}
     Substituting the appropriate values and simplifying, we get the equation
     \begin{align}
-        \vec{q}^\top\myvec{0&1\\0&0}\vec{q} + \vec{q}^\top\myvec{-4\\0} = 0
+        \vec{q}^\top\myvec{0&1\\0&0}\vec{q} + 2\vec{q}^\top\myvec{-2\\0} = 0
         \label{eq:q-eqn}
     \end{align}
-    We represent a quadratic equation by completing the squares. In the general
-    case, where $\vec{A}$ is symmetric and invertible,
+    Comparing with the general equation of the conic,
     \begin{align}
-        \vec{x}^\top\vec{Ax} + \vec{x}^\top\vec{b} + c &= \brak{\vec{x}-\vec{h}}^\top\vec{A}\brak{\vec{x}-\vec{h}} + k
-        \label{eq:quad-vec-gen}
+        \vec{V'} &= \myvec{0&1\\0&0} \label{eq:V-q-val} \\
+        \vec{u'} &= \myvec{-2\\0} \label{eq:u-q-val} \\
+        f' &= 0 \label{eq:f-q-val}
     \end{align}
-    Expanding \eqref{eq:quad-vec-gen} and comparing like terms,
+    To solve \eqref{eq:q-eqn}, we must make $\vec{V'}$ symmetric. Thus,
+    substituting $\vec{V'} \leftarrow \frac{\vec{V'}+\vec{V'}^\top}{2}$,
+    the equation becomes
     \begin{align}
-        -2\vec{Ah} &= \vec{b} \label{eq:h-eqn} \\
-        k - \vec{h}^\top\vec{Ah} &= c \label{eq:k-eqn}
+        \vec{q}^\top\myvec{0&\frac{1}{2}\\\frac{1}{2}&0}\vec{q} + 2\myvec{-2\\0}\vec{q} = 0
+        \label{eq:q-affine}
     \end{align}
-    From \eqref{eq:h-eqn},
+    Note that
     \begin{align}
-        \vec{h} = -\frac{1}{2}\vec{A}^{-1}\vec{b}
-        \label{eq:h-exp}
+        \vec{V'}\myvec{1\\1} &= \myvec{1\\1} \label{eq:v1} \\
+        \vec{V'}\myvec{1\\-1} &= \myvec{-1\\1} \label{eq:v2}
     \end{align}
-    Substituting \eqref{eq:h-exp} into \eqref{eq:k-eqn},
+    and hence the eigenparameters of $\vec{V'}$ are
     \begin{align}
-        k = c - \frac{1}{4}\vec{b}^\top\vec{A}^{-1}\vec{b}
-        \label{eq:k-exp}
+        \vec{P} = \myvec{1&1\\1&-1},\ \vec{D} = \myvec{1&0\\0&-1}
     \end{align}
-    In \eqref{eq:q-eqn}, $\vec{A} = \myvec{0&1\\0&0}$ is not symmetric.
-    Replacing $\vec{A}$ with $\frac{\vec{A}^\top + \vec{A}}{2}$, we get
+    Applying the affine transformation and since $\det{V'} = -\frac{1}{4} \neq 0$, 
+    \eqref{eq:q-affine} becomes
     \begin{align}
-        \vec{A} = \frac{1}{2}\myvec{0&1\\1&0},\ \vec{b} = \myvec{-4\\0},\ c = 0
-        \label{eq:vals}
-    \end{align}
-    Using \eqref{eq:h-exp} and \eqref{eq:k-exp},
-    \begin{align}
-        \vec{A}^{-1} &= \myvec{0&2\\2&0} \\
-        \implies \vec{h} &= \myvec{0\\4} \\
-        \implies k &= 0
-        \label{eq:hk-vals}
-    \end{align}
-    and \eqref{eq:q-eqn} becomes
-    \begin{align}
-        \brak{\vec{x}-\myvec{0\\4}}^\top\myvec{0&1\\1&0}\brak{\vec{x}-\myvec{0\\4}} = 0
-        \label{eq:qA-diag}
-    \end{align}
-    Let $\vec{S} := \myvec{0&1\\1&0}$. Note that
-    \begin{align}
-        \vec{S}\myvec{1\\1} &= \myvec{1\\1} \label{eq:v1} \\
-        \vec{S}\myvec{1\\-1} &= \myvec{-1\\1} \label{eq:v2}
-    \end{align}
-    Since the eigenvectors of a real symmetric matrix are orthogonal, we can 
-    decompose $\vec{S}$ as
-    \begin{align}
-        \vec{S} &= \myvec{1&1\\1&-1}\myvec{1&0\\0&-1}\myvec{1&1\\1&-1} \\
-                &= \vec{P\Lambda P}^\top
-                \label{eq:S-decomp}
+        \vec{y}^\top\vec{Dy} = f_0
+        \label{eq:y-affine}
     \end{align}
     where
     \begin{align}
-        \vec{P} := \myvec{1&1\\1&-1},\ \vec{\Lambda} := \myvec{1&0\\0&-1}
-        \label{eq:Pl-vals}
+        \vec{q} &= \vec{Py} + \vec{c} \\
+        \vec{c} &= -\vec{V'}^{-1}\vec{u} \\
+                &= -\myvec{0&1\\1&0}\myvec{-4\\0} = \myvec{0\\4} \\
+        f_0 &= \vec{u}^\top\vec{V}^{-1}\vec{u} - f \\
+            &= \myvec{-4&0}\myvec{0&1\\1&0}\myvec{-4\\0} = 0
     \end{align}
-    Therefore, letting
+    Since $f_0 = 0$, we see that \eqref{eq:y-affine} represents a pair of straight lines.
+    Expressing $\vec{y} \triangleq \myvec{y_1\\y_2}$, we get
     \begin{align}
-        \vec{y} \triangleq \vec{P}\brak{\vec{x}-\vec{h}}
-        \label{eq:y-def}
-    \end{align}
-    we rewrite \eqref{eq:qA-diag} as
-    \begin{align}
-        \vec{y}^\top\myvec{1&0\\0&-1}\vec{y} = 0
-        \label{eq:y-eqn}
-    \end{align}
-    The solutions to \eqref{eq:y-eqn} are given by
-    \begin{align}
-        \vec{y} = \myvec{a\\\pm a}
+        y_1^2-y_2^2 &= 0 \\
+        \implies y_1 &= \pm y_2 \\
+        \implies \vec{y} &= \myvec{a\\\pm a},\ a \in \mathbb{R}
         \label{eq:y-sol}
     \end{align}
-    Using \eqref{eq:y-def},
+    Hence, using \eqref{eq:y-sol},
     \begin{align}
-        \vec{x} &= \vec{h} + \vec{P}^{-1}\vec{y} \\
-                &= \myvec{0\\4} + \frac{1}{2}\myvec{1&1\\1&-1}\myvec{a\\\pm a} \\
-                &= \myvec{\frac{a\pm a}{2}\\\frac{a\mp a}{2}+4} \\
-        \implies \vec{x} &\in \cbrak{\myvec{a\\4},\myvec{0\\a+4}}
+        \vec{q} &= \vec{Py}+\vec{c} \\
+                &= \myvec{a\pm a\\a\mp a+4} \\
+        \implies \vec{q} &\in \cbrak{\myvec{2a\\4},\myvec{0\\2a+4}}
         \label{eq:x-case}
     \end{align}
-    In the first case, \eqref{eq:curve} implies $a^2 = 8$. In the second case,
-    we have $a + 4 = 0$. Thus, the points of contact are
+    In the first case, \eqref{eq:curve} implies $a^2 = 2$. In the second case,
+    we have $2a + 4 = 0$. Thus, the points of contact are
     \begin{align}
         \vec{N} \in \cbrak{\myvec{\pm 2\sqrt{2}\\4},\myvec{0\\0}}
         \label{eq:poc-ans}
     \end{align}
     The nearest point out of these three candidates for $\vec{N}$ is
-    $\myvec{\pm2\sqrt{2}\\4}$. Thus, the correct answer is \textbf{b)}.
+    $\myvec{\pm2\sqrt{2}\\4}$. Thus, the correct answer is \textbf{a)}.
 
     The situation is depicted in Fig. \ref{fig:normal} plotted by the Python
     code \texttt{codes/normal.py}.

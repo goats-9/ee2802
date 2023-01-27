@@ -114,39 +114,61 @@ columns=fullflexible
         \vec{A} = \myvec{r\\0},\ \vec{S} = \myvec{r\cos\beta\\r\sin\beta},\ \vec{D} = \myvec{r\cos\gamma\\r\sin\gamma}
         \label{eq:pos-vec-def}
     \end{align}
+    where
+    \begin{align}
+        \beta, \gamma \in [0,2\pi),\ \beta, \gamma \neq 0
+        \label{eq:int}
+    \end{align}
     We have,
     \begin{align}
         \norm{\vec{A}-\vec{S}}^2 &= \norm{\vec{A}-\vec{D}}^2 \\
         \implies \vec{A}^\top\vec{S} &= \vec{A}^\top\vec{D} \\
-        \implies \cos\beta &= \cos\gamma \label{eq:cos} \\
-        \implies \sin\beta &= -\sin\gamma \label{eq:sin}
+        \implies \cos\beta &= \cos\gamma \\
+        \implies \sin\frac{\beta+\gamma}{2}\sin\frac{\beta-\gamma}{2} &= 0
     \end{align}
-    Since $\beta \neq \gamma$. We can also write using \eqref{eq:cos} and
-    \eqref{eq:sin},
+    Since $\beta \neq \gamma$ and from \eqref{eq:int}, 
+    $\frac{\beta-\gamma}{2} \in \brak{-\pi,\pi}$, we get that
+    \begin{align}
+        \frac{\beta+\gamma}{2} &= n\pi \\
+        \implies \beta+\gamma &= 2n\pi
+        \label{eq:sum}
+    \end{align}
+    However, \eqref{eq:int} gives $\beta + \gamma \in \brak{0,4\pi}$, which forces
+    $n = 1$ in \eqref{eq:sum}, and thus
+    \begin{align}
+        \beta + \gamma = 2\pi
+        \label{eq:bg-sum}
+    \end{align}
+    Therefore, using \eqref{eq:bg-sum}
     \begin{align}
         &\norm{\vec{A}-\vec{S}}^2 = \norm{\vec{S}-\vec{D}}^2 \\
         &\implies \vec{A}^\top\vec{S} = \vec{D}^\top\vec{S} \\
         &\implies \cos\beta = \cos\brak{\beta-\gamma} \\
-        &\implies \cos\beta = \cos^2\beta - \sin^2\beta \\
-        &\implies 2\cos^2\beta - \cos\beta - 1 = 0 \\
-        &\implies \brak{2\cos\beta+1}\brak{\cos\beta-1} = 0
+        &\implies \sin\frac{3\beta-2\pi}{2}\sin\frac{\gamma}{2} = 0
         \label{eq:beta-gamma}
     \end{align}
-    From \eqref{eq:beta-gamma}, if $\cos\beta = 1$, then
-    $\sin\beta = \sin\gamma = 0$, a contradiction. Therefore, since
-    $\beta, \gamma \le 2\pi$,
+    From \eqref{eq:beta-gamma} and \eqref{eq:int},
     \begin{align}
-        \cos\beta = \cos\gamma = -\frac{1}{2} \\
-        \implies \beta, \gamma \in \cbrak{\frac{2\pi}{3},\frac{4\pi}{3}}
+        3\beta -2\pi &= 2m\pi \\
+        \implies 3\beta &= 2k\pi \\
+        \implies \beta &= \frac{2k\pi}{3}
     \end{align}
-    Therefore, the length of the thread is
+    where $k \in \mathbb{Z}$. From \eqref{eq:int}, $k \in \cbrak{1,2}$.
+    Thus,
     \begin{align}
-        \norm{\vec{S}-\vec{D}} = 2r\sin\beta = r\sqrt{3}
+        \beta,\gamma \in \cbrak{\frac{2\pi}{3},\frac{4\pi}{3}}
+        \label{eq:bg-sol}
+    \end{align}
+    Therefore, the length of the thread from \eqref{eq:bg-sol} is
+    \begin{align}
+        \norm{\vec{S}-\vec{D}} &= \norm{r\myvec{\cos\beta-\cos\gamma\\\sin\beta-\sin\gamma}} \\
+                               &= r\sqrt{3}
     \end{align}
     Here, $r = 20$ m. Thus, the length is $20\sqrt{3}$ m.
 
-    The situation is demonstrated in Fig. \ref{fig:equilateral}, plotted by the Python
-    code \texttt{codes/equilateral.py}. Here, the values used for construction are shown in Table \eqref{tab:param}
+    The situation is demonstrated in Fig. \ref{fig:equilateral}, plotted by the 
+    Python code \texttt{codes/equilateral.py}. Here, the values used for 
+    construction are shown in Table \eqref{tab:param}.
     \begin{table}[!ht]
         \centering
         \begin{tabular}{|c|c|}

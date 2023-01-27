@@ -146,16 +146,20 @@ columns=fullflexible
         \label{eq:u-exp}
     \end{align}
     Hence, from \eqref{eq:vert}, we see that $\vec{u}$ lies on the $y$-axis.
-    The general expression of the centre of the circle is given by
+    The general expression of the centre of a conic is given by
     \begin{align}
         \vec{c} &= -\vec{V}^{-1}\vec{u} \\
-                &= \frac{1}{e^2-1}\myvec{1&0\\0&1-e^2}\vec{u} \\
-                &= -\vec{u}
+                &= \frac{1}{e^2-1}\myvec{1&0\\0&1-e^2}\vec{u}
         \label{eq:center}
     \end{align}
-    and so, $\vec{c}$ lies on the $y$-axis. However, $\vec{c}$ also lies on the
-    $x$-axis since it is the major axis. Therefore, $\vec{c} = -\vec{u} = \vec{0}$.
-    Thus, from \eqref{eq:u-val},
+    We let $\vec{u} \triangleq \myvec{0\\u}$ and obtain from \eqref{eq:center}
+    \begin{align}
+        \vec{c} = \myvec{0\\-u} = -\vec{u}
+        \label{eq:u-c-0}
+    \end{align}
+    Since the major axis of the hyperbola is the $x$-axis, we see that $\vec{c}$
+    lies on the $x$-axis. Thus, \eqref{eq:u-c-0} implies $\vec{c} = -\vec{u} 
+    = \vec{0}$. Thus, from \eqref{eq:u-val},
     \begin{align}
         \vec{F} = \myvec{ce^2\\0}
         \label{eq:F-c-e}

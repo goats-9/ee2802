@@ -141,7 +141,7 @@ columns=fullflexible
     \end{proof}
     Call the quadrilateral $ABCD$, where
     \begin{align}
-        \vec{A} = \myvec{-2\\0},\ \vec{C} = \myvec{2\\0}
+        \vec{A} = \myvec{-2\\0},\ \vec{C} = \myvec{1\\1}
         \label{eq:a-c-def}
     \end{align}
     Suppose that $ABCD$ circumscribes the unit circle, given by
@@ -156,38 +156,75 @@ columns=fullflexible
     \end{align}
     To find the points of contact from $\vec{A}$, we have
     \begin{align}
-        \vec{\Sigma} &= \brak{\vec{A}+\vec{u}}\brak{\vec{A}+\vec{u}}^\top - \brak{\vec{A}^\top\vec{A}+2\vec{u}^\top\vec{A} + f}\vec{I} \\
+        \vec{\Sigma_A} &= \brak{\vec{A}+\vec{u}}\brak{\vec{A}+\vec{u}}^\top - \brak{\vec{A}^\top\vec{A}+2\vec{u}^\top\vec{A} + f}\vec{I} \\
                      &= \myvec{1&0\\0&-3}
                      \label{eq:sigma}
     \end{align}
-    The eigenvalues of $\vec{\Sigma}$ is
+    The eigenvalues of $\vec{\Sigma_A}$ are
     \begin{align}
         \lambda_1 = 1,\ \lambda_2 = -3
         \label{eq:lambda}
     \end{align}
-    and
+    and since the eigenvector matrix $\vec{P_A} = \vec{I}$,
     \begin{align}
         \vec{n_1} = \myvec{1\\\sqrt{3}},\ \vec{n_2} = \myvec{1\\-\sqrt{3}}
         \label{eq:n-sigma}
     \end{align}
     Thus, the points of contact are given by
     \begin{align}
-        \vec{E} = \frac{1}{2}\myvec{-1\\\sqrt{3}},\ \vec{H} = \frac{1}{2}\myvec{-1\\-\sqrt{3}} \\
-        \vec{F} = \frac{1}{2}\myvec{1\\\sqrt{3}},\ \vec{G} = \frac{1}{2}\myvec{1\\-\sqrt{3}}
-        \label{eq:poc}
+        \vec{E} = \frac{1}{2}\myvec{-1\\\sqrt{3}},\ \vec{H} = \frac{1}{2}\myvec{-1\\-\sqrt{3}}
+        \label{eq:poc-eh}
+    \end{align}
+    Similarly for $\vec{C}$,
+    \begin{align}
+        \vec{\Sigma_C} = \myvec{1&1\\1&1} - \vec{I} = \myvec{0&1\\1&0}
+    \end{align}
+    Notice that
+    \begin{align}
+        \vec{\Sigma_C}\myvec{1\\1} &= \myvec{1\\1} \\
+        \vec{\Sigma_C}\myvec{1\\-1} &= -\myvec{1\\-1} \\
+    \end{align}
+    Thus, the eigenvalues and the corresponding eigenvector
+    matrix is
+    \begin{align}
+        \mu_1 = 1,\ \mu_2 = -1,\ \vec{P_C} = \myvec{1&1\\1&-1}
+    \end{align}
+    and thus
+    \begin{align}
+        \vec{m_1} &= \vec{P_C}\myvec{1\\1} = \myvec{2\\0} \\ 
+        \vec{m_2} &= \vec{P_C}\myvec{1\\-1} = \myvec{0\\2}
+    \end{align}
+    Therefore, the points of contact of $\vec{C}$ are
+    \begin{align}
+        \vec{F} = \myvec{1\\0},\ \vec{G} = \myvec{0\\1}
+        \label{eq:poc-fg}
     \end{align}
     Using the lemma we proved above, the direction vectors of $\vec{B}$ and 
     $\vec{D}$ are
     \begin{align}
-        \vec{d_B} &= \vec{E} + \vec{F} = \myvec{0\\\sqrt{3}} \label{eq:d-B} \\
-        \vec{d_D} &= \vec{G} + \vec{H} = \myvec{0\\-\sqrt{3}} \label{eq:d-D}
+        \vec{d_B} &= \vec{E} + \vec{F} = \frac{\sqrt{3}}{2}\myvec{\sqrt{3}\\1} \label{eq:d-B} \\
+        \vec{d_D} &= \vec{G} + \vec{H} = \frac{1}{2}\myvec{-1\\2-\sqrt{3}} \label{eq:d-D}
     \end{align}
-    Clearly, from \eqref{eq:a-c-def}, \eqref{eq:d-B} and \eqref{eq:d-D},
+    Clearly,
     \begin{align}
-        \vec{A}^\top\vec{B} = 0 &\implies \angle AOB = \frac{\pi}{2} \\
-        \vec{C}^\top\vec{D} = 0 &\implies \angle COD = \frac{\pi}{2}
+        \norm{\vec{d_B}} &= \sqrt{3} \\
+        \norm{\vec{d_D}} &= \sqrt{2-\sqrt{3}}
+        \label{eq:norm-d}
     \end{align}
-    Hence, $\angle AOB + \angle COD = \pi$, as required.
+    and from \eqref{eq:a-c-def}, \eqref{eq:d-B} and \eqref{eq:d-D},
+    \begin{align}
+        \cos\angle AOD &= \frac{\vec{A}^\top\vec{d_D}}{\norm{A}\norm{\vec{d_D}}} \\
+                       &= \frac{-1}{2\sqrt{2\sqrt{3}}} \\
+                       &= -\frac{\sqrt{2+\sqrt{3}}}{2} \\
+                       &= -\frac{\sqrt{3}+1}{2\sqrt{2}} \label{eq:cos-aod} \\
+        \cos\angle BOC &= \frac{\vec{C}^\top\vec{d_B}}{\norm{C}\norm{\vec{d_B}}} \\
+                       &= \frac{\sqrt{3}+1}{2\sqrt{2}} \label{eq:cos-boc}
+    \end{align}
+    Hence, from \eqref{eq:norm-d}, \eqref{eq:cos-aod} and \eqref{eq:cos-boc},
+    \begin{align}
+        \cos\angle AOD + \cos\angle BOC = 0
+    \end{align}
+    and hence, $\angle AOD + \angle BOC = \pi$, as required.
 
     The situation is illustrated in Fig. \ref{fig:quad-circ} plotted by the 
     Python code \texttt{codes/quad\_circ.py}. The numerical parameters used 
@@ -202,7 +239,7 @@ columns=fullflexible
             \hline
             $\vec{A}$ & $\myvec{-2\\0}$ \\
             \hline
-            $\vec{C}$ & $\myvec{2\\0}$ \\
+            $\vec{C}$ & $\myvec{1\\1}$ \\
             \hline
         \end{tabular}
         \caption{Parameters used in the construction of Fig. \ref{fig:quad-circ}.}

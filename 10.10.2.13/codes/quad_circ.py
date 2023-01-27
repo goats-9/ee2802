@@ -23,16 +23,29 @@ def line_gen(A,B):
     x_AB[:,i]= temp1.T
   return x_AB
 
+#intersection of two lines
+def line_intersect(n1,c1,n2,c2):
+  n=np.vstack((n1.T,n2.T))
+  p = np.array([[c1],[c2]])
+  #intersection
+  p=np.linalg.inv(n)@p
+  return p
+
 O = np.array([[0.0],[0.0]])
 A = np.array([[-2.0],[0.0]])
-C = np.array([[2.0],[0.0]])
-B = np.array([[0.0],[2/np.sqrt(3)]])
-D = np.array([[0.0],[-2/np.sqrt(3)]])
-E = np.array([[-1.0],[np.sqrt(3.0)]])/2
-F = np.array([[1.0],[np.sqrt(3.0)]])/2
-G = np.array([[1.0],[-np.sqrt(3.0)]])/2
-H = np.array([[-1.0],[-np.sqrt(3.0)]])/2
+C = np.array([[1.0],[1.0]])
 r = 1
+n1 = np.array([[1.0],[np.sqrt(3)]])
+n2 = np.array([[1.0],[-np.sqrt(3)]])
+m1 = np.array([[2.0],[0.0]])
+m2 = np.array([[0.0],[2.0]])
+H = -n1/np.linalg.norm(n1)
+F = m1/np.linalg.norm(m1)
+G = m2/np.linalg.norm(m2)
+E = -n2/np.linalg.norm(n2)
+B = line_intersect(n1,np.sum(A.T@n1),m1,np.sum(C.T@m1))
+D = line_intersect(n2,np.sum(A.T@n2),m2,np.sum(C.T@m2))
+#Plot
 P = circ_gen(O.T,r)
 L1=line_gen(O,A)
 L2=line_gen(O,B)
