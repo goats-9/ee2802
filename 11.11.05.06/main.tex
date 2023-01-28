@@ -149,19 +149,22 @@ columns=fullflexible
         \myvec{0&1}\vec{x} = \myvec{0&1}\myvec{0\\3} = 3
         \label{eq:latus-rectum}
     \end{align}
-    Adding \eqref{eq:parabola-mtx} to 12 times \eqref{eq:latus-rectum},
+    Hence, for $\lambda \in \mathbb{R}$,
+    \begin{align}
+        \vec{x} = \lambda\myvec{1\\0} + \myvec{0\\3} = \myvec{\lambda\\3}
+        \label{eq:x-general}
+    \end{align}
+    Adding \eqref{eq:parabola-mtx} to 12 times \eqref{eq:latus-rectum}, and
+    using \eqref{eq:x-general}
     \begin{align}
         \vec{x}^\top\myvec{1&0\\0&0}\vec{x} &= 36 \\
-        \implies \myvec{\vec{x}^\top\myvec{1\\0} 0}\vec{x} &= 36 \\
-        \implies \vec{x}^\top\myvec{1\\0}\brak{\myvec{1&0}\vec{x}} &= 36 \\
-        \implies \brak{\myvec{1&0}\vec{x}}^2 &= 36 \\
-        \implies \myvec{1&0}\vec{x} &= \pm 6
+        \implies \lambda^2 &= 36 \\
+        \implies \lambda &= \pm 6
         \label{eq:x-latus}
     \end{align}
-    Combining \eqref{eq:latus-rectum} and \eqref{eq:x-latus}, the ends of the 
-    latus rectum are
+    Thus, the ends of the latus rectum are
     \begin{align}
-        \vec{x} = \myvec{1&0\\0&1}\vec{x} = \myvec{\pm 6\\3}
+        \vec{x} = \myvec{\pm 6\\3}
     \end{align}
     Since the vertex of the parabola is at $\vec{P} = \myvec{0\\0}$,
     we see that the area of the required triangle is
