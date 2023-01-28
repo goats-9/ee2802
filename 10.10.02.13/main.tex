@@ -1,30 +1,35 @@
 \documentclass[journal,12pt,twocolumn]{IEEEtran}
 \usepackage{setspace}
 \usepackage{gensymb}
-\usepackage{xcolor}
-\usepackage{caption}
 \singlespacing
-\usepackage{siunitx}
 \usepackage[cmex10]{amsmath}
-\usepackage{mathtools}
-\usepackage{hyperref}
 \usepackage{amsthm}
 \usepackage{mathrsfs}
 \usepackage{txfonts}
 \usepackage{stfloats}
+\usepackage{bm}
 \usepackage{cite}
 \usepackage{cases}
 \usepackage{subfig}
 \usepackage{longtable}
 \usepackage{multirow}
 \usepackage{enumitem}
-\usepackage{bm}
 \usepackage{mathtools}
-\usepackage{listings}
 \usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning}
 \usepackage{circuitikz}
-\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\usepackage{verbatim}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{tkz-euclide} % loads  TikZ and tkz-base
+\usepackage{listings}
+\usepackage{color}    
+\usepackage{array}    
+\usepackage{longtable}
+\usepackage{calc}     
+\usepackage{multirow} 
+\usepackage{hhline}   
+\usepackage{ifthen}   
+\usepackage{lscape}     
+\usepackage{chngcntr}
 \DeclareMathOperator*{\Res}{Res}
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\thesection.\arabic{subsection}}
@@ -33,31 +38,35 @@
 \renewcommand\thesectiondis{\arabic{section}}
 \renewcommand\thesubsectiondis{\thesectiondis.\arabic{subsection}}
 \renewcommand\thesubsubsectiondis{\thesubsectiondis.\arabic{subsubsection}}
+\renewcommand\thetable{\arabic{table}}
+% correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
+\def\inputGnumericTable{}                                 %%
 
 \lstset{
-language=Python,
+%language=C,
 frame=single, 
 breaklines=true,
 columns=fullflexible
 }
+%\lstset{
+%language=tex,
+%frame=single, 
+%breaklines=true
+%}
+
 \begin{document}
-\theoremstyle{definition}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{problem}{Problem}
 \newtheorem{proposition}{Proposition}[section]
-\newtheorem{lemma}{Lemma}
+\newtheorem{lemma}{Lemma}[section]
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{example}{Example}[section]
-\newtheorem{definition}{Definition}[section]
+\newtheorem{definition}[problem]{Definition}
 \newcommand{\BEQA}{\begin{eqnarray}}
 \newcommand{\EEQA}{\end{eqnarray}}
 \newcommand{\define}{\stackrel{\triangle}{=}}
-\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
-\newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
 \bibliographystyle{IEEEtran}
-\providecommand{\nCr}[2]{\,^{#1}C_{#2}} % nCr
-\providecommand{\nPr}[2]{\,^{#1}P_{#2}} % nPr
 \providecommand{\mbf}{\mathbf}
 \providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
 \providecommand{\qfunc}[1]{\ensuremath{Q\left(#1\right)}}
@@ -73,19 +82,19 @@ columns=fullflexible
 \theoremstyle{remark}
 \newtheorem{rem}{Remark}
 \newcommand{\sgn}{\mathop{\mathrm{sgn}}}
-\newcommand{\rect}{\mathop{\mathrm{rect}}}
-\newcommand{\sinc}{\mathop{\mathrm{sinc}}}
 \providecommand{\abs}[1]{\left\vert#1\right\vert}
 \providecommand{\res}[1]{\Res\displaylimits_{#1}} 
-\providecommand{\norm}[1]{\left\Vert#1\right\Vert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
 \providecommand{\mtx}[1]{\mathbf{#1}}
 \providecommand{\mean}[1]{E\left[ #1 \right]}
 \providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
-\providecommand{\ztrans}{\overset{\mathcal{Z}}{ \rightleftharpoons}}
 \providecommand{\system}[1]{\overset{\mathcal{#1}}{ \longleftrightarrow}}
 \newcommand{\solution}{\noindent \textbf{Solution: }}
+\newcommand{\cosec}{\,\text{cosec}\,}
 \providecommand{\dec}[2]{\ensuremath{\overset{#1}{\underset{#2}{\gtrless}}}}
-\let\StandardTheFigure\thefigure
+\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
+\newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\let\vec\mathbf
 \def\putbox#1#2#3{\makebox[0in][l]{\makebox[#1][l]{}\raisebox{\baselineskip}[0in][0in]{\raisebox{#2}[0in][0in]{#3}}}}
      \def\rightbox#1{\makebox[0in][r]{#1}}
      \def\centbox#1{\makebox[0in]{#1}}
@@ -160,20 +169,22 @@ columns=fullflexible
                      &= \myvec{1&0\\0&-3}
                      \label{eq:sigma}
     \end{align}
-    The eigenvalues of $\vec{\Sigma_A}$ are
+    The eigenparameters of $\vec{\Sigma_A}$ are
     \begin{align}
-        \lambda_1 = 1,\ \lambda_2 = -3
+        \lambda_1 = 1,\ \lambda_2 = -3,\ \vec{P_A} = \vec{I}
         \label{eq:lambda}
     \end{align}
-    and since the eigenvector matrix $\vec{P_A} = \vec{I}$,
+    Thus, the normals to the tangents are
     \begin{align}
         \vec{n_1} = \myvec{1\\\sqrt{3}},\ \vec{n_2} = \myvec{1\\-\sqrt{3}}
         \label{eq:n-sigma}
     \end{align}
-    Thus, the points of contact are given by
+    The points of contact are given by
     \begin{align}
-        \vec{E} = \frac{1}{2}\myvec{-1\\\sqrt{3}},\ \vec{H} = \frac{1}{2}\myvec{-1\\-\sqrt{3}}
-        \label{eq:poc-eh}
+        \vec{E} &= -\frac{r\vec{n_2}}{\norm{\vec{n_2}}} - \vec{u} \\
+                &= \frac{1}{2}\myvec{-1\\\sqrt{3}} \label{eq:poc-e} \\
+        \vec{H} &= -\frac{r\vec{n_1}}{\norm{\vec{n_1}}} - \vec{u} \\
+                &= \frac{1}{2}\myvec{-1\\-\sqrt{3}} \label{eq:poc-h}
     \end{align}
     Similarly for $\vec{C}$,
     \begin{align}
@@ -184,20 +195,21 @@ columns=fullflexible
         \vec{\Sigma_C}\myvec{1\\1} &= \myvec{1\\1} \\
         \vec{\Sigma_C}\myvec{1\\-1} &= -\myvec{1\\-1} \\
     \end{align}
-    Thus, the eigenvalues and the corresponding eigenvector
-    matrix is
+    Thus, the eigenparameters of $\vec{C}$ are
     \begin{align}
         \mu_1 = 1,\ \mu_2 = -1,\ \vec{P_C} = \myvec{1&1\\1&-1}
     \end{align}
-    and thus
+    The normals to the tangents are given by
     \begin{align}
         \vec{m_1} &= \vec{P_C}\myvec{1\\1} = \myvec{2\\0} \\ 
         \vec{m_2} &= \vec{P_C}\myvec{1\\-1} = \myvec{0\\2}
     \end{align}
     Therefore, the points of contact of $\vec{C}$ are
     \begin{align}
-        \vec{F} = \myvec{1\\0},\ \vec{G} = \myvec{0\\1}
-        \label{eq:poc-fg}
+        \vec{F} &= \frac{r\vec{m_1}}{\norm{\vec{m_1}}} - \vec{u} \\
+                &= \myvec{1\\0} \label{eq:poc-f} \\
+        \vec{G} &= \frac{r\vec{m_2}}{\norm{\vec{m_2}}} - \vec{u} \\
+                &= \myvec{0\\1} \label{eq:poc-g}
     \end{align}
     Using the lemma we proved above, the direction vectors of $\vec{B}$ and 
     $\vec{D}$ are
@@ -220,28 +232,18 @@ columns=fullflexible
         \cos\angle BOC &= \frac{\vec{C}^\top\vec{d_B}}{\norm{C}\norm{\vec{d_B}}} \\
                        &= \frac{\sqrt{3}+1}{2\sqrt{2}} \label{eq:cos-boc}
     \end{align}
-    Hence, from \eqref{eq:norm-d}, \eqref{eq:cos-aod} and \eqref{eq:cos-boc},
+    Hence,
     \begin{align}
         \cos\angle AOD + \cos\angle BOC = 0
     \end{align}
-    and hence, $\angle AOD + \angle BOC = \pi$, as required.
+    which implies $\angle AOD + \angle BOC = \pi$, as required.
 
     The situation is illustrated in Fig. \ref{fig:quad-circ} plotted by the 
     Python code \texttt{codes/quad\_circ.py}. The numerical parameters used 
     in the construction are shown in Table \ref{tab:param}.
     \begin{table}[!ht]
         \centering
-        \begin{tabular}{|c|c|}
-            \hline
-            \textbf{Parameter} & \textbf{Value} \\
-            \hline
-            $r$ & 1 \\
-            \hline
-            $\vec{A}$ & $\myvec{-2\\0}$ \\
-            \hline
-            $\vec{C}$ & $\myvec{1\\1}$ \\
-            \hline
-        \end{tabular}
+        \input{tables/10.10.02.13_1.tex}
         \caption{Parameters used in the construction of Fig. \ref{fig:quad-circ}.}
         \label{tab:param}
     \end{table}
