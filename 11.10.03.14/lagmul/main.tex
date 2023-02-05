@@ -130,6 +130,11 @@ columns=fullflexible
         \textrm{s.t. } g\brak{\vec{x}} &\triangleq \vec{n}^\top\vec{x} - c = 0
         \label{eq:lag-opt}
     \end{align}
+    where
+    \begin{align}
+        \vec{P} = \myvec{-1\\3},\ \vec{n} = \myvec{3\\-4},\ c = 16
+        \label{eq:vals}
+    \end{align}
     Define
     \begin{align}
         C\brak{\vec{x},\lambda} &= h\brak{\vec{x}} - \lambda g\brak{\vec{x}}
@@ -151,16 +156,20 @@ columns=fullflexible
     \eqref{eq:x-lambda},
     \begin{align}
         \vec{n}^\top\brak{\frac{\lambda}{2}\vec{n}+\vec{P}} - c &= 0 \\
-        \implies \frac{25\lambda}{2} - 15 - 16 &= 0 \\
-        \implies \lambda = \frac{62}{25}
+        \implies \lambda &= \frac{2\brak{c-\vec{n}^\top\vec{P}}}{\norm{\vec{n}}^2}
         \label{eq:lambda-opt}
     \end{align}
     Substituting \eqref{eq:lambda-opt} in \eqref{eq:x-lambda}, the optimal
     point is given by
     \begin{align}
-        \vec{Q} &= \myvec{-1\\3} + \frac{31}{25}\myvec{3\\-4} \\
-                &= \frac{1}{25}\myvec{68\\-49}
+        \vec{Q} &= \vec{P} + \frac{\lambda}{2}\vec{n} \\
+                &= \vec{P} - \frac{\vec{n}^\top\vec{P}-c}{\norm{\vec{n}}^2}\vec{n}
                 \label{eq:x-sol-lag}
+    \end{align}
+    Substituting from \eqref{eq:vals},
+    \begin{align}
+        \lambda = \frac{62}{25},\ \vec{Q} = \frac{1}{25}\myvec{68\\-49}
+        \label{eq:sol}
     \end{align}
     To find $\vec{Q}$ graphically, we use constrained gradient descent, with
     learning rate $\alpha = 0.01$. The results are shown in Fig.
@@ -173,4 +182,31 @@ columns=fullflexible
         \label{fig:gd-lag}
     \end{figure}
 \end{enumerate}
+
+\section{Appendix}
+\subsection{Constrained Gradient Descent}
+
+\textit{Constrained gradient descent} is a method of optimizing the cost function
+subject to some constraints, represented as follows.
+\begin{align}
+    \max_{\vec{x}}f\brak{\vec{x}} \label{eq:cgd-cost} \\
+    \textrm{s.t. } g\brak{\vec{x}} = 0
+    \label{eq:cgd-constr}
+\end{align}
+Unlike the unconstrained version, one cannot move in the negative direction of the
+gradient vector of $f\brak{\vec{x}}$. However, we must move along the constraint in
+\eqref{eq:cgd-constr}.
+
+The algorithm terminates when the gradient vector of $f$ is parallel to the normal 
+vector of $g$ at that point. Mathematically, at an optimum $\vec{x_o}$,
+\begin{align}
+    \nabla f\brak{\vec{x_o}} = \lambda\nabla g\brak{\vec{x_o}}
+    \label{eq:cgd-cond}
+\end{align}
+where $\lambda \in \mathbb{R}\setminus\cbrak{0}$. Observe that \eqref{eq:cgd-cond}
+may be rewritten as
+\begin{align}
+    \nabla C\brak{\vec{x},\lambda} = \nabla \brak{f\brak{\vec{x}}-\lambda g\brak{\vec{x}}} = 0
+\end{align}
+which is analogous to the method of Lagrangian multipliers.
 \end{document}

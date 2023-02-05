@@ -132,22 +132,29 @@ columns=fullflexible
     where $\lambda \in \mathbb{R}$ and
     \begin{align}
         \vec{A} = \myvec{0\\-4},\ \vec{m} = \myvec{4\\3}
+        \label{eq:vals}
     \end{align}
     Thus,
     \begin{align}
-        \norm{\vec{Q}-\vec{P}}^2 &= \norm{\vec{A}-\vec{P}+\lambda\vec{m}}^2 \\
-                                 &= \norm{\myvec{4\lambda+1\\3\lambda-7}}^2 \\
-                                 &= 25\lambda^2-34\lambda+50 = f\brak{\lambda}
-                                 \label{eq:dist-lambda}
+        f\brak{\lambda} &= \norm{\vec{Q}-\vec{P}}^2 \\
+                        &= \norm{\vec{A}-\vec{P}+\lambda\vec{m}}^2 \\
+                        &= \norm{\vec{m}}^2\lambda^2 + 2\vec{m}^\top\brak{\vec{A}-\vec{P}}\lambda + \norm{\vec{A}-\vec{P}}^2
+                        \label{eq:dist-lambda}
     \end{align}
     Since the coefficient of $\lambda^2$ in $f(\lambda)$ is positive, it
     follows that $f\brak{\lambda}$ is convex. Hence, the minima is achieved at
     \begin{align}
-        f'\brak{\lambda_m} = 50\lambda_m - 34 &= 0 \\
-        \implies \lambda_m = \frac{17}{25}
+        f'\brak{\lambda_m} &= 2\brak{\norm{\vec{m}}^2\lambda_m + \vec{m}^\top\brak{\vec{A}-\vec{P}}} = 0 \\
+        \implies \lambda_m &= -\frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}}^2}
         \label{eq:lambda-min}
     \end{align}
-    Thus, substituting into \eqref{eq:Q-def}, we get
+    Thus,
+    \begin{align}
+        \vec{Q_m} &= \vec{A} + \lambda_m\vec{m} \\
+                  &= \vec{A} - \frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}}^2}\vec{m}
+                  \label{eq:Q-m-exp}
+    \end{align}
+    Thus, substituting \eqref{eq:vals} into \eqref{eq:Q-m-exp}, we get
     \begin{align}
         \vec{Q_m} = \frac{1}{25}\myvec{68\\-49}
         \label{eq:Q-sol}

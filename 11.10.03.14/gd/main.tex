@@ -132,41 +132,47 @@ columns=fullflexible
     where $\lambda \in \mathbb{R}$ and
     \begin{align}
         \vec{A} = \myvec{0\\-4},\ \vec{m} = \myvec{4\\3}
+        \label{eq:vals}
     \end{align}
     Thus,
     \begin{align}
-        \norm{\vec{Q}-\vec{P}}^2 &= \norm{\vec{A}-\vec{P}+\lambda\vec{m}}^2 \\
-                                 &= \norm{\myvec{4\lambda+1\\3\lambda-7}}^2 \\
-                                 &= 25\lambda^2-34\lambda+50 = f\brak{\lambda}
-                                 \label{eq:dist-lambda}
+        f\brak{\lambda} &= \norm{\vec{Q}-\vec{P}}^2 \\
+                        &= \norm{\vec{A}-\vec{P}+\lambda\vec{m}}^2 \\
+                        &= \norm{\vec{m}}^2\lambda^2 + 2\vec{m}^\top\brak{\vec{A}-\vec{P}}\lambda + \norm{\vec{A}-\vec{P}}^2
+                        \label{eq:dist-lambda}
     \end{align}
     Since \eqref{eq:dist-lambda} is convex, we use the gradient descent function 
     on $\lambda$ to converge at the minimum of $f\brak{\lambda}$.
     \begin{align}
         \lambda_{n+1} &= \lambda_n - \alpha f'\brak{\lambda_n} \\
-                      &= \brak{1-50\alpha}\lambda_n + 34\alpha
+                      &= \brak{1-2\alpha\norm{\vec{m}}^2}\lambda_n + 2\alpha\vec{m}^\top\brak{\vec{A}-\vec{P}}
                       \label{eq:diff-eqn}
     \end{align}
     Taking the one-sided $Z$-transform on both sides of \eqref{eq:diff-eqn},
     \begin{align}
-        z\Lambda\brak{z} &= \brak{1-50\alpha}\Lambda\brak{z} + \frac{34\alpha}{1-z^{-1}} \\
-        \Lambda\brak{z} &= \frac{34\alpha z^{-1}}{\brak{1- z^{-1}}\brak{1 - \brak{1-50\alpha}z^{-1}}} \label{eq:roc} \\
-                                 &= \frac{17}{25}\brak{\frac{1}{1-\brak{1-50\alpha}z^{-1}}-\frac{1}{1-z^{-1}}} \\
-                                 &= \frac{17}{25}\sum_{k=0}^{\infty}\brak{1-\brak{1-50\alpha}^k}z^{-k}
-                                 \label{eq:lambda-z-trans}
+        z\Lambda\brak{z} &= \brak{1-2\alpha\norm{\vec{m}}^2}\Lambda\brak{z} - \frac{2\alpha\vec{m}^\top\brak{\vec{A}-\vec{P}}}{1-z^{-1}}
+        \label{eq:Z-trans-eqn}
+    \end{align}
+    Solving \eqref{eq:Z-trans-eqn}
+    \begin{align}
+        &\Lambda\brak{z} = -\frac{2\alpha\vec{m}^\top\brak{\vec{A}-\vec{P}}z^{-1}}{\brak{1- z^{-1}}\brak{1 - \brak{1-2\alpha\norm{\vec{m}}^2}z^{-1}}} \label{eq:roc} \\
+        &= -\frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}}^2}\lbrak{\frac{1}{1-z^{-1}}} \\
+        &\rbrak{- \frac{1}{1-\brak{1-2\alpha\norm{\vec{m}}^2}z^{-1}}} \\
+        &= \frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}}^2}\sum_{k=0}^{\infty}\brak{1-\brak{1-2\alpha\norm{\vec{m}}^2}^k}z^{-k}
+        \label{eq:lambda-z-trans}
     \end{align}
     From \eqref{eq:roc}, the ROC is
     \begin{align}
-        \abs{z} &> \max\cbrak{1,1-50\alpha} \\
-        \implies 0 &< 1 - 50\alpha < 1 \\
-        \implies \alpha &\in \brak{0,0.02}
+        \abs{z} &> \max\cbrak{1,1-2\alpha\norm{\vec{m}}^2} \\
+        \implies 0 &< 1 - 2\alpha\norm{\vec{m}}^2 < 1 \\
+        \implies 0 &< \alpha < \frac{1}{2\norm{\vec{m}}^2}
         \label{eq:alpha-constr}
     \end{align}
-    Thus, if $\alpha > 0$, then from \eqref{eq:lambda-z-trans}
+    Thus, if $\alpha$ satisfies \eqref{eq:alpha-constr}, then from 
+    \eqref{eq:lambda-z-trans}, substituting from \eqref{eq:vals},
     \begin{align}
-        \lim_{n\to\infty}\lambda_n &= \lim_{n\to\infty}\frac{17}{25}\brak{1-\brak{1-50\alpha}^n} \\
+        \lim_{n\to\infty}\lambda_n &= -\frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}^2}}                                  \label{eq:conv}
                                    &= \frac{17}{25}
-                                   \label{eq:conv}
     \end{align}
     We select the following parameters to arrive at the optimal $\lambda$,
     where $N$ is the number of iterations and $\epsilon$ is the convergence 
