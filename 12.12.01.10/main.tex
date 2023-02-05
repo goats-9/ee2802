@@ -105,9 +105,9 @@ columns=fullflexible
 \begin{enumerate}
     \item Find 
     \begin{align}
-        \max_{x,y}Z = x + y \label{eq:func} \\
-        \textrm{s.t. } x - y \le -1 \label{eq:constr1} \\
-        -x + y \le 0 \label{eq:constr2} \\
+        \max_{x,y}Z &= x + y \label{eq:func} \\
+        \textrm{s.t. } x - y &\le -1 \label{eq:constr1} \\
+        -x + y &\le 0 \label{eq:constr2} \\
         x, y &\ge 0
     \end{align}
 
@@ -157,7 +157,7 @@ columns=fullflexible
                 \label{eq:S-red}
     \end{align}
     Again, the pivot column in \eqref{eq:S-red} is the first column. However, 
-    the first column has all negative elements, and therefore, there is no solution 
+    the first column has no positive elements, and therefore, there is no solution 
     to the optimization problem. This is justified by Fig. \ref{fig:lp}, plotted
     using the Python code \texttt{codes/lp.py}.
     \begin{figure}[!ht]
