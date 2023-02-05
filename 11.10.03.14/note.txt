@@ -1,4 +1,0 @@
-Solve using
-1. Convexity
-2. Gradient Descent
-3. Lagrange Multipliers
