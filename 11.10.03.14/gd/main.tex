@@ -163,16 +163,15 @@ columns=fullflexible
     \end{align}
     From \eqref{eq:roc}, the ROC is
     \begin{align}
-        \abs{z} &> \max\cbrak{1,1-2\alpha\norm{\vec{m}}^2} \\
-        \implies 0 &< 1 - 2\alpha\norm{\vec{m}}^2 < 1 \\
-        \implies 0 &< \alpha < \frac{1}{2\norm{\vec{m}}^2}
+        \abs{z} &> \max\cbrak{1,\abs{1-2\alpha\norm{\vec{m}}^2}} \\
+        \implies -1 &< 1 - 2\alpha\norm{\vec{m}}^2 < 1 \\
+        \implies 0 &< \alpha < \frac{1}{\norm{\vec{m}}^2}
         \label{eq:alpha-constr}
     \end{align}
     Thus, if $\alpha$ satisfies \eqref{eq:alpha-constr}, then from 
     \eqref{eq:lambda-z-trans}, substituting from \eqref{eq:vals},
     \begin{align}
-        \lim_{n\to\infty}\lambda_n &= -\frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}^2}}                                  \label{eq:conv}
-                                   &= \frac{17}{25}
+        \lim_{n\to\infty}\lambda_n = -\frac{\vec{m}^\top\brak{\vec{A}-\vec{P}}}{\norm{\vec{m}^2}} = \frac{17}{25} \label{eq:conv}
     \end{align}
     We select the following parameters to arrive at the optimal $\lambda$,
     where $N$ is the number of iterations and $\epsilon$ is the convergence 
