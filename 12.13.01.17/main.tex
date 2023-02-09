@@ -136,13 +136,15 @@ columns=fullflexible
     
     We consider the options one by one.
     \begin{enumerate}
-        \item If $A \subset B$ and $A \neq B$, then clearly $\pr{A|B} = 1$.
-        Therefore, from \eqref{eq:cond},
+        \item If $A \subset B$ and $A \neq B$, then we can write $B = A+C$,
+        where $AC = 0$ and $C \neq 0$. Thus,
         \begin{align}
-            \pr{B|A} = \pr{A|B} = 1
-            \label{eq:opt-a}
+            \pr{B} &= \pr{A+C} \\
+                   &= \pr{A}+\pr{C}-\pr{AC} \\
+                   &= \pr{A}+\pr{C} > \pr{A}
+                   \label{eq:great}
         \end{align}
-        This implies that $B \subset A$, which is a contradiction.
+        However, we know that $\pr{A} = \pr{B}$. This is a contradiction.
         \item We give a counterexample to show this is wrong. Consider
         $A$ to denote the event that an even number shows on rolling a 
         fair die and $B$ denote the event that a prime number shows on
