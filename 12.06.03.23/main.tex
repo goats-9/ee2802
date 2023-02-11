@@ -112,11 +112,20 @@ columns=fullflexible
         \vec{x}^\top\vec{V_ix} + 2\vec{u_i}^\top\vec{x} + f_i = 0
         \label{eq:conic-def}
     \end{align}
-    where
+    where $i = 1, 2$, and
     \begin{align}
         \vec{V_1} = \myvec{0&0\\0&1},\ \vec{u_1} = \myvec{-\frac{1}{2}\\0},\ f_1 = 0 \\
         \vec{V_2} = \myvec{0&\frac{1}{2}\\\frac{1}{2}&0},\ \vec{u_2} = \vec{0},\ f_2 = -k
         \label{eq:vals}
+    \end{align}
+    Subtracting the two equations,
+    \begin{align}
+        \vec{x}^\top\myvec{0&\frac{1}{2}\\\frac{1}{2}&-1}\vec{x} + \myvec{\frac{1}{2}&0}\vec{x} - k = 0
+        \label{eq:st-lines}
+    \end{align}
+    Notice that for \eqref{eq:st-lines},
+    \begin{align}
+        \myvec{\vec{A}&\vec{u}\\\vec{u}^\top&f} = \myvec{0&\frac{1}{2}&\frac{1}{2}\\\frac{1}{2}&-1&0}
     \end{align}
 \end{enumerate}
 \end{document}
