@@ -103,18 +103,19 @@ columns=fullflexible
      \def\midbox#1{\raisebox{-0.5\baselineskip}[0in][0in]{#1}}
 
 \vspace{3cm}
-\title{Semidefinite Programming Assignment}
+\title{Quadratic Programming Assignment}
 \author{Gautam Singh}
 \maketitle
 \bigskip
 
 \begin{abstract}
     This document contains the solution to Question 21 of 
-    Exercise 6 in Chapter 6 of the class 12 NCERT textbook.
+    Exercise 6 in Chapter 6 of the class 12 NCERT textbook
+    using quadratic programming.
 \end{abstract}
 
 \begin{enumerate}
-    \item The line 
+    \item The line
     \begin{align}
         y = mx + 1 \label{eq:line}
     \end{align}
@@ -133,58 +134,33 @@ columns=fullflexible
     \solution Rewriting \eqref{eq:line} and \eqref{eq:curve} in standard forms,
     we get,
     \begin{align}
-        \vec{n} = \myvec{m\\-1}, c = -1 \label{eq:line-params} \\
-        \vec{V} = \myvec{0&0\\0&1}, \vec{u} = \myvec{-2\\0}, f = 0 \label{eq:curve-params}
+        &\vec{n} = \myvec{m\\-1},\ c = -1 \label{eq:line-params} \\
+        &\vec{V} = \myvec{0&0\\0&1},\ \vec{u} = \myvec{-2\\0},\ f = 0 \label{eq:curve-params}
     \end{align}
-    Now, we rotate the axes by applying the transformation
+    Hence, the equivalent optimization problem is
     \begin{align}
-        \vec{x} \leftarrow \vec{Px}
-        \label{eq:trans}
+        &\min_{\vec{x}} \frac{\brak{\vec{n}^\top\vec{x}-c}^2}{\norm{\vec{n}}^2} \label{eq:cost} \\
+        &\textrm{s.t. } \vec{x}^\top\vec{Vx} + 2\vec{u}^\top\vec{x} + f = 0 \label{eq:constr}
     \end{align}
-    such that
+    Using
     \begin{align}
-        \vec{Pn} = \vec{e_1} \label{eq:n-e1}
+        \vec{y} \triangleq \myvec{\vec{x}\\1} 
+        \label{eq:y-def}
     \end{align}
-    We find $\vec{P}$ by forming the augmented matrix
+    In quadratic form, \eqref{eq:cost} becomes
     \begin{align}
-        \myvec{1&0&m\\0&1&-1} &\xleftrightarrow[]{R_1 \leftarrow \frac{R_1}{m}} \myvec{\frac{1}{m}&0&1\\0&1&-1} \\
-                &\xleftrightarrow[]{R_2 \leftarrow R_1 + R_2} \myvec{\frac{1}{m}&0&1\\\frac{1}{m}&1&0}
-                \label{eq:aug-P}
+        \min_{\vec{x}} \vec{x}^\top\brak{\frac{\vec{nn}^\top}{\norm{\vec{n}}^2}}\vec{x} + 2\brak{-\frac{c\vec{n}^\top}{\norm{\vec{n}}^2}}\vec{x} + \frac{c^2}{\norm{\vec{n}}^2}
     \end{align}
-    giving
-    \begin{align}
-        \vec{P} = \myvec{\frac{1}{m}&0\\\frac{1}{m}&1}
-        \label{eq:P-val}
-    \end{align}
-    Thus, using \eqref{eq:trans}, the optimization problem becomes
-    \begin{align}
-        \min_{\vec{x}} \norm{\vec{x}}^2 \label{eq:cost} \\
-        \textrm{s.t. } \vec{x}^\top\vec{P}^\top\vec{VPx} + 2\vec{u}^\top\vec{Px} + f = 0 \label{eq:constr}
-    \end{align}
-    We use semidefinite programming to solve this problem. Setting
-    \begin{align}
-        \vec{y} = \myvec{\vec{x}\\1}
-    \end{align}
-    we rewrite the optimization problem as
-    \begin{align}
-        \min_{\vec{y}}\vec{y}^\top\vec{Cy} \label{eq:y-cost} \\
-        \textrm{s.t. } \vec{y}^\top\vec{Ay} = 0 \label{eq:y-constr}
-    \end{align}
-    Using semidefinite relaxation, the problem becomes
-    \begin{align}
-        \min_{\vec{Y}} \tr{\vec{CY}} \label{eq:sd-cost} \\
-        \textrm{s.t. } \tr{\vec{AY}} = 0 \label{eq:sd-constr} \\
-        \vec{A} \succeq \vec{0} \label{eq:sd-psd}
-    \end{align}
-    The Python code \texttt{codes/sdp.py} solves this problem by plotting
-    the values of \eqref{eq:sd-cost} in Fig. \ref{fig:sdp-graph} and choosing 
-    $m$ appropriately using \textit{cvxpy}. The cost \eqref{eq:sd-cost} is 
-    minimized when $m = \pm 1$. Hence, option \textbf{a)} is correct.
+    We solve this problem using quadratic programming. The Python code 
+    \texttt{codes/qp.py} finds the value of $m$ that has the least cost
+    by plotting Fig. \ref{fig:qp}. 
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=\columnwidth]{figs/sdp.png}
-        \caption{Cost for various values of $m$.}
-        \label{fig:sdp-graph}
+        \includegraphics[width=\columnwidth]{figs/qp.png}
+        \caption{Cost as a function of $m$.}
+        \label{fig:qp}
     \end{figure}
+    We see that the optimal slope is $m = 1$. Hence, \textbf{a)} is the
+    correct answer.
 \end{enumerate}
 \end{document}
