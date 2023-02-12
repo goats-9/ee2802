@@ -142,11 +142,6 @@ columns=fullflexible
         &\min_{\vec{x}} \frac{\brak{\vec{n}^\top\vec{x}-c}^2}{\norm{\vec{n}}^2} \label{eq:cost} \\
         &\textrm{s.t. } \vec{x}^\top\vec{Vx} + 2\vec{u}^\top\vec{x} + f = 0 \label{eq:constr}
     \end{align}
-    Using
-    \begin{align}
-        \vec{y} \triangleq \myvec{\vec{x}\\1} 
-        \label{eq:y-def}
-    \end{align}
     In quadratic form, \eqref{eq:cost} becomes
     \begin{align}
         \min_{\vec{x}} \vec{x}^\top\brak{\frac{\vec{nn}^\top}{\norm{\vec{n}}^2}}\vec{x} + 2\brak{-\frac{c\vec{n}^\top}{\norm{\vec{n}}^2}}\vec{x} + \frac{c^2}{\norm{\vec{n}}^2}

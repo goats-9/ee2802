@@ -4,20 +4,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-#Generate line points
-def line_gen(A,B):
-  len =10
-  dim = A.shape[0]
-  x_AB = np.zeros((dim,len))
-  lam_1 = np.linspace(0,1,len)
-  for i in range(len):
-    temp1 = A + lam_1[i]*(B-A)
-    x_AB[:,i]= temp1.T
-  return x_AB
-
-#Generate the required parabola
-def parab_gen(x,a):
-    return x**2/a
+##Generate line points
+#def line_gen(A,B):
+#  len =10
+#  dim = A.shape[0]
+#  x_AB = np.zeros((dim,len))
+#  lam_1 = np.linspace(0,1,len)
+#  for i in range(len):
+#    temp1 = A + lam_1[i]*(B-A)
+#    x_AB[:,i]= temp1.T
+#  return x_AB
+#
+##Generate the required parabola
+#def parab_gen(x,a):
+#    return x**2/a
 
 V = np.array([[0,0],[0,1]])
 u = np.array([[-2],[0]])
