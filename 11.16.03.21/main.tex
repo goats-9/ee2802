@@ -122,55 +122,56 @@ columns=fullflexible
         \item The student has opted NSS but not NCC.
     \end{enumerate}
 
-    \solution Define random variables $C$ and $S$ as
-    \begin{align}
-        C &=
-        \begin{cases}
-            1, \textrm{if the student opted for NCC} \\
-            0, \textrm{otherwise}
-        \end{cases} \label{eq:C-def} \\
-        S &=
-        \begin{cases}
-            1, \textrm{if the student opted for NSS} \\
-            0, \textrm{otherwise}
-        \end{cases} \label{eq:S-def}
-    \end{align}
+    \solution Define random variables $X$ and $Y$ as shown
+    in Tables \ref{tab:X-def} and \ref{tab:Y-def}.
+    \begin{table}[!ht]
+        \centering
+        \input{tables/11.16.03.21_1.tex}
+        \caption{Definition of $X$.}
+        \label{tab:X-def}
+    \end{table}
+    \begin{table}[!ht]
+        \centering
+        \input{tables/11.16.03.21_2.tex}
+        \caption{Definition of $Y$.}
+        \label{tab:Y-def}
+    \end{table}
     From the given data
     \begin{align}
-        \pr{C=1} &= \frac{30}{60} = \frac{1}{2} \label{eq:pr-C} \\
-        \pr{S=1} &= \frac{32}{60} = \frac{8}{15} \label{eq:pr-S} \\
-        \pr{C=1,\ S=1} &= \frac{24}{60} = \frac{2}{5} \label{eq:pr-CS}
+        \pr{X=1} &= \frac{30}{60} = \frac{1}{2} \label{eq:pr-X} \\
+        \pr{Y=1} &= \frac{32}{60} = \frac{8}{15} \label{eq:pr-Y} \\
+        \pr{X=1,\ Y=1} &= \frac{24}{60} = \frac{2}{5} \label{eq:pr-XY}
     \end{align}
     Thus, we write
     \begin{align}
-        &\pr{C=1,\ S=0} \nonumber \\
-        &= \pr{C=1} - \pr{C=1,\ S=1} = \frac{1}{10} \\
-        &\pr{C=0,\ S=1} \nonumber \\
-        &= \pr{S=1} - \pr{C=1,\ S=1} = \frac{2}{15} \\
-        &\pr{C=0,\ S=0} \nonumber \\
-        &= \pr{S=0} - \pr{C=1,\ S=0} \\
-        &= 1 - \pr{S=1} - \pr{C=1,\ S=0} \\
+        &\pr{X=1,\ Y=0} \nonumber \\
+        &= \pr{X=1} - \pr{X=1,\ Y=1} = \frac{1}{10} \\
+        &\pr{X=0,\ Y=1} \nonumber \\
+        &= \pr{Y=1} - \pr{X=1,\ Y=1} = \frac{2}{15} \\
+        &\pr{X=0,\ Y=0} \nonumber \\
+        &= \pr{Y=0} - \pr{X=1,\ Y=0} \\
+        &= 1 - \pr{Y=1} - \pr{X=1,\ Y=0} \\
         &= 1 - \frac{8}{15} - \frac{1}{10} = \frac{11}{30}
     \end{align}
     and form the joint pmf as in Table \ref{tab:joint}.
     \begin{table}[!ht]
         \centering
-        \input{tables/11.16.03.21_1.tex}
-        \caption{Joint pmf of $C$ and $S$.}
+        \input{tables/11.16.03.21_3.tex}
+        \caption{Joint pmf of $X$ and $Y$.}
         \label{tab:joint}
     \end{table}
     \begin{enumerate}
-        \item We are required to find $\pr{C+S\ge1}$. Thus, from Table 
+        \item We are required to find $\pr{X+Y\ge1}$. Thus, from Table 
         \ref{tab:joint},
         \begin{align}
-            \pr{C+S\ge1} &= 1 - \pr{C+S=0} \\
+            \pr{X+Y\ge1} &= 1 - \pr{X+Y=0} \\
                          &= \frac{19}{30}
         \end{align}
         
-        \item We are required to find $\pr{C=0,\ S=0}$. But from Table \ref{tab:joint},
+        \item We are required to find $\pr{X=0,\ Y=0}$. But from Table \ref{tab:joint},
         this value is $\frac{11}{30}$.
 
-        \item We are required to find $\pr{C=0,\ S=1}$. But from Table \ref{tab:joint},
+        \item We are required to find $\pr{X=0,\ Y=1}$. But from Table \ref{tab:joint},
         this value is $\frac{2}{15}$.
     \end{enumerate}
 \end{enumerate}
