@@ -119,32 +119,35 @@ columns=fullflexible
     conditional probability of the event `the coin shows a tail', given that `at 
     least one die shows a 3'.
 
-    \solution Define random variables $X$ and $Y$ to be the outcomes
-    of the first and second events repectively as shown
-    in Tables \ref{tab:X-def} and \ref{tab:Y-def}.
-    \begin{table}[!ht]
-        \centering
-        \input{tables/12.13.01.15_1.tex}
-        \caption{Definition of $X$.}
-        \label{tab:X-def}
-    \end{table}
-    \begin{table}[!ht]
-        \centering
-        \input{tables/12.13.01.15_2.tex}
-        \caption{Definition of $Y$.}
-        \label{tab:Y-def}
-    \end{table}
-
-    We are required to find $\pr{Y=1|X=3}$. Since both the coin and die are fair,
-    the joint pmf of $X$ and $Y$ is as shown in Table \ref{tab:joint}.
-    \begin{table}[!ht]
-        \centering
-        \input{tables/12.13.01.15_3.tex}
-        \caption{Joint pmf of $X$ and $Y$.}
-        \label{tab:joint}
-    \end{table}
-
-    Clearly, $\pr{X=3,\ Y=1} = 0$, thus
+    \solution Let $X$ denote the die roll for the first trial. The pmf of $X$ is
+    \begin{align}
+        \pr{X=k} = 
+        \begin{cases}
+            \frac{1}{6} & 1 \le i \le 6 \\
+            0 & \textrm{otherwise}
+        \end{cases}
+        \label{eq:pmf-X}
+    \end{align}
+    Let $Y$ be the random variable denoting the outcome of the coin toss in the
+    second trial. The pmf of $Y$ is
+    \begin{align}
+        \pr{Y=k} = 
+        \begin{cases}
+            \frac{1}{2} & 0 \le i \le 1 \\
+            0 & \textrm{otherwise}
+        \end{cases}
+        \label{eq:pmf-Y}
+    \end{align}
+    We are required to find $\pr{Y=1|X=3}$. However, from the given data,
+    \begin{align}
+        \pr{Y=1,\ X=k} = 
+        \begin{cases}
+            \frac{1}{12} & k \in \cbrak{1,2,4,5} \\
+            0 & \textrm{otherwise}
+        \end{cases}
+        \label{eq:pmf-XY}
+    \end{align}
+    Therefore, from \eqref{eq:pmf-XY},
     \begin{align}
         \pr{Y=1|X=3} = \frac{\pr{X=3,\ Y=1}}{\pr{X=3}} = 0
     \end{align}
