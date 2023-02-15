@@ -140,30 +140,47 @@ columns=fullflexible
         Y \sim \textrm{Bin}\brak{n,p}
         \label{eq:pmf-Y}
     \end{align}
+    The cdf of $Y$ is given by
+    \begin{align}
+        F_Y\brak{k} &= \pr{Y \le k} \\
+                    &=
+        \begin{cases}
+            0 & k < 0 \\
+            \sum_{i=1}^{k}\myvec{n\\i}p^i\brak{1-p}^{n-i} & 1 \le k \le n \\
+            1 & k \ge n
+        \end{cases}
+        \label{eq:cdf-Y}
+    \end{align}
     In this case,
     \begin{align}
         p = \frac{2}{5},\ n = 6
     \end{align}
     \begin{enumerate}
-        \item We require $\pr{Y=6}$. Thus,
+        \item We require $\pr{Y=6}$. Thus, from \eqref{eq:pmf-Y},
             \begin{align}
                 \pr{Y=6} &= \myvec{n\\6}p^6\brak{1-p}^0 \\
                          &= 0.004096
+                         \label{eq:ans-a}
             \end{align}
 
-        \item We require $\pr{Y\ge4}$. Thus,
+        \item We require $\pr{Y\ge4}$. Thus, from \eqref{eq:cdf-Y},
             \begin{align}
-                \pr{Y\ge4} &= \sum_{k=4}^6\pr{Y=k} \\
+                \pr{Y\ge4} &= 1 - \pr{Y<4} \\
+                           &= F_Y\brak{6} - F_Y\brak{3} \\
+                           &= \sum_{k=4}^6\pr{Y=k} \\
                            &= \sum_{k=4}^6\myvec{n\\k}p^k\brak{1-p}^{n-k} \\
                            &= 0.1792
             \end{align}
 
-        \item We require $\pr{Y\le5}$. Since $n = 6$ in \eqref{eq:pmf-Y},
+        \item We require $\pr{Y\le5}$. Since $n = 6$ in \eqref{eq:cdf-Y},
+            using \eqref{eq:ans-a} gives
             \begin{align}
-                \pr{Y\le5} = 1 - \pr{Y=6} = 0.995904
+                \pr{Y\le5} &= F_Y\brak{5} \\
+                           &= 1 - \pr{Y=6} \\
+                           &= 0.995904
             \end{align}
 
-        \item We require $\pr{Y=3}$. Thus,
+        \item We require $\pr{Y=3}$. Thus, from \eqref{eq:pmf-Y},
             \begin{align}
                 \pr{Y=3} &= \myvec{n\\3}p^3\brak{1-p}^{n-3} \\
                          &= 0.27648
