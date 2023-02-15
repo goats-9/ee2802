@@ -20,8 +20,6 @@ int main() {
         for (int j = 0; j < n; j++) ans += bernoulli(p);
         ++arr[ans];
     }
-    for (int i = 0; i < n+1; i++) printf("%d ", arr[i]);
-    printf("\n");
     // Answers
     double a1 = 0.004096;
     double a2 = 0.1792;
