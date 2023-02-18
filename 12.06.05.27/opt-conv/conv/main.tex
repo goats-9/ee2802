@@ -147,7 +147,22 @@ columns=fullflexible
         \label{eq:convex}
     \end{align}
     Hence, the optimization problem is convex as the set of points on the 
-    parabola form a convex set. The problem is solved using \textit{cvxpy}
-    in the Python code \texttt{codes/parab\_cvx.py}.
+    parabola form a convex set. We can solve the above problem using quadratic
+    programming (QP) or semidefinite programming (SDP). In the case of the latter, we
+    apply the semidefinite relaxation to get the following problem.
+    \begin{align}
+        \min_{\vec{X}}&\textrm{ tr}\brak{\vec{CX}} \label{eq:sdp-cost} \\
+        \textrm{s.t. }&\textrm{ tr}\brak{\vec{AX}} \le 0 \label{eq:sdp-constr} \\
+                      &\vec{X} \succeq 0
+    \end{align}
+    where
+    \begin{align}
+        \vec{C} &= \myvec{\vec{I}&-\vec{P}\\-\vec{P}^\top&\norm{\vec{P}}^2} \label{eq:C-def} \\
+        \vec{A} &= \myvec{\vec{V}&\vec{u}\\\vec{u}^\top&f} \label{eq:A-def}
+    \end{align}
+
+    The problem is solved using \textit{cvxpy} in the Python codes 
+    \texttt{codes/parab\_qp.py} using QP and \texttt{codes/parab\_sdp.py}
+    using SDP.
 \end{enumerate}
 \end{document}
