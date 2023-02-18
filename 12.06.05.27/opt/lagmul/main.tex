@@ -127,27 +127,10 @@ columns=fullflexible
     \begin{align}
         \vec{V} = \myvec{1&0\\0&0},\ \vec{u} = \myvec{0\\-1}
     \end{align}
-    First, we show that \eqref{eq:constr} is nonconvex. Indeed, suppose 
-    $\vec{x_1}$ and $\vec{x_2}$ satisfy $h\brak{\vec{x}} = 0$. Then, 
-    \begin{align}
-        \vec{x_1}^\top\vec{Vx_1} + 2\vec{u}^\top\vec{x_1} + f &= 0 \label{eq:x1-parab} \\
-        \vec{x_2}^\top\vec{Vx_2} + 2\vec{u}^\top\vec{x_2} + f &= 0 \label{eq:x2-parab}
-    \end{align}
-    Then, for any $0 \le \lambda \le 1$, substituting
-    \begin{align}
-        \vec{x_\lambda} \leftarrow \lambda\vec{x_1} + \brak{1-\lambda}\vec{x_2}
-    \end{align}
-    into \eqref{eq:constr}, we get
-    \begin{align}
-        h\brak{\vec{x_\lambda}} = \lambda\brak{\lambda-1}\brak{\vec{x_1}-\vec{x_2}}^\top\vec{V}\brak{\vec{x_1}-\vec{x_2}} + f \neq 0
-        \label{eq:nonconvex}
-    \end{align}
-    Hence, the optimization problem is nonconvex. The constraints
-    throw an error when \textit{cvxpy} is used, as shown in the erroneous Python code
-    \texttt{codes/parab\_cvx.py}.
 
-    We use the method of Lagrange multipliers instead to find the optima. Here, 
-    we need to find $\lambda \in \mathbb{R}$ such that there exists a $\vec{x}$ 
+    Since the given optimization problem is nonconvex, we use the method of 
+    Lagrange multipliers to find the optima. Here, we need to find 
+    $\lambda \in \mathbb{R}$ such that there exists a $\vec{x}$ 
     satisfying
     \begin{align}
         \nabla g\brak{\vec{x}} &= \lambda\nabla h\brak{\vec{x}} \\
@@ -193,15 +176,5 @@ columns=fullflexible
         \label{eq:true-min}
     \end{align}
     Thus, the correct answer is \textbf{a)}.
-
-    We demonstrate both of the minima in \eqref{eq:true-min} is obtained using 
-    constrained gradient descent in Fig. \ref{fig:gd-pits}, plotted using the 
-    Python code \texttt{codes/grad\_pits.py}.
-    \begin{figure}[!ht]
-        \centering
-        \includegraphics[width=\columnwidth]{figs/grad_pits.png}
-        \caption{Gradient descent for a nonconvex optimization problem.}
-        \label{fig:gd-pits}
-    \end{figure}
 \end{enumerate}
 \end{document}
