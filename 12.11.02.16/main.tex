@@ -158,12 +158,12 @@ columns=fullflexible
     \begin{align}
         \vec{m_1}^\top\brak{\vec{A}-\vec{B}} = 0 \\
         \vec{m_2}^\top\brak{\vec{A}-\vec{B}} = 0 \\
-        \implies \vec{M}^\top\brak{\vec{A}-\vec{B}} = \vec{O}
+        \implies \vec{M}^\top\brak{\vec{A}-\vec{B}} = \vec{0}
         \label{eq:perp-vec}
     \end{align}
     Using \eqref{eq:a-def} and \eqref{eq:b-def} in \eqref{eq:perp-vec},
     \begin{align}
-        \vec{M}^\top\brak{\vec{x_1}-\vec{x_2} + \vec{M}\vec{\lambda}} = \vec{O} \\
+        \vec{M}^\top\brak{\vec{x_1}-\vec{x_2} + \vec{M}\vec{\lambda}} = \vec{0} \\
         \implies \vec{M^\top M\lambda} = \vec{M}^\top\brak{\vec{x_2}-\vec{x_1}}
         \label{eq:lambda-eqn}
     \end{align}
@@ -181,11 +181,11 @@ columns=fullflexible
     \end{align}
     Hence, using \eqref{eq:lambda-def} and substituing into \eqref{eq:a-def} and \eqref{eq:b-def},
     \begin{align}
-        \vec{A} = \frac{1}{19}\myvec{29\\8\\77} \quad \vec{B} = \frac{1}{19}\myvec{20\\11\\86}
+        \vec{A_m} = \frac{1}{19}\myvec{29\\8\\77},\ \vec{B_m} = \frac{1}{19}\myvec{20\\11\\86}
     \end{align}
     Thus, the required distance is
     \begin{align}
-        \norm{\vec{B}-\vec{A}} = \frac{\sqrt{9^2 +3^2 +(-9)^2}}{19} = \frac{3}{\sqrt{19}}
+        \norm{\vec{B_m}-\vec{A_m}} = \frac{\sqrt{9^2 +3^2 +(-9)^2}}{19} = \frac{3}{\sqrt{19}}
     \end{align}
     The situation is depicted in Fig. \ref{fig:skew}.
 

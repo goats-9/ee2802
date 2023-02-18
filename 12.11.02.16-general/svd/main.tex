@@ -169,69 +169,38 @@ columns=fullflexible
     \end{align}
     and thus, $f$ is convex.
 
-    We need to minimize $f$ as a function of $\vec{\lambda}$. 
+    We need to minimize $f$ as a function of $\vec{\lambda}$.
     Differentiating \eqref{eq:f-def} using the chain rule,
     \begin{align}
         \frac{df\brak{\vec{\lambda}}}{d\vec{\lambda}} &= \vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}+\vec{M}\brak{\vec{M\lambda}-\vec{x}}^\top \\
                                                       &= 2\vec{M}^\top\brak{\vec{M\lambda}-\vec{x}}
         \label{eq:vec-min}
     \end{align}
-    Using gradient descent, with learning rate $\alpha$, we get the update
-    equation
+    Setting \eqref{eq:vec-min} to zero gives the equation
     \begin{align}
-        \vec{\lambda_{n+1}} &= \vec{\lambda_n} - 2\alpha\vec{M}^\top\brak{\vec{M\lambda_n}-\vec{x}} \\
-                        &= \brak{\vec{I}-2\alpha\vec{M}^\top\vec{M}}\vec{\lambda_n} + 2\alpha\vec{M}^\top\vec{x}
-        \label{eq:gd-upd}
+        \vec{M}^\top\vec{M\lambda} = \vec{M}^\top\vec{x}
+        \label{eq:vec-eqn}
     \end{align}
-    Define the vector-valued one sided $Z$-transform as
+    We use singular value decomposition here. Let
     \begin{align}
-        \vec{X}\brak{z} = \sum_{k=0}^{\infty}\vec{x_k}z^{-k}
-        \label{eq:Z-vec}
+        \vec{M} = \vec{U\Sigma V}^\top
+        \label{eq:M-svd}
     \end{align}
-    Taking the vector-valued one sided $Z$-transform on both sides of
-    \eqref{eq:gd-upd}, and defining
+    where $\vec{U}, \vec{V}$ are orthogonal and $\vec{\Sigma}$ is diagonal with
+    nonnegative diagonal entries. Substituting in \eqref{eq:vec-eqn},
     \begin{align}
-        \vec{U} \triangleq \vec{I} - \brak{\vec{I}-2\alpha\vec{M}^\top\vec{M}}
-        \label{eq:U-def}
+        \vec{V\Sigma U}^\top\vec{U\Sigma V}^\top\vec{\lambda} = \vec{V\Sigma U}^\top\vec{x} \\
+        \implies \vec{V\Sigma}^2\vec{V}^\top\vec{\lambda} = \vec{V\Sigma U}^\top\vec{x} \\
+        \implies \vec{\lambda} = \brak{\vec{V\Sigma}^2\vec{V}^\top}^{-1}\vec{V\Sigma U}^\top\vec{x} \\
+        \implies \vec{\lambda} = \vec{V\Sigma}^{-2}\vec{V}^\top\vec{V\Sigma U}^\top\vec{x} \\
+        \implies \vec{\lambda} = \vec{V\Sigma}^{-1}\vec{U}^\top\vec{x} \label{eq:lambda-sol}
     \end{align}
-    we get,
+    where $\vec{\Sigma}^{-1}$ is obtained by inverting the nonzero elements of
+    $\vec{\Sigma}$. Thus, the shortest distance is given by using \eqref{eq:M-svd}
+    and \eqref{eq:lambda-sol} in \eqref{eq:f-def}, and is given by
     \begin{align}
-        &z\vec{\Lambda}\brak{z} = \vec{U\Lambda}\brak{z} + \frac{2\alpha}{1-z^{-1}}\vec{M}^\top\vec{x} \\
-        &\brak{\vec{I}-\vec{U}z^{-1}}\vec{\Lambda}\brak{z} = \frac{2\alpha z^{-1}}{1-z^{-1}}\vec{M}^\top\vec{x} \\
-        &\vec{\Lambda}\brak{z} = \frac{2\alpha}{1-z^{-1}}\brak{\vec{I}-\vec{U}z^{-1}}^{-1}\vec{M}^\top\vec{x} \\
-        &\vec{\Lambda}\brak{z} = \frac{2\alpha z^{-1}}{1-z^{-1}}\brak{\sum_{k=0}^{\infty}\brak{\vec{U}z^{-1}}^k}\vec{M}^\top\vec{x} \\ 
-        &\vec{\Lambda}\brak{z} = 2\alpha\sum_{m=0}^{\infty}\sum_{k=0}^{\infty}\vec{U}^kz^{-(m+k+1)}\vec{M}^\top\vec{x} \label{eq:roc} \\
-        &\vec{\Lambda}\brak{z} = 2\alpha\sum_{n=1}^{\infty}\sum_{k=0}^{n}\vec{U}^k\vec{M}^\top\vec{x}z^{-n} \label{eq:L-n}
+        d = \norm{\brak{\vec{U}\brak{\vec{\Sigma\Sigma}^{-1}}\vec{U}^\top-\vec{I}}\vec{x}}
+        \label{eq:min-sol}
     \end{align}
-    where \eqref{eq:L-n} follows from setting $n := m + k + 1$. The ROC of $z$ must
-    not depend on $\alpha$, thus using \eqref{eq:U-def}, \eqref{eq:roc} follows when
-    \begin{align}
-        \norm{\vec{I}-2\alpha\vec{M}^\top\vec{M}} < 1 \\
-        \implies -1 < 1 - 2\alpha\norm{\vec{M}}^2 < 1 \\
-        \implies 0 < \alpha < \frac{1}{\norm{\vec{M}}^2}
-        \label{eq:alpha-cond}
-    \end{align}
-    Thus, using \eqref{eq:U-def},
-    \begin{align}
-        \vec{\lambda_n} &= 2\alpha\sum_{k=0}^{n}\vec{U}^k\vec{M}^\top\vec{x} \\
-        \implies \vec{\lambda} &= \lim_{n\to\infty}\vec{\lambda_n} \\
-                               &= 2\alpha\brak{\vec{I}-\vec{U}}^{-1}\vec{M}^\top\vec{x} \\
-                               &= \brak{\vec{M}^\top\vec{M}}^{-1}\vec{M}^\top\vec{x}
-                               \label{eq:lambda-sol}
-    \end{align}
-    Therefore, the required shortest distance is
-    \begin{align}
-        \norm{\vec{A}-\vec{B}} &= \norm{\brak{\vec{M}\brak{\vec{M}^\top\vec{M}}^{-1}\vec{M}^\top - \vec{I}}\vec{x}} 
-        \label{eq:dist-skew}
-    \end{align}
-
-    The situation is illustrated with $\alpha = 0.01$ and number of iterations
-    $N = 1000$ for this problem in Fig. \ref{fig:skew-gd}.
-    \begin{figure}[!ht]
-        \centering
-        \includegraphics[width=\columnwidth]{figs/skew_gd.png}
-        \caption{Finding the shortest distance using gradient descent.}
-        \label{fig:skew-gd}
-    \end{figure}
 \end{enumerate}
 \end{document}
