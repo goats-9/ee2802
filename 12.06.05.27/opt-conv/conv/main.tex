@@ -115,23 +115,42 @@ columns=fullflexible
     \solution We need to find
     \begin{align}
         \min_{\vec{x}} g\brak{\vec{x}} &= \norm{\vec{x}-\vec{P}}^2 \\
-        \textrm{s.t. } h\brak{\vec{x}} &= \vec{x}^\top\vec{Vx} + 2\vec{u}^\top\vec{x} = 0
+        \textrm{s.t. } h\brak{\vec{x}} &= \vec{x}^\top\vec{Vx} + 2\vec{u}^\top\vec{x} + f = 0 \label{eq:nonconv-constr}
     \end{align}
     where
     \begin{align}
-        \vec{V} = \myvec{1&0\\0&0},\ \vec{u} = \myvec{0\\-1}
+        \vec{V} = \myvec{1&0\\0&0},\ \vec{u} = \myvec{0\\-1},\ f = 0
     \end{align}
+    We first show that \eqref{eq:nonconv-constr} makes the problem nonconvex.
+    Suppose $\vec{x_1}$ and $\vec{x_2}$ satisfy $h\brak{\vec{x}} = 0$. Then,
+    \begin{align}
+        \vec{x_1}^\top\vec{Vx_1} + 2\vec{u}^\top\vec{x_1} + f &= 0 \label{eq:x1-parab} \\
+        \vec{x_2}^\top\vec{Vx_2} + 2\vec{u}^\top\vec{x_2} + f &= 0 \label{eq:x2-parab}
+    \end{align}
+    Then, for any $0 \le \lambda \le 1$, substituting
+    \begin{align}
+        \vec{x_\lambda} \leftarrow \lambda\vec{x_1} + \brak{1-\lambda}\vec{x_2}
+    \end{align}
+    into \eqref{eq:constr}, we get
+    \begin{align}
+        h\brak{\vec{x_\lambda}} = \lambda\brak{\lambda-1}\brak{\vec{x_1}-\vec{x_2}}^\top\vec{V}\brak{\vec{x_1}-\vec{x_2}} \neq 0
+        \label{eq:nonconvex}
+    \end{align}
+    as $\vec{x_1} - \vec{x_2}$ can be arbitrary. Hence, the optimization 
+    problem is nonconvex as the set of points on the parabola do not form a 
+    convex set.
+
     Since $\vec{P}$ lies \textit{outside} the given curve, we can apply the following
     relaxation to make it a convex optimization problem.
     \begin{align}
         \min_{\vec{x}} g\brak{\vec{x}} &= \norm{\vec{x}-\vec{P}}^2 \label{eq:cost} \\
-        \textrm{s.t. } h\brak{\vec{x}} &= \vec{x}^\top\vec{Vx} + 2\vec{u}^\top\vec{x} \le 0 \label{eq:constr}
+        \textrm{s.t. } h\brak{\vec{x}} &= \vec{x}^\top\vec{Vx} + 2\vec{u}^\top\vec{x} + f \le 0 \label{eq:constr}
     \end{align}
     We now show that the optimization problem is indeed convex. Suppose 
     $\vec{x_1}$ and $\vec{x_2}$ satisfy $h\brak{\vec{x}} \le 0$. Then, 
     \begin{align}
-        \vec{x_1}^\top\vec{Vx_1} + 2\vec{u}^\top\vec{x_1} + f &\le 0 \label{eq:x1-parab} \\
-        \vec{x_2}^\top\vec{Vx_2} + 2\vec{u}^\top\vec{x_2} + f &\le 0 \label{eq:x2-parab}
+        \vec{x_1}^\top\vec{Vx_1} + 2\vec{u}^\top\vec{x_1} + f &\le 0 \\
+        \vec{x_2}^\top\vec{Vx_2} + 2\vec{u}^\top\vec{x_2} + f &\le 0 
     \end{align}
     Then, for any $0 \le \lambda \le 1$, substituting
     \begin{align}
