@@ -124,7 +124,11 @@ columns=fullflexible
 
     We find the required minima using constrained gradient descent in 
     Fig. \ref{fig:gd-pits}, plotted using the Python code 
-    \texttt{codes/grad\_pits.py}.
+    \texttt{codes/grad\_pits.py}. The gradient descent update equation is
+    \begin{align}
+        \vec{x_{n+1}} = \vec{x_n} - 2\alpha\sgn{\brak{\brak{\vec{x_n}-\vec{P}}^\top\brak{\vec{Vx_n}+\vec{u}}}} \nonumber \\
+        \brak{\vec{Vx_n}+\vec{u}}
+    \end{align}
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=\columnwidth]{figs/grad_pits.png}
