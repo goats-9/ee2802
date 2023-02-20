@@ -132,7 +132,7 @@ columns=fullflexible
     Fig. \ref{fig:gd-pits}, plotted using the Python code 
     \texttt{codes/grad\_pits.py}. The constrained gradient descent update equation is
     \begin{align}
-        \vec{x_{n+1}} &= \vec{x_n} - \alpha\nabla h\brak{\vec{x_n}} \\
+        \vec{x_{n+1}} &= \vec{x_n} - \alpha\sgn\brak{\brak{\nabla g\brak{\vec{x_n}}}^\top\brak{\nabla h\brak{\vec{x_n}}}}\nabla h\brak{\vec{x_n}} \\
         \vec{x_{n+1}} &= \vec{x_n} - 2\alpha\sgn{\brak{\brak{\vec{x_n}-\vec{P}}^\top\brak{\vec{Vx_n}+\vec{u}}}} \nonumber \\
                       &\brak{\vec{Vx_n}+\vec{u}} \label{eq:sgn}
     \end{align}
