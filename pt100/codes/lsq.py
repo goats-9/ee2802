@@ -2,21 +2,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 A = np.loadtxt('training_data.txt')
-X = np.hstack((A[:,[1]],np.ones((A.shape[0],1))))
-Y = A[:,[0]]
+X = np.hstack((np.ones((A.shape[0],1)),A[:,[0]],A[:,[0]]**2))
+T = A[:,[0]]
+Y = A[:,[1]]
 
 #Least squares method
-m, c = np.linalg.lstsq(X, Y, rcond=None)[0]
-print(m, c)
+v, av, bv = np.linalg.lstsq(X, Y, rcond=None)[0]
+theta = np.zeros((3,1))
+theta[0][0] = v
+theta[1][0] = av
+theta[2][0] = bv
+print(theta)
 
 #Plot both the results
-plt.plot(X, m*X+c)
-plt.plot(A[:,[1]], Y, 'k.')
+plt.plot(T, X@theta)
+plt.plot(T, Y, 'k.')
 plt.grid()
-plt.xlabel('Output Voltage (V)')
-plt.ylabel('Temperature ($^{\circ}$C)')
-plt.xlim([1.6,2.0])
-plt.ylim([0,70])
+plt.ylabel('Output Voltage (V)')
+plt.xlabel('Temperature ($^{\circ}$C)')
 plt.tight_layout()
 plt.savefig('../figs/train.png')
 
@@ -25,14 +28,13 @@ plt.close('all')
 
 #Plot for validation
 B = np.loadtxt('validation_data.txt')
-Xv = np.hstack((B[:,[1]],np.ones((B.shape[0],1))))
-Yv = B[:,[0]]
-plt.plot(Xv, m*Xv+c)
-plt.plot(B[:,[1]], Yv, 'k.')
-plt.xlabel('Output Voltage (V)')
-plt.ylabel('Temperature ($^{\circ}$C)')
-plt.xlim([1.6,2.0])
-plt.ylim([0,70])
+Xv = np.hstack((np.ones((B.shape[0],1)),B[:,[0]],B[:,[0]]**2))
+Yv = B[:,[1]]
+Tv = B[:,[0]]
+plt.plot(Tv, Xv@theta)
+plt.plot(Tv, Yv, 'k.')
+plt.ylabel('Output Voltage (V)')
+plt.xlabel('Temperature ($^{\circ}$C)')
 plt.grid()
 plt.tight_layout()
 plt.savefig('../figs/valid.png')

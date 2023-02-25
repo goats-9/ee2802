@@ -130,15 +130,14 @@ to drive the Arduino.
 
 \section{Model}
 
-For the PT-100, we assume a linear relation between celsius temperature $T$ and 
-output voltage $V$ given by
+For the PT-100, we use the Callendar-Van Dusen equation
 \begin{align}
-    T &= mV + k \\
-    \implies \vec{\theta}^\top\vec{x} &= y \label{eq:model}
+    V(T) &= V(0)\brak{1+AT+BT^2}
+    \implies y &= \vec{\theta}^\top\vec{x} \label{eq:model}
 \end{align}
 where
 \begin{align}
-    y = T,\ \vec{\theta} = \myvec{m\\k},\ \vec{x} = \myvec{V\\1}
+    y = V(T),\ \vec{\theta} = V(0)\myvec{1\\A\\B},\ \vec{x} = \myvec{1\\T\\T^2}
     \label{eq:x-y-theta-def}
 \end{align}
 
@@ -146,14 +145,14 @@ where
 To find the optimal parameters of the model \eqref{eq:model} can now be modeled 
 as an unconstrained optimization problem \eqref{eq:opt-model}
 \begin{align}
-    \min_{\vec{\theta}}\sum_{i}\abs{\vec{\theta}^\top x_i - y_i}^2
+    \min_{\vec{\theta}}\sum_{i}\abs{\vec{\theta}^\top\vec{x_i} - y_i}^2
     \label{eq:opt-model}
 \end{align}
 which is solved by the Python code \texttt{codes/lsq.py}.
 
 The optimized parameters are
 \begin{align}
-    \vec{\theta} = \myvec{333.05\\-551.34}
+    \vec{\theta} = \myvec{1.6547\\3.199\times10^{-3}\\-3.9599\times10^{-6}}
     \label{eq:opt-theta}
 \end{align}
 
