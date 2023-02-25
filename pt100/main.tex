@@ -145,8 +145,13 @@ where
 To find the optimal parameters $\vec{n}$, \eqref{eq:model} can now be modeled 
 as an unconstrained optimization problem.
 \begin{align}
-    \min_{\vec{n}}\sum_{i}\abs{\vec{n}^\top\vec{x_i} - c_i}^2
+    \min_{\vec{n}}\norm{\vec{n}^\top\vec{X} - \vec{C}}^2
     \label{eq:opt-model}
+\end{align}
+where
+\begin{align}
+    \vec{X} &= \myvec{1&1&\ldots&1\\T_1&T_2&\ldots&T_n\\T_1^2&T_2^2&\ldots&T_n^2} \\
+    \vec{C} &= \myvec{V\brak{T_1}&V\brak{T_2}&\ldots&V\brak{T_n}}
 \end{align}
 which is solved by the Python code \texttt{codes/lsq.py}.
 
@@ -157,7 +162,6 @@ The optimized parameters are
 \end{align}
 
 The fitting is shown in Fig. \ref{fig:train}.
-
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\columnwidth]{figs/train.png}
