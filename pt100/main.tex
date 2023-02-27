@@ -154,10 +154,15 @@ where
 and $\vec{n}$ is the unknown.
 
 \section{Solution}
-We approximate $\vec{n}$ by using the least sqaures method. \eqref{eq:lsq-eqn} 
-is solved by the Python code \texttt{codes/lsq.py}.
+We approximate $\vec{n}$ by using the least sqaures method. 
+Using the pseudo-inverse method, the solution to \eqref{eq:lsq-eqn} 
+is
+\begin{align}
+    \vec{n} = \brak{\vec{XX}^\top}^{-1}\vec{X}\vec{C}
+\end{align}
+The Python code \texttt{codes/lsq.py} solves for $\vec{n}$.
 
-Thus,
+The calculated value of $\vec{n}$ is
 \begin{align}
     \vec{n} = \myvec{1.6547\\3.199\times10^{-3}\\-3.9599\times10^{-6}}
     \label{eq:opt-theta}
