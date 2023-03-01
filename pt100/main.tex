@@ -185,9 +185,16 @@ The approximation is shown in Fig. \ref{fig:train}.
     \label{fig:train}
 \end{figure}
 
-Notice in \eqref{eq:opt-theta} that the optimal value of $C$ in \eqref{eq:model}
-is negative, and hence the governing equation is strictly concave. Hence, we
-cannot use gradient descent methods to solve this problem.
+Thus, the approximate model is given by
+\begin{align}
+    V(T) &= 1.6547 + \brak{3.199\times10^{-3}}T \nonumber \\
+         &- \brak{3.9599\times10^{-6}}T^2
+    \label{eq:opt-model}
+\end{align}
+
+Notice in \eqref{eq:opt-model} that the coefficient of $T^2$ is negative, and 
+hence the governing function is strictly concave. Hence, we cannot use gradient 
+descent methods to solve this problem.
 
 \section{Validation}
 The validation dataset is shown in Table \ref{tab:valid}. The results of the 
