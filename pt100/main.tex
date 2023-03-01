@@ -126,7 +126,21 @@ The training data gathered by the PT-100 to train the Arduino is shown in Table
 \end{table}
 
 The C++ source \texttt{codes/data.cpp} was used along with \textit{platformio}
-to drive the Arduino.
+to drive the Arduino. The effective schematic circuit diagram is shown in 
+\autoref{fig:ckt}.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{circuitikz} \draw
+        (0,0) to[battery1, l=$5\ V$, invert] (0,2)
+        to[R, l^=$10\ \Omega$] (3,2) to[short, -o] (5,2);
+        \draw (3,2) to[R, l^=$P\ \Omega$] (3,0)
+        -- (0,0);
+        \draw (3,0) to[short, -o] (5,0);
+    \end{circuitikz}
+    \caption{Schematic Circuit Diagram to Measure the Output of PT-100 ($P$).}
+    \label{fig:ckt}
+\end{figure}
 
 \section{Model}
 
@@ -154,15 +168,8 @@ where
 and $\vec{n}$ is the unknown.
 
 \section{Solution}
-We approximate $\vec{n}$ by using the least sqaures method. 
-
-\subsection{Pseuso-Inverse Method}
-Using the pseudo-inverse method, the solution to \eqref{eq:lsq-eqn} 
-is
-\begin{align}
-    \vec{n} = \brak{\vec{XX}^\top}^{-1}\vec{X}\vec{C}
-\end{align}
-The Python code \texttt{codes/lsq.py} solves for $\vec{n}$.
+We approximate $\vec{n}$ by using the least sqaures method. The Python code 
+\texttt{codes/lsq.py} solves for $\vec{n}$.
 
 The calculated value of $\vec{n}$ is
 \begin{align}
