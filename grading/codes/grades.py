@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 from math import isnan
+import matplotlib.pyplot as plt
+import os
+
 data = pd.read_excel('marks.xlsx')      #reading input
 df1 = data.loc[:,"Total" or "Marks"]    #storing marks column
 x = np.array(df1)
@@ -14,7 +17,6 @@ k = 8                                   #No.of Clusters(Grades)
 df2 = data.loc[:,"Grade"]               #Fixed grades
 fixed = np.array(df2)
 fixed = fixed.reshape(fixed.size,1)     #Converting to column
-
 
 k_points = np.linspace(0,1,k)*np.max(x) 
 #Initializing Clusters means spaced equally in (0,x_max)
@@ -60,8 +62,6 @@ for iter in range(iterations):
 
 grades = []                #Attach grades to the data points 
 
-
-
 for i in range(N):
     try :
         boolean = isnan(fixed[i])
@@ -86,4 +86,6 @@ for i in range(N):
             grades.append('A')
 data['Grades'] = grades
 data.to_excel('grades.xlsx',index = False)  #writing to file
-
+fig = data['Grades'].value_counts().sort_index(ascending=False).plot.bar().get_figure()
+fig.savefig('../figs/grades_kmeans.png')
+os.system('termux-open ../figs/grades_kmeans.png')

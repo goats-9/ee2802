@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from math import isnan
+import matplotlib.pyplot as plt
+import os
 data = pd.read_excel('marks.xlsx')      #reading input
 df1 = data.loc[:,"Total" or "Marks"]    #storing marks column
 x = np.array(df1)
@@ -30,6 +32,8 @@ for i in range(N):
     else: s = 'F'
     grades.append(s)
 
-data['Grade'] = grades
+data['Grades'] = grades
 data.to_excel('grades_norm.xlsx',index = False)  #writing to file
-data.to_csv('grades_norm.csv',index=False)
+fig = data['Grades'].value_counts().sort_index(ascending=False).plot.bar().get_figure()
+fig.savefig('../figs/grades_gauss.png')
+os.system('termux-open ../figs/grades_gauss.png')
