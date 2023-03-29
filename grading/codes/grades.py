@@ -84,8 +84,13 @@ for i in range(N):
             grades.append('A-')   
         if X[i][1] == 8:
             grades.append('A')
-data['Grades'] = grades
+data['Grade'] = grades
 data.to_excel('grades.xlsx',index = False)  #writing to file
-fig = data['Grades'].value_counts().sort_index(ascending=False).plot.bar().get_figure()
+fig = data['Grade'].value_counts().sort_index(ascending=False).plot.bar().get_figure()
+ax = fig.gca()
+ax.set_xlabel('Grade')
+ax.set_ylabel('Number of Students')
+ax.grid()
+fig.tight_layout()
 fig.savefig('../figs/grades_kmeans.png')
 os.system('termux-open ../figs/grades_kmeans.png')

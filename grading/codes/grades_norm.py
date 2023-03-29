@@ -6,6 +6,7 @@ import os
 data = pd.read_excel('marks.xlsx')      #reading input
 df1 = data.loc[:,"Total" or "Marks"]    #storing marks column
 x = np.array(df1)
+x = 100*x/np.max(x)
 #Population parameters
 mu = df1.mean()
 sig = df1.var()
@@ -35,5 +36,10 @@ for i in range(N):
 data['Grades'] = grades
 data.to_excel('grades_norm.xlsx',index = False)  #writing to file
 fig = data['Grades'].value_counts().sort_index(ascending=False).plot.bar().get_figure()
+ax = fig.gca()
+ax.set_xlabel('Grade')
+ax.set_ylabel('Number of Students')
+ax.grid()
+fig.tight_layout()
 fig.savefig('../figs/grades_gauss.png')
 os.system('termux-open ../figs/grades_gauss.png')

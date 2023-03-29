@@ -1,0 +1,313 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Inbuilt themes in beamer
+\documentclass{beamer}
+\usepackage{setspace}
+\usepackage{gensymb}
+\singlespacing
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{cite}
+\usepackage{cases}
+\usepackage{subfig}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}    
+\usepackage{array}    
+\usepackage{longtable}
+\usepackage{calc}     
+\usepackage{multirow} 
+\usepackage{hhline}   
+\usepackage{ifthen}   
+\DeclareMathOperator*{\Res}{Res}
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+\def\inputGnumericTable{}                                 %%
+
+\lstset{
+%language=C,
+frame=single, 
+breaklines=true,
+columns=fullflexible
+}
+%\lstset{
+%language=tex,
+%frame=single, 
+%breaklines=true
+%}
+\usetheme{CambridgeUS}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newtheorem{proposition}{Proposition}[section]
+\newcommand{\BEQA}{\begin{eqnarray}}
+\newcommand{\EEQA}{\end{eqnarray}}
+\newcommand{\define}{\stackrel{\triangle}{=}}
+\bibliographystyle{IEEEtran}
+\providecommand{\mbf}{\mathbf}
+\providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
+\providecommand{\qfunc}[1]{\ensuremath{Q\left(#1\right)}}
+\providecommand{\sbrak}[1]{\ensuremath{{}\left[#1\right]}}
+\providecommand{\lsbrak}[1]{\ensuremath{{}\left[#1\right.}}
+\providecommand{\rsbrak}[1]{\ensuremath{{}\left.#1\right]}}
+\providecommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\providecommand{\lbrak}[1]{\ensuremath{\left(#1\right.}}
+\providecommand{\rbrak}[1]{\ensuremath{\left.#1\right)}}
+\providecommand{\cbrak}[1]{\ensuremath{\left\{#1\right\}}}
+\providecommand{\lcbrak}[1]{\ensuremath{\left\{#1\right.}}
+\providecommand{\rcbrak}[1]{\ensuremath{\left.#1\right\}}}
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newcommand{\sgn}{\mathop{\mathrm{sgn}}}
+\providecommand{\abs}[1]{\left\vert#1\right\vert}
+\providecommand{\res}[1]{\Res\displaylimits_{#1}} 
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+\providecommand{\mtx}[1]{\mathbf{#1}}
+\providecommand{\mean}[1]{\mathbb{E}\left[ #1 \right]}   
+\providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
+\providecommand{\system}[1]{\overset{\mathcal{#1}}{ \longleftrightarrow}}
+\newcommand{\cosec}{\,\text{cosec}\,}
+\providecommand{\dec}[2]{\ensuremath{\overset{#1}{\underset{#2}{\gtrless}}}}
+\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
+\newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+% Theme choice:
+
+% Title page details: 
+\title[Machine Learning in Grading]{An Application of Machine Learning to Grading} 
+\author{Gautam Singh}
+\begin{document}
+
+
+% Title page frame
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+% Remove logo from the next slides
+\logo{}
+
+% Outline frame
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+
+% Lists frame
+\section{Introduction}
+\begin{frame}{Aim}
+    Compare grade distribution obtained by using the $K$-means algorithm to 
+    the grade distribution obtained using a standard normal distribution.
+    \begin{enumerate}
+        \item Which method is fairer?
+        \begin{enumerate}
+            \item Courses with skewed performance?
+            \item Courses with less students :)?
+        \end{enumerate}
+        \item Which method is faster to compute grades?
+        \item Which method reflects student efforts better?
+        \item What about failing students?
+        \item Which method can be extended to assess based on other factors?
+    \end{enumerate}
+\end{frame}
+
+\section{Resources}
+\begin{frame}{Resources}
+Marks datasheet and relevant Python codes can be found 
+\href{https://github.com/goats-9/ee2802-assignments/tree/main/grading/codes}{here}.
+\begin{enumerate}
+    \item Marks of students: \texttt{marks.xlsx}
+    \item Python code using Gaussian method: \texttt{grades\_norm.py}
+    \item Python code using $K$-means method: \texttt{grades.py}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Data Visualization}
+    \begin{figure}[!ht]
+        \centering
+        \includegraphics[width=0.6\columnwidth]{figs/dataset.png}
+        \caption{Histogram showing distribution of marks of the students.}
+        \label{fig:data}
+    \end{figure}
+\end{frame}
+
+\section{Grading Using the Gaussian Method}
+
+\begin{frame}{Population Measures}
+    Consider a dataset $\cbrak{\vec{x}_i}_{i=1}^N$.
+    \begin{enumerate}
+        \item The \textbf{population mean} is given by
+            \begin{align}
+                \vec{\mu} &\triangleq \mean{\vec{x}}
+                \label{eq:mean}
+            \end{align}
+        \item The \textbf{population covariance matrix} is given by
+            \begin{align}
+                \vec{\Sigma} &\triangleq \mean{\brak{\vec{x}-\vec{\mu}}\brak{\vec{x}-\vec{\mu}}^\top}
+                \label{eq:var}
+            \end{align}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Sample Measures}
+    Consider a sample $\cbrak{\vec{y}_i}_{i=1}^n$ drawn from the earlier dataset 
+    ($n \ll N$).
+    \begin{enumerate}
+        \item The \textbf{sample mean} is given by
+            \begin{align}
+                \bar{\vec{x}} &\triangleq \mean{\vec{y}}
+                \label{eq:smpl-mean}
+            \end{align}
+        \item The \textbf{sample covariance matrix} is given by
+            \begin{align}
+                \vec{s} &\triangleq \frac{n}{n-1} \mean{\brak{\vec{y}-\bar{\vec{x}}}\brak{\vec{x}-\bar{\vec{x}}}^\top}
+                \label{eq:smpl-var}
+            \end{align}
+    \end{enumerate}
+    Note that the sample measures are \textbf{unbiased estimators} of their
+    corresponding population measures.
+\end{frame}
+
+\begin{frame}{The $Z$-score}
+    \begin{enumerate}
+        \item We assume that the number of students is large and the distribution
+        of their parameters follows a normal distribution with population mean 
+        $\vec{\mu}$ and population covariance $\vec{\Sigma}$.
+        \item The $Z$-score of a student given their parameters $\vec{x}$ is 
+        given by
+        \begin{align}
+            \vec{Z} \triangleq \vec{\Sigma}^{-\frac{1}{2}}\brak{\vec{x}-\vec{\mu}}
+            \label{eq:Z-score}
+        \end{align}
+    \end{enumerate}
+    \begin{alertblock}{Statistical Note}
+        If the population is large, computing population parameters directly
+        is cumbersome. In this case, use the sample parameters to calculate
+        the $Z$-score.
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Application}
+    In this case, data is one dimensional (marks of the student). Also, the
+    population size is small enough to directly compute population measures.
+    \begin{enumerate}
+        \item The $Z$-score in this case will be
+            \begin{align}
+                Z = \frac{x-\mu}{\sigma}
+                \label{eq:Z-score-app}
+            \end{align}
+        where $x$ denotes the marks of the student.
+        \item The runtime in this case is $O\brak{N}$.
+        \item The marks were scaled relative to the highest scoring student.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Grading Scheme}
+    \begin{table}[!ht]
+        \centering
+        \input{tables/grades.tex}
+        \caption{Grading scheme used for calculation of $Z$-scores}
+        \label{tab:grade-scheme}
+    \end{table}
+\end{frame}
+
+\section{Grading Using the K-Means Method}
+\begin{frame}{The $K$-Means Algorithm}
+    \begin{enumerate}
+        \item It is an \textbf{unsupervised} learning algorithm.
+        \item It is a \textbf{classification} algorithm.
+        \item It is an \textbf{EM} algorithm (explained ahead).
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Definitions}
+    Consider a dataset $\cbrak{\vec{x}_n}_{n=1}^N$ and $K$ means
+    $\cbrak{\vec{\mu}_k}_{k=1}^K$.
+    \begin{enumerate}
+        \item We define binary indicator variables $r_{nk}$ for 
+        $1 \le n \le N,\ 1 \le k \le K$ as
+            \begin{align}
+                r_{nk} \triangleq
+                \begin{cases}
+                    1 & k = \argmin_j\norm{\vec{x}_n-\vec{\mu}_j}^2 \\
+                    0 & \textrm{otherwise}
+                \end{cases}
+                \label{eq:rnk-def}
+            \end{align}
+        \item The cost function is given by
+            \begin{align}
+                J \triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\mu_{k}}^2
+                \label{eq:cost-def}
+            \end{align}
+        \item We are required to find $\cbrak{\vec{\mu}_k}_{k=1}^K$ such that
+        \eqref{eq:cost-def} is minimized.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Working of the $K$-Means Algorithm}
+    The $K$-Means algorithm is an EM algorithm. Initally, we choose an arbitrary 
+    set of means. In each iteration, there are two steps.
+    \begin{enumerate}
+        \item \textit{E-step}: Here, we calculate all the $r_{nk}$ as defined
+            in \eqref{eq:rnk-def}.
+        \item \textit{M-step}: We set
+            \begin{align}
+                \vec{\mu}_k \leftarrow \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}}
+                \label{eq:M-step}
+            \end{align}
+    \end{enumerate}
+    \begin{alertblock}{What if a Cluster is Empty?}
+        If we encounter a $k$ such that $r_{nk} = 0\ \forall\ 1 \le n \le 
+        N$, we can either
+        \begin{enumerate}
+            \item Discard the cluster (by setting $K \leftarrow K - 1$)
+            \item Selecting a point ``far away'' from all clusters.
+        \end{enumerate}
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}{Application}
+    \begin{enumerate}
+        \item In this case, $K = 8$ and $N = 114$. The algorithm converged in 5 iterations.
+        \item The runtime in this case is $O\brak{NK}$ per iteration.
+        \item The marks were scaled relative to the highest scoring student.
+    \end{enumerate}
+\end{frame}
+
+\section{Results}
+\begin{frame}
+    \begin{figure}
+        \centering
+        \subfloat[\centering Standard Normal Distribution]{{\includegraphics[width=0.45\columnwidth]{figs/grades_gauss.png}}}
+        \qquad
+        \subfloat[\centering $K$-Means Algorithm]{{\includegraphics[width=0.45\columnwidth]{figs/grades_kmeans.png}}}
+        \caption{Comparison of grading distributions using both algorithms.}
+    \end{figure}
+\end{frame}
+
+\section{Conclusions}
+\begin{frame}{Conclusions}
+    \begin{enumerate}
+        \item Grading on a Gaussian curve failed less (in fact zero) students 
+        than in the case of grading using the $K$-means algorithm.
+        \item Grading on a Gaussian curve is faster for larger datasets, and
+        both algorithms would have very little difference.
+        \item The $K$-Means algorithm gives a better idea of the performance
+        of the class, especially when it is skew.
+        \item The $K$-Means algorithm can be extended to involve other factors
+        such as attendance, prerequisites completed, and so on.
+    \end{enumerate}
+\end{frame}
+\end{document}
