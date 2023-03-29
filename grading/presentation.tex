@@ -47,6 +47,11 @@ columns=fullflexible
 %frame=single, 
 %breaklines=true
 %}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+}
 \usetheme{CambridgeUS}
 
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -86,10 +91,9 @@ columns=fullflexible
 % Theme choice:
 
 % Title page details: 
-\title[Machine Learning in Grading]{An Application of Machine Learning to Grading} 
+\title[Machine Learning for Student Evaluation]{An Application of Machine Learning to Grading} 
 \author{Gautam Singh}
 \begin{document}
-
 
 % Title page frame
 \begin{frame}
@@ -110,15 +114,21 @@ columns=fullflexible
 \begin{frame}{Aim}
     Compare grade distribution obtained by using the $K$-means algorithm to 
     the grade distribution obtained using a standard normal distribution.
+    \pause
     \begin{enumerate}
         \item Which method is fairer?
+        \pause
         \begin{enumerate}
-            \item Courses with skewed performance?
-            \item Courses with less students :)?
+            \item For courses with skewed performance?
+            \pause
+            \item For courses with less students :)?
         \end{enumerate}
+        \pause
         \item Which method is faster to compute grades?
-        \item Which method reflects student efforts better?
-        \item What about failing students?
+        \pause
+        \item Which method reflects student efforts better? What about failing 
+        students?
+        \pause
         \item Which method can be extended to assess based on other factors?
     \end{enumerate}
 \end{frame}
@@ -135,6 +145,7 @@ Marks datasheet and relevant Python codes can be found
 \end{frame}
 
 \begin{frame}{Data Visualization}
+    \pause
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=0.6\columnwidth]{figs/dataset.png}
@@ -147,12 +158,14 @@ Marks datasheet and relevant Python codes can be found
 
 \begin{frame}{Population Measures}
     Consider a dataset $\cbrak{\vec{x}_i}_{i=1}^N$.
+    \pause
     \begin{enumerate}
         \item The \textbf{population mean} is given by
             \begin{align}
                 \vec{\mu} &\triangleq \mean{\vec{x}}
                 \label{eq:mean}
             \end{align}
+        \pause
         \item The \textbf{population covariance matrix} is given by
             \begin{align}
                 \vec{\Sigma} &\triangleq \mean{\brak{\vec{x}-\vec{\mu}}\brak{\vec{x}-\vec{\mu}}^\top}
@@ -164,33 +177,39 @@ Marks datasheet and relevant Python codes can be found
 \begin{frame}{Sample Measures}
     Consider a sample $\cbrak{\vec{y}_i}_{i=1}^n$ drawn from the earlier dataset 
     ($n \ll N$).
+    \pause
     \begin{enumerate}
         \item The \textbf{sample mean} is given by
             \begin{align}
                 \bar{\vec{x}} &\triangleq \mean{\vec{y}}
                 \label{eq:smpl-mean}
             \end{align}
+        \pause
         \item The \textbf{sample covariance matrix} is given by
             \begin{align}
                 \vec{s} &\triangleq \frac{n}{n-1} \mean{\brak{\vec{y}-\bar{\vec{x}}}\brak{\vec{x}-\bar{\vec{x}}}^\top}
                 \label{eq:smpl-var}
             \end{align}
+        \pause
     \end{enumerate}
     Note that the sample measures are \textbf{unbiased estimators} of their
     corresponding population measures.
 \end{frame}
 
 \begin{frame}{The $Z$-score}
+    \pause
     \begin{enumerate}
         \item We assume that the number of students is large and the distribution
         of their parameters follows a normal distribution with population mean 
         $\vec{\mu}$ and population covariance $\vec{\Sigma}$.
+        \pause
         \item The $Z$-score of a student given their parameters $\vec{x}$ is 
         given by
         \begin{align}
             \vec{Z} \triangleq \vec{\Sigma}^{-\frac{1}{2}}\brak{\vec{x}-\vec{\mu}}
             \label{eq:Z-score}
         \end{align}
+        \pause
     \end{enumerate}
     \begin{alertblock}{Statistical Note}
         If the population is large, computing population parameters directly
@@ -202,6 +221,7 @@ Marks datasheet and relevant Python codes can be found
 \begin{frame}{Application}
     In this case, data is one dimensional (marks of the student). Also, the
     population size is small enough to directly compute population measures.
+    \pause
     \begin{enumerate}
         \item The $Z$-score in this case will be
             \begin{align}
@@ -209,12 +229,15 @@ Marks datasheet and relevant Python codes can be found
                 \label{eq:Z-score-app}
             \end{align}
         where $x$ denotes the marks of the student.
+        \pause
         \item The runtime in this case is $O\brak{N}$.
+        \pause
         \item The marks were scaled relative to the highest scoring student.
     \end{enumerate}
 \end{frame}
 
 \begin{frame}{Grading Scheme}
+    \pause
     \begin{table}[!ht]
         \centering
         \input{tables/grades.tex}
@@ -225,9 +248,12 @@ Marks datasheet and relevant Python codes can be found
 
 \section{Grading Using the K-Means Method}
 \begin{frame}{The $K$-Means Algorithm}
+    \pause
     \begin{enumerate}
         \item It is an \textbf{unsupervised} learning algorithm.
+        \pause
         \item It is a \textbf{classification} algorithm.
+        \pause
         \item It is an \textbf{EM} algorithm (explained ahead).
     \end{enumerate}
 \end{frame}
@@ -235,8 +261,9 @@ Marks datasheet and relevant Python codes can be found
 \begin{frame}{Definitions}
     Consider a dataset $\cbrak{\vec{x}_n}_{n=1}^N$ and $K$ means
     $\cbrak{\vec{\mu}_k}_{k=1}^K$.
+    \pause
     \begin{enumerate}
-        \item We define binary indicator variables $r_{nk}$ for 
+        \item We define \textbf{binary indicator variables} $r_{nk}$ for 
         $1 \le n \le N,\ 1 \le k \le K$ as
             \begin{align}
                 r_{nk} \triangleq
@@ -246,48 +273,59 @@ Marks datasheet and relevant Python codes can be found
                 \end{cases}
                 \label{eq:rnk-def}
             \end{align}
-        \item The cost function is given by
+        \pause
+        \item The \textbf{cost function} is given by
             \begin{align}
                 J \triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\mu_{k}}^2
                 \label{eq:cost-def}
             \end{align}
+        \pause
         \item We are required to find $\cbrak{\vec{\mu}_k}_{k=1}^K$ such that
-        \eqref{eq:cost-def} is minimized.
+        \eqref{eq:cost-def} is \textit{minimized}.
     \end{enumerate}
 \end{frame}
 
 \begin{frame}{Working of the $K$-Means Algorithm}
-    The $K$-Means algorithm is an EM algorithm. Initally, we choose an arbitrary 
-    set of means. In each iteration, there are two steps.
+    Initally, we choose an arbitrary set of means. In each iteration, there are 
+    two steps.
+    \pause
     \begin{enumerate}
         \item \textit{E-step}: Here, we calculate all the $r_{nk}$ as defined
             in \eqref{eq:rnk-def}.
+        \pause
         \item \textit{M-step}: We set
             \begin{align}
                 \vec{\mu}_k \leftarrow \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}}
                 \label{eq:M-step}
             \end{align}
+        \pause
     \end{enumerate}
     \begin{alertblock}{What if a Cluster is Empty?}
         If we encounter a $k$ such that $r_{nk} = 0\ \forall\ 1 \le n \le 
         N$, we can either
+        \pause
         \begin{enumerate}
             \item Discard the cluster (by setting $K \leftarrow K - 1$)
+            \pause
             \item Selecting a point ``far away'' from all clusters.
         \end{enumerate}
     \end{alertblock}
 \end{frame}
 
 \begin{frame}{Application}
+    \pause
     \begin{enumerate}
         \item In this case, $K = 8$ and $N = 114$. The algorithm converged in 5 iterations.
+        \pause
         \item The runtime in this case is $O\brak{NK}$ per iteration.
-        \item The marks were scaled relative to the highest scoring student.
+        \pause
+        \item The marks were scaled relative to the highest scoring student.    
     \end{enumerate}
 \end{frame}
 
 \section{Results}
 \begin{frame}
+    \pause
     \begin{figure}
         \centering
         \subfloat[\centering Standard Normal Distribution]{{\includegraphics[width=0.45\columnwidth]{figs/grades_gauss.png}}}
@@ -299,13 +337,17 @@ Marks datasheet and relevant Python codes can be found
 
 \section{Conclusions}
 \begin{frame}{Conclusions}
+    \pause
     \begin{enumerate}
         \item Grading on a Gaussian curve failed less (in fact zero) students 
         than in the case of grading using the $K$-means algorithm.
+        \pause
         \item Grading on a Gaussian curve is faster for larger datasets, and
         both algorithms would have very little difference.
+        \pause
         \item The $K$-Means algorithm gives a better idea of the performance
         of the class, especially when it is skew.
+        \pause
         \item The $K$-Means algorithm can be extended to involve other factors
         such as attendance, prerequisites completed, and so on.
     \end{enumerate}
