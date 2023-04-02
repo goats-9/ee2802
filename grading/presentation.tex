@@ -87,7 +87,7 @@ columns=fullflexible
 \providecommand{\dec}[2]{\ensuremath{\overset{#1}{\underset{#2}{\gtrless}}}}
 \newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
 \newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
-\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+\renewcommand{\vec}[1]{\mathbf{\boldsymbol{#1}}}
 % Theme choice:
 
 % Title page details: 
@@ -276,9 +276,21 @@ Marks datasheet and relevant Python codes can be found
         \pause
         \item The \textbf{cost function} is given by
             \begin{align}
-                J \triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\mu_{k}}^2
+                J &\triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\vec{\mu}_{k}}^2 \\
+                  &= \textrm{tr}\brak{\vec{XR}^\top}
                 \label{eq:cost-def}
             \end{align}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Definitions (Cont\'d...)}
+    \begin{enumerate}
+        \item Here $\vec{X}$ and $\vec{R}$ are matrices such that
+            \begin{align}
+                \sbrak{\vec{X}}_{nk} &\triangleq \norm{\vec{x}_n - \vec{\mu}_k}^2 \\
+                \sbrak{\vec{R}}_{nk} &\triangleq r_{nk}
+            \end{align}
+            for $1\le n\le N,\ 1\le k\le K$.
         \pause
         \item We are required to find $\cbrak{\vec{\mu}_k}_{k=1}^K$ such that
         \eqref{eq:cost-def} is \textit{minimized}.
