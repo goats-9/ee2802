@@ -178,8 +178,15 @@ Differentiating with respect to $\vec{\mu}_k$ and setting the derivative
 to zero, we get
 \begin{align}
     \sum_{n=1}^N2\vec{\mu}_kr_{nk}\brak{\vec{x}_n-\vec{\mu}_k} = 0 \\
-    \implies \vec{{\mu_k}} = \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}}
+    \implies \vec{{\mu_k}} = \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}} = \frac{\vec{Xr}_k}{\vec{1}^\top\vec{r}_k}
     \label{eq:M-step}
+\end{align}
+where
+\begin{align}
+    \vec{X} &\triangleq \myvec{\vec{x}_1&\vec{x}_2&\ldots&\vec{x}_n} \\
+    \vec{r}_k &\triangleq \myvec{r_{1k}&r_{2k}&\ldots&r_{nk}}^\top \\
+    \vec{1} &\triangleq \myvec{1&1&\ldots&1}^\top
+    \label{eq:M-defs}
 \end{align}
 From \eqref{eq:M-step}, we see that the optimum is attained when $\vec{\mu}_k$ 
 is set to the expectation of the $\vec{x}_n$ with respect to $r_{nk}$.

@@ -89,7 +89,11 @@ columns=fullflexible
 \newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
 \renewcommand{\vec}[1]{\mathbf{\boldsymbol{#1}}}
 % Theme choice:
+\newcounter{saveenumi}
+\newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+\newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
 
+\resetcounteronoverlays{saveenumi}
 % Title page details: 
 \title[Machine Learning for Student Evaluation]{An Application of Machine Learning to Grading} 
 \author{Gautam Singh}
@@ -276,21 +280,9 @@ Marks datasheet and relevant Python codes can be found
         \pause
         \item The \textbf{cost function} is given by
             \begin{align}
-                J &\triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\vec{\mu}_{k}}^2 \\
-                  &= \textrm{tr}\brak{\vec{XR}^\top}
+                J &\triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\vec{\mu}_{k}}^2
                 \label{eq:cost-def}
             \end{align}
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{Definitions (Cont\'d...)}
-    \begin{enumerate}
-        \item Here $\vec{X}$ and $\vec{R}$ are matrices such that
-            \begin{align}
-                \sbrak{\vec{X}}_{nk} &\triangleq \norm{\vec{x}_n - \vec{\mu}_k}^2 \\
-                \sbrak{\vec{R}}_{nk} &\triangleq r_{nk}
-            \end{align}
-            for $1\le n\le N,\ 1\le k\le K$.
         \pause
         \item We are required to find $\cbrak{\vec{\mu}_k}_{k=1}^K$ such that
         \eqref{eq:cost-def} is \textit{minimized}.
@@ -307,14 +299,26 @@ Marks datasheet and relevant Python codes can be found
         \pause
         \item \textit{M-step}: We set
             \begin{align}
-                \vec{\mu}_k \leftarrow \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}}
+                \vec{\mu}_k \leftarrow \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}} = \frac{\vec{Xr}_k}{\vec{1}^\top\vec{r}_k}
                 \label{eq:M-step}
             \end{align}
-        \pause
+        \seti
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Working of the $K$-Means Algorithm (Contd...)}
+    \begin{enumerate}
+        \conti
+        \item Here,
+            \begin{align}
+                \vec{X} &\triangleq \myvec{\vec{x}_1&\vec{x}_2&\ldots&\vec{x}_n} \\
+                \vec{r}_k &\triangleq \myvec{r_{1k}&r_{2k}&\ldots&r_{nk}}^\top \\
+                \vec{1} &\triangleq \myvec{1&1&\ldots&1}^\top
+                \label{eq:M-defs}
+            \end{align}
     \end{enumerate}
     \begin{alertblock}{What if a Cluster is Empty?}
-        If we encounter a $k$ such that $r_{nk} = 0\ \forall\ 1 \le n \le 
-        N$, we can either
+        If we encounter a $k$ such that $\vec{r}_{k} = \vec{0}$, we can either
         \pause
         \begin{enumerate}
             \item Discard the cluster (by setting $K \leftarrow K - 1$)

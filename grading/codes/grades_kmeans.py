@@ -85,7 +85,7 @@ for i in range(N):
         if X[i][1] == 8:
             grades.append('A')
 data['Grade'] = grades
-data.to_excel('grades.xlsx',index = False)  #writing to file
+data.to_excel('grades_kmeans.xlsx',index = False)  #writing to file
 fig = data['Grade'].value_counts().sort_index(ascending=False).plot.bar().get_figure()
 ax = fig.gca()
 ax.set_xlabel('Grade')
