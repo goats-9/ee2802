@@ -14,7 +14,7 @@
 
 Motor Motor1;
 Motor Motor2;
-double th = -50.0;
+double th = -45.0;
 
 void lock(int del) {
   delay(del);
@@ -41,27 +41,22 @@ void back() {
 void right() {
   Motor1.moveMotor(127);
   Motor2.moveMotor(-127);
-  lock(200);
+  lock(190);
 }
 
 // Rotate 90 degrees anticlockwise
 void left() {
   Motor1.moveMotor(-127);
   Motor2.moveMotor(127);
-  lock(200);
+  lock(190);
 }
 
 // Get RSSI at a point
 double getRSSI() {
-  double rssi = 0.0;
-  int sz = 100;
-  double smpl;
-  // RSSI readings taken after 'sz' samples
-  for (int i = 0; i < sz; i++) {
-    while ((smpl = WiFi.RSSI()) > 0);
-    rssi = smpl;
-  }
-  return rssi/sz;
+  delay(100);
+  double sig_read;
+  while ((sig_read = WiFi.RSSI()) > 0);
+  return sig_read;
 }
 
 // Infinite loop to prevent loop() from iterating again
@@ -93,15 +88,14 @@ void loop() {
   int N = 5;
   double rssi[N];
   rssi[0] = getRSSI();
-  for (int i = 1; i <= N; i++) {
+  for (int i = 1; i < N; i++) {
       front();
       rssi[i] = getRSSI();
+      if (rssi[i] >= th) stop();
   }
   int idx = maxArray(rssi, N); 
-  if (idx > 0 && idx < N-1) { 
-    for (int i = 0; i < N/2; i++) back();
-    left();
-  } else if (idx == 0) {
-      for (int i = 0; i < N-1; i++) back();
-  }
+  for (int i = N - 1; i > idx; i--) back();
+  if (idx > 0 && idx < N-1) left();
+  else if (idx == 0) back();
+  else front();
 }
