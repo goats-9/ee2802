@@ -131,21 +131,20 @@ columns=fullflexible
 \end{frame}
 
 \begin{frame}[label=software]{Software}
-Relevant platformio codes can be found 
-\href{https://github.com/goats-9/ee2802-assignments/tree/main/pt100/esp32/codes/esp32}{here}.
+Relevant codes can be found 
+\href{https://github.com/goats-9/ee2802-assignments/tree/main/pt100/esp32/codes}{here}.
 \begin{enumerate}
-    \item In this directory, type \texttt{pio run} to generate the firmware to
+    \item In the \texttt{client} directory, type \texttt{pio run} to generate the firmware to
     flash to the ESP32.
     \item Using ArduinoDroid, flash it to the ESP32 from your Android phone.
-    \item Run the server by typing \texttt{flask run --host=<YOUR HOST IP>}.
+    \item Run the server by typing \texttt{flask run --host=<YOUR HOST IP>} from the \texttt.
 \end{enumerate}
-A more detailed manual is present \href{https://github.com/goats-9/ee2802-assignments/tree/main/pt100/esp32/main.pdf}{here}.
 \end{frame}
 
 \begin{frame}{Setup for Experiment}
     \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.6\columnwidth]{figs/esp32.jpg}
+        \includegraphics[width=0.6\columnwidth]{figs/esp32.png}
         \caption{Setup for Weather Station.}
         \label{fig:setup}
     \end{figure}
@@ -162,7 +161,11 @@ A more detailed manual is present \href{https://github.com/goats-9/ee2802-assign
                  &= V(0)\myvec{1&A&B}\myvec{1\\T\\T^2}
         \end{align}
         \pause
-        \item We can use the least squares method to find the coefficients.
+        \item We can use the least mean squares method to find the coefficients.
+        \item The calculated coefficients are
+        \begin{align}
+            \vec{W}_{opt} = \myvec{1.553\\3.25 \times 10^{-3} \\ -8.68 \times 10^{-6}}
+        \end{align}
     \end{enumerate}
 \end{frame}
 
