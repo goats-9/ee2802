@@ -115,7 +115,7 @@ columns=fullflexible
 % Lists frame
 \section{Introduction}
 \begin{frame}{Aim}
-    Use machine learning to build a simple weather station  with a web interface
+    Use machine learning to build a simple weather station with a web interface
     using a PT-100 and ESP32.
 \end{frame}
 
@@ -123,8 +123,9 @@ columns=fullflexible
 \begin{frame}{Hardware}
     \begin{enumerate}
         \item ESP32 microcontroller with Type-B USB cable
-        \item PT-100 RTD
+        \item PT-100 RTD (Resistance Temperature Detector)
         \item Breadboard and Jumper Wires
+        \item Digital LCD Display (JHD 162A)
         \item Android phone
         \item (Optional) USB 2.0/3.0 Hub
     \end{enumerate}
@@ -137,11 +138,11 @@ Relevant codes can be found
     \item In the \texttt{client} directory, type \texttt{pio run} to generate the firmware to
     flash to the ESP32.
     \item Using ArduinoDroid, flash it to the ESP32 from your Android phone.
-    \item Run the server by typing \texttt{flask run --host=<YOUR HOST IP>} from the \texttt.
+    \item Run the server by typing \texttt{flask run --host=<YOUR HOST IP>} in the \texttt{server} directory.
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{Setup for Experiment}
+\begin{frame}{Circuit Diagram}
     \begin{figure}[!ht]
         \centering
         \includegraphics[width=0.6\columnwidth]{figs/esp32.png}
@@ -151,20 +152,32 @@ Relevant codes can be found
 \end{frame}
 
 \section{Working}
+\begin{frame}{Choice of Pull-up Resistance}
+    Circuit is a pull-up resistor and PT-100 resistance in series across 
+    voltage supply $V_0$.
+    Suppose we want $V_T$ at temperature $T$ across the PT-100 resistor 
+    $P_T = P_0\brak{1+\alpha T}$. Then, using voltage division,
+    \begin{align}
+        V_T &= \frac{P_TV_0}{P_T + R} \\
+        \implies R &\approx P_T\brak{\frac{V_0}{V_T} - 1}
+        \label{eq:R-est}
+    \end{align}
+    For this experiment, the pull-up resistance $R = 100 \Omega$.
+\end{frame}
+
 \begin{frame}{Underlying Principles}
     \begin{enumerate}
         \item The PT-100 is a resistance temperature detector (RTD),
-        \pause
         \item It is governed by the Callendar van Dusen Equation
         \begin{align}
             V(T) &= V(0)\brak{1 + AT + BT^2} \\
-                 &= V(0)\myvec{1&A&B}\myvec{1\\T\\T^2}
+                 &= V(0)\myvec{1&A&B}\myvec{1\\T\\T^2} \\
+                 &= \vec{w}^\top\vec{x}
         \end{align}
-        \pause
         \item We can use the least mean squares method to find the coefficients.
         \item The calculated coefficients are
         \begin{align}
-            \vec{W}_{opt} = \myvec{1.553\\3.25 \times 10^{-3} \\ -8.68 \times 10^{-6}}
+            \vec{w^*} = \myvec{1.568\\2.894 \times 10^{-3} \\ -3.975 \times 10^{-6}}
         \end{align}
     \end{enumerate}
 \end{frame}
