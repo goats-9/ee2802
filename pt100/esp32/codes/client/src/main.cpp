@@ -9,8 +9,7 @@
  *
  * const char *ssid = "YOUR-SSID-HERE";
  * const char *password = "YOUR-PASSWORD-HERE";
- * const char *statusURL = "URL-TO-PUT-ESP32-READY-STATUS"
- * const char *decisionURL = "URL-TO-READ-NEXT-MOVE"
+ * const char *tempURL = "URL-TO-PUT-TEMPERATURE"
 */
 #include "credentials.h"
 
@@ -39,7 +38,7 @@ float getTemp() {
   float analogValue = analogRead(TEMP_PIN);
   float V = 3.3*analogValue/4095;
   Serial.println(V);
-  return (B - sqrtl(B*B+4*A*(C-V)))/(2*A);
+  return (-B + sqrtl(B*B+4*A*(C-V)))/(2*A);
 }
 
 void loop() {
@@ -50,16 +49,4 @@ void loop() {
   serializeJson(doc, requestBody);
   int httpResponseCode = temp.PUT(requestBody);
   delay(2000);
-  // doc["status"] = 1;
-  // serializeJson(doc, requestBody);
-  // httpResponseCode = status.PUT(requestBody);
-  // // Process the order
-  // if (order == 0) front();
-  // else if (order == 1) {left(); front();}
-  // else if (order == 2) back();
-  // else if (order == 3) {right(); front();}
-  // else if (order == 4) left();
-  // doc["status"] = 0;
-  // serializeJson(doc, requestBody);
-  // httpResponseCode = status.POST(requestBody);
 }
