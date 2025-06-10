@@ -123,49 +123,14 @@ literate=
 \bigskip
 
 \begin{abstract}
-    This document is a report which demonstrates the use of machine learning
-    in beacon tracking using an unmanned ground vehicle (UGV) and a WiFi-enabled
+    This document is a report which demonstrates the use of machine learning in
+    beacon tracking using an unmanned ground vehicle (UGV) and a WiFi-enabled
     microcontroller such as the ESP32.
 \end{abstract}
 
-\section{Assets}
-\begin{enumerate}
-    \item UGV chassis with DC motors
-    \item ESP32 microcontroller with Type-B USB cable
-    \item L293D Motor Driver IC
-    \item Breadboard and Jumper Wires
-    \item Android phone
-    \item (Optional) USB 2.0/3.0 Hub
-\end{enumerate}
+\section{Introduction}
 
-\section{Procedure}
-\begin{enumerate}
-    \item Make the connections as per the wiring diagram in Fig. \ref{fig:beacon}.
-    \item Connect the ESP32 board to your Android Phone.
-    \item Generate the firmware by entering the following commands.
-        \begin{lstlisting}
-$ cd codes
-$ pio run
-        \end{lstlisting}
-    \item Go to ArduinoDroid and select
-        \begin{lstlisting}
-Actions - Upload - Upload Precompiled
-        \end{lstlisting}
-    and choose the firmware file at
-        \begin{lstlisting}
-codes/.pio/build/firmware.hex
-        \end{lstlisting}
-    \item Now put the phone at a reasonable distance from the UGV with no 
-    obstacles in the way and then turn on the hotspot. The UGV should travel
-    towards the phone and stop near it.
-\end{enumerate}
-
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=\columnwidth]{figs/beacon.png}
-    \caption{Wiring Diagram for Beacon Tracking.}
-    \label{fig:beacon}
-\end{figure}
+\section{Related Work}
 
 \section{Working}
 To estimate (radial) distance to beacon, we use its signal strength. For WiFi,
@@ -175,19 +140,38 @@ dBm) at radial distance of \(r\) metres is given by
     R\brak{r} = R\brak{1} - 10\log_{10}\brak{r}
     \label{eq:rssi}
 \end{align}
-where \(R(1)\) is the RSSI at a distance of 1 metre from the beacon. Clearly,
-\(R\brak{r}\) is a decreasing function as \(\log_{10}\brak{r}\) is an increasing
-function. Further, the second derivative of \(R\brak{r}\) is given by
+where \(R\brak{1}\) is the RSSI at a distance of 1 metre from the beacon. The
+beacon tracking problem can be formulated as the following optimization problem.
 \begin{equation}
-    \frac{d^2R\brak{r}}{dr^2} = \frac{10}{\ln{10}}\frac{1}{r^2} > 0.
-    \label{eq:rssidd}
+    \max_{r} R\brak{r} \text{ s.t. } r > 0.
+    \label{eq:rssopt}
 \end{equation}
-Clearly, the RSSI is a convex function of the radial distance \(r\). This
-implies that we can use gradient ascent to find the point where the RSSI is
-maximum, which would be the location of the beacon. The UGV uses a recursive
-algorithm to update its position using this principle until it is close enough
-to the beacon based on the RSSI measurements it takes at various points in its
-vicinity. The algorithm is described in \autoref{alg:beacon}.
+
+The derivative and second derivative of \(R\brak{r}\) is given by
+\begin{align}
+    R^\prime\brak{r} &= -\frac{10}{\ln{10}}\frac{1}{r}, \label{eq:rssid} \\
+    R^{\prime\prime}\brak{r} &= \frac{10}{\ln{10}}\frac{1}{r^2} > 0. \label{eq:rssidd}
+\end{align}
+Notice that for \(r > 0\), \(R^\prime\brak{r} < 0\), thus \(R\brak{r}\) is a
+decreasing function of \(r\). This implies that the maximum RSSI is at \(r =
+0\), as expected. Since \(R\brak{r}\) is a convex function of \(r\), we can use
+gradient ascent to recursively find the point where the RSSI is maximum, which
+would correspond to the location of the beacon. Using \eqref{eq:rssid}, the
+gradient ascent update equation is given by
+\begin{equation}
+    r_{n+1} = r_n + \alpha R^\prime\brak{r_n} = r_n - \frac{10\alpha}{r_n\ln{10}}
+    \label{eq:gradient-ascent-upd}
+\end{equation}
+where \(r_i\) is the radial distance at the \(i\)-th step and \(\alpha\) is the
+step size. Since \(r_n > 0\), we can see that \(r_{n+1} < r_n\) for all \(n\).
+In other words, the radial distance to the beacon is decreasing with each step.
+This means that the UGV will converge towards the beacon. However, due to the
+explosion of the gradient in \eqref{eq:rssid}, the update steps become larger as
+\(r_n\) decreases, which could lead to overshooting the beacon. To prevent this,
+the UGV uses a recursive algorithm to update its position using this principle
+until it is close enough to the beacon based on the RSSI measurements it takes
+at various points in the vicinity of its current position. The algorithm is
+described in \autoref{alg:beacon}.
 
 \begin{algorithm}[H]
     \caption{Beacon Tracking Algorithm}
@@ -210,7 +194,49 @@ vicinity. The algorithm is described in \autoref{alg:beacon}.
     \end{algorithmic}
 \end{algorithm}
 
-\section{Observations}
+\section{Implementation}
+
+\subsection{Assets}
+\begin{enumerate}
+    \item UGV chassis with DC motors
+    \item ESP32 microcontroller with Type-B USB cable
+    \item L293D Motor Driver IC
+    \item Breadboard and Jumper Wires
+    \item Android phone
+    \item (Optional) USB 2.0/3.0 Hub
+\end{enumerate}
+
+\subsection{Procedure}
+\begin{enumerate}
+    \item Make the connections as per the wiring diagram in
+    \autoref{fig:beacon}.
+    \item Connect the ESP32 board to your Android Phone.
+    \item Generate the firmware by entering the following commands.
+        \begin{lstlisting}
+$ cd codes
+$ pio run
+        \end{lstlisting}
+    \item Go to ArduinoDroid and select
+        \begin{lstlisting}
+Actions - Upload - Upload Precompiled
+        \end{lstlisting}
+    and choose the firmware file at
+        \begin{lstlisting}
+codes/.pio/build/firmware.hex
+        \end{lstlisting}
+    \item Now put the phone at a reasonable distance from the UGV with no
+    obstacles in the way and then turn on the hotspot. The UGV should travel
+    towards the phone and stop near it.
+\end{enumerate}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\columnwidth]{figs/beacon.png}
+    \caption{Wiring Diagram for Beacon Tracking.}
+    \label{fig:beacon}
+\end{figure}
+
+\section{Results}
 The UGV eventually converges close to the beacon (here, the hotspot). However,
 if there are a lot of nearby obstacles, the UGV may not converge close to the
 location of the beacon. It may either get physically blocked by the beacon or
