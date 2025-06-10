@@ -1,4 +1,5 @@
 \documentclass[journal,12pt,twocolumn]{IEEEtran}
+\IEEEoverridecommandlockouts
 \usepackage{setspace}
 \usepackage{gensymb}
 \singlespacing
@@ -30,6 +31,8 @@
 \usepackage{ifthen}   
 \usepackage{lscape}     
 \usepackage{chngcntr}
+\usepackage{algorithm}
+\usepackage[indLines=false]{algpseudocodex}
 \DeclareMathOperator*{\Res}{Res}
 \renewcommand\thesection{\arabic{section}}
 \renewcommand\thesubsection{\thesection.\arabic{subsection}}
@@ -42,6 +45,9 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 \def\inputGnumericTable{}                                 %%
+
+\renewcommand\algorithmicensure{\textbf{Input:}}
+\newcommand{\algorithmautorefname}{Algorithm}
 
 \lstset{
 %language=C,
@@ -107,9 +113,13 @@ literate=
 
 \vspace{3cm}
 \title{Beacon Tracking Using ESP32}
-\author{Gautam Singh}
+\author{
+    \IEEEauthorblockN{Gautam Singh, G.V.V. Sharma} \\
+    \IEEEauthorblockA{Indian Institute of Technology Hyderabad, India} \\
+    Email: cs21btech11018@iith.ac.in, gadepall@ee.iith.ac.in
+}
 \maketitle
-\tableofcontents
+% \tableofcontents
 \bigskip
 
 \begin{abstract}
@@ -157,12 +167,53 @@ codes/.pio/build/firmware.hex
     \label{fig:beacon}
 \end{figure}
 
+\section{Working}
+To estimate (radial) distance to beacon, we use its signal strength. For WiFi,
+this is the \textbf{Received Signal Strength Indicator} (RSSI). The RSSI (in
+dBm) at radial distance of \(r\) metres is given by
+\begin{align}
+    R\brak{r} = R\brak{1} - 10\log_{10}\brak{r}
+    \label{eq:rssi}
+\end{align}
+where \(R(1)\) is the RSSI at a distance of 1 metre from the beacon. Clearly,
+\(R\brak{r}\) is a decreasing function as \(\log_{10}\brak{r}\) is an increasing
+function. Further, the second derivative of \(R\brak{r}\) is given by
+\begin{equation}
+    \frac{d^2R\brak{r}}{dr^2} = \frac{10}{\ln{10}}\frac{1}{r^2} > 0.
+    \label{eq:rssidd}
+\end{equation}
+Clearly, the RSSI is a convex function of the radial distance \(r\). This
+implies that we can use gradient ascent to find the point where the RSSI is
+maximum, which would be the location of the beacon. The UGV uses a recursive
+algorithm to update its position using this principle until it is close enough
+to the beacon based on the RSSI measurements it takes at various points in its
+vicinity. The algorithm is described in \autoref{alg:beacon}.
+
+\begin{algorithm}[H]
+    \caption{Beacon Tracking Algorithm}
+    \label{alg:beacon}
+    \begin{algorithmic}[1]
+        \Ensure{RSSI threshold \(T\), number of steps \(N\)}
+        \While{\textsc{GetRSSI()} \(< T\)}
+            \State Take \(N\) steps in a straight line and measure the RSSI at 
+            each step.
+            \State Suppose the maximum RSSI is measured at step \(i\).
+            \State Move to the position at step \(i\)
+            \If{\(i = N\)}
+                \State Move one step forward.
+            \ElsIf{\(i = 0\)}
+                \State Move one step backward.
+            \Else
+                \State Turn left.
+            \EndIf
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
 \section{Observations}
-\begin{enumerate}
-    \item The UGV eventually converges close to the beacon (here, the hotspot).
-    \item However, if there are a lot of nearby obstacles, the UGV may not 
-    converge close to the location of the beacon. It may either get physically 
-    blocked by the beacon or the signal interference may be too high.
-\end{enumerate}
+The UGV eventually converges close to the beacon (here, the hotspot). However,
+if there are a lot of nearby obstacles, the UGV may not converge close to the
+location of the beacon. It may either get physically blocked by the beacon or
+the signal interference may be too high.
 
 \end{document}
