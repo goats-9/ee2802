@@ -1,4 +1,4 @@
-\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 \usepackage{setspace}
 \usepackage{gensymb}
@@ -76,7 +76,6 @@ literate=
 \newcommand{\BEQA}{\begin{eqnarray}}
 \newcommand{\EEQA}{\end{eqnarray}}
 \newcommand{\define}{\stackrel{\triangle}{=}}
-\bibliographystyle{IEEEtran}
 \providecommand{\mbf}{\mathbf}
 \providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
 \providecommand{\qfunc}[1]{\ensuremath{Q\left(#1\right)}}
@@ -241,5 +240,9 @@ The UGV eventually converges close to the beacon (here, the hotspot). However,
 if there are a lot of nearby obstacles, the UGV may not converge close to the
 location of the beacon. It may either get physically blocked by the beacon or
 the signal interference may be too high.
+
+\nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
 
 \end{document}
