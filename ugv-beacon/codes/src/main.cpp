@@ -81,10 +81,7 @@ int maxArray(double *arr, int sz) {
 }
 
 void loop() {
-  // Need to read RSSI Values
-  // At point, then ahead, and then behind
-  // EDIT: Three points might be a bit bad... Let's
-  // try five points?
+  // Measure RSSI values at point and in each of the four directions
   int N = 5;
   double rssi[N];
   rssi[0] = getRSSI();
