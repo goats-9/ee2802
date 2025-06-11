@@ -111,7 +111,7 @@ literate=
      \def\midbox#1{\raisebox{-0.5\baselineskip}[0in][0in]{#1}}
 
 \vspace{3cm}
-\title{Beacon Tracking Using ESP32}
+\title{Indoor Wireless Beacon Tracking Using ESP32}
 \author{
     \IEEEauthorblockN{Gautam Singh, G.V.V. Sharma} \\
     \IEEEauthorblockA{Indian Institute of Technology Hyderabad, India} \\
@@ -127,11 +127,76 @@ literate=
     microcontroller such as the ESP32.
 \end{abstract}
 
-\section{Introduction}
+\section{Introduction and Related Work}
+\label{sec:intro}
 
-\section{Related Work}
+Positioning, localization and navigation (PLAN) technology has become an
+essential capability for consumer household devices such as robot vacuums and
+autonomous vehicles alike. This fast growing market has seen the entry of big
+tech giants such as Amazon, Apple and Google. Use cases of PLAN include safety,
+medical applications and assistance for the elderly and the specially abled.
+Reliable PLAN technology can reduce road accidents, congestion, energy and time
+consumption. A comprehensive survey of PLAN technology presented in
+\cite{el-sheimyIndoorNavigationState2021} categorizes these technologies based
+on the primary sensors used in navigation and illustrates the trade-offs between
+accuracy, cost, and complexity. Some of these technologies are briefly described
+below.
 
-\section{Working}
+The authors of \cite{narayananFuzzyGuidedAutonomous2022} present a fuzzy
+controller system consisting of three ultrasonic sensors and one camera to
+detect obstacles in the robot's vicinity. The navigation logic is implemented on
+a BLE tag module using the angle of arrival (AOA) method and is suitable for
+unmanned nursing in hospitals, especially during pandemic outbreaks. The authors
+of \cite{familiIDROPRobustLocalization2023} propose iDROP, a 3-D localization
+scheme for drones in indoor GPS-denied environments that is robust against noise
+and multipath fading and provides location estimation with high accuracy. The
+authors of \cite{htROSPoweredAutonomous2024} present a UGV powered by the robot
+operating system (ROS) that uses light detection and ranging (LiDAR) for
+accurate navigation even in dynamic conditions, suitable for various indoor
+robotic use cases such as in warehouses or construction sites. The authors of
+\cite{yukhimetsLocalNavigationSystem2024} present a cost-effective and scalable
+navigation system for ESP32 microcontrollers using multiple BLE beacons. A
+neural network is employed to model the position of the robot based on the
+signal strength received from various BLE beacons and the Levenberg-Marquardt
+method is used to accurately estimate the position of the robot. The authors of
+\cite{stefasUAVLandingUnknown2019} present a strategy for landing a UAV using a
+radio beacon that exploits a special structure occurring when approaching the
+target beacon from above to reduce the flight time required for landing near the
+beacon.
+
+Methods based on artificial intelligence (AI) have gained popularity in recent
+literature. The authors of \cite{liuSimpleOnlineUnmanned2021} propose an easy to
+implement method for multi-object tracking (MOT) using an encoder-decoder
+mechanism. Their proposed method achieves comparable performance with
+state-of-the-art frameworks on the challenging MOT dataset. The authors of
+\cite{masmitjaReinforcementLearningPath2022} leverage deep reinforcement
+learning (RL) to train an agent for tracking dynamically moving objects using
+unmanned surface vehicles (USV) in marine environments. The trained RL agent
+performs comparably to the analytically derived trajectory in the steady state.
+The authors of \cite{kashyapAutonomousNavigationROS22025} explore multiple RL
+algorithms using LiDAR inputs on TurtleBot3, showing that the twin delayed deep
+deterministic policy gradient (TD3) is the most efficient and robust across
+varied environments.
+
+Many of the above methods are either too complex or too expensive to be
+implemented on cheap hardware such as an ESP32 microcontroller. Furthermore, a
+lot of supporting infrastructure needs to be set up to enable autonomous
+navigation. Our work aims to provide a lightweight and cost-effective solution
+for indoor beacon tracking using easily available wireless-capable
+microcontrollers such as the ESP32. The main contributions of this paper are as
+follows.
+
+\begin{enumerate}
+    \item A simple yet robust algorithm for indoor beacon tracking using only
+    RSSI measurements from a single target beacon.
+    \item A practical implementation of the algorithm on an ESP32
+    microcontroller mounted on a UGV chassis using open-source frameworks such
+    as PlatformIO.
+\end{enumerate}
+
+\section{Preliminaries}
+\label{sec:prelims}
+
 To estimate (radial) distance to beacon, we use its signal strength. For WiFi,
 this is the \textbf{Received Signal Strength Indicator} (RSSI). The RSSI (in
 dBm) at radial distance of \(r\) metres is given by
@@ -228,7 +293,7 @@ codes/.pio/build/firmware.hex
     towards the phone and stop near it.
 \end{enumerate}
 
-\begin{figure}[!ht]
+\begin{figure}[t]
     \centering
     \includegraphics[width=\columnwidth]{figs/beacon.png}
     \caption{Wiring Diagram for Beacon Tracking.}
