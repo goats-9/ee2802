@@ -48,6 +48,7 @@
 
 \renewcommand\algorithmicensure{\textbf{Input:}}
 \newcommand{\algorithmautorefname}{Algorithm}
+\renewcommand{\sectionautorefname}{Section}
 
 \lstset{
 %language=C,
@@ -127,19 +128,48 @@ literate=
     microcontroller such as the ESP32.
 \end{abstract}
 
-\section{Introduction and Related Work}
+\section{Introduction}
 \label{sec:intro}
-
 Positioning, localization and navigation (PLAN) technology has become an
-essential capability for consumer household devices such as robot vacuums and
-autonomous vehicles alike. This fast growing market has seen the entry of big
-tech giants such as Amazon, Apple and Google. Use cases of PLAN include safety,
-medical applications and assistance for the elderly and the specially abled.
-Reliable PLAN technology can reduce road accidents, congestion, energy and time
-consumption. A comprehensive survey of PLAN technology presented in
-\cite{el-sheimyIndoorNavigationState2021} categorizes these technologies based
-on the primary sensors used in navigation and illustrates the trade-offs between
-accuracy, cost, and complexity. Some of these technologies are briefly described
+essential capability for consumer electronics and autonomous vehicles alike.
+This fast growing market has seen the entry of big tech giants such as Amazon,
+Apple and Google. Use cases of PLAN include safety, medical applications and
+assistance for the elderly and the specially abled. Reliable PLAN technology can
+reduce road accidents, congestion, energy and time consumption. However, many
+existing PLAN technologies cater to industrial use cases and are expensive,
+complex and require hardware that might be scarcely available to consumers. 
+
+To overcome the above challenges, we propose a simple, effective and robust
+algorithm for indoor beacon tracking using a single WiFi or BLE beacon and a
+low-cost easily available microcontroller such as the ESP32 that is suitable for
+consumer electronics such as robot vacuum cleaners. The main contributions of
+this paper are as follows.
+
+\begin{enumerate}
+    \item A simple yet robust algorithm for indoor beacon tracking using only
+    RSSI measurements from a single target beacon.
+    \item A practical implementation of the algorithm on an ESP32
+    microcontroller mounted on a UGV chassis using open-source frameworks such
+    as PlatformIO.
+\end{enumerate}
+
+The remainder of this paper is organized as follows. In
+\autoref{sec:related-work}, we present a brief survey of related work in the
+field of indoor beacon tracking. In \autoref{sec:prelims}, we present the
+mathematical formulation of the problem and the key concepts used in our
+approach. In \autoref{sec:implementation}, we present the implementation details
+of the algorithm on the ESP32 microcontroller. In \autoref{sec:results}, we
+present the experimental results and performance evaluation of our proposed
+approach. Finally, in \autoref{sec:conclusion}, we conclude the paper and
+discuss possible extensions of our work.
+
+\section{Related Work}
+\label{sec:related-work}
+
+A comprehensive survey of PLAN technology presented in
+\cite{el-sheimyIndoorNavigationState2021} categorizes PLAN technologies based on
+the primary sensors used in navigation and illustrates the trade-offs between
+accuracy, cost and complexity. Some of these technologies are briefly described
 below.
 
 The authors of \cite{narayananFuzzyGuidedAutonomous2022} present a fuzzy
@@ -154,11 +184,11 @@ authors of \cite{htROSPoweredAutonomous2024} present a UGV powered by the robot
 operating system (ROS) that uses light detection and ranging (LiDAR) for
 accurate navigation even in dynamic conditions, suitable for various indoor
 robotic use cases such as in warehouses or construction sites. The authors of
-\cite{yukhimetsLocalNavigationSystem2024} present a cost-effective and scalable
-navigation system for ESP32 microcontrollers using multiple BLE beacons. A
-neural network is employed to model the position of the robot based on the
-signal strength received from various BLE beacons and the Levenberg-Marquardt
-method is used to accurately estimate the position of the robot. The authors of
+\cite{yukhimetsLocalNavigationSystem2024} present a scalable navigation system
+for ESP32 microcontrollers using multiple BLE beacons. A neural network is
+employed to model the position of the robot based on the signal strength
+received from various BLE beacons and the Levenberg-Marquardt method is used to
+accurately estimate the position of the robot. The authors of
 \cite{stefasUAVLandingUnknown2019} present a strategy for landing a UAV using a
 radio beacon that exploits a special structure occurring when approaching the
 target beacon from above to reduce the flight time required for landing near the
@@ -183,16 +213,8 @@ implemented on cheap hardware such as an ESP32 microcontroller. Furthermore, a
 lot of supporting infrastructure needs to be set up to enable autonomous
 navigation. Our work aims to provide a lightweight and cost-effective solution
 for indoor beacon tracking using easily available wireless-capable
-microcontrollers such as the ESP32. The main contributions of this paper are as
-follows.
-
-\begin{enumerate}
-    \item A simple yet robust algorithm for indoor beacon tracking using only
-    RSSI measurements from a single target beacon.
-    \item A practical implementation of the algorithm on an ESP32
-    microcontroller mounted on a UGV chassis using open-source frameworks such
-    as PlatformIO.
-\end{enumerate}
+microcontrollers such as the ESP32. It builds upon the proposed algorithm in
+\cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.
 
 \section{Preliminaries}
 \label{sec:prelims}
@@ -259,6 +281,7 @@ described in \autoref{alg:beacon}.
 \end{algorithm}
 
 \section{Implementation}
+\label{sec:implementation}
 
 \subsection{Assets}
 \begin{enumerate}
@@ -301,12 +324,23 @@ codes/.pio/build/firmware.hex
 \end{figure}
 
 \section{Results}
+\label{sec:results}
 The UGV eventually converges close to the beacon (here, the hotspot). However,
 if there are a lot of nearby obstacles, the UGV may not converge close to the
 location of the beacon. It may either get physically blocked by the beacon or
 the signal interference may be too high.
 
-\nocite{*}
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+
+In this paper, we presented a cost-effective and robust beacon tracking
+algorithm that uses RSSI measurements to approach the beacon at each step. Our
+work uses easily available hardware and software tools to implement the
+algorithm on an ESP32 microcontroller mounted on a UGV chassis. A further
+extension to this work could be to use additional sensors such as a gyroscope or
+an accelerometer to improve the accuracy of the UGV's position and prevent
+deviations from the intended path of the UGV.
+
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 
