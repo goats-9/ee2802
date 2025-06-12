@@ -271,21 +271,19 @@ keeps the step size constant.
 \subsection{Beacon Tracking Algorithm}
 \label{subsec:beacon-tracking-algorithm}
 
-The proposed beacon tracking algorithm broadly be divided into two stages at
-each step. The first stage is the \emph{probing stage}, where the UGV measures
-the RSSI at various points in its vicinity. The second stage is the
-\emph{decision stage}, where the UGV decides its direction of movement based on
-the RSSI measurements.
+The proposed beacon tracking algorithm consists of stages at each step. The
+first stage is the \emph{probing stage}, where the UGV measures the RSSI at
+various points in its vicinity. The second stage is the \emph{decision stage},
+where the UGV decides its direction of movement based on the RSSI measurements.
 
-The algorithm proposed in
-\cite{dubeyNavigationCommunicationUGV2022} is described in
-\autoref{alg:beacon-dubey}. The probing phase consists of taking RSSI
-measurements in place but at various orientations. The decision phase consists
-of moving in the direction where the signal is the strongest. A major drawback
-of this approach is that there may not be appreciable difference in the measured
-RSSI values at the various orientations in the same place, especially if the
-beacon is far away. This could lead to the UGV making arbitrary moves instead of
-converging towards the beacon.
+The algorithm proposed in \cite{dubeyNavigationCommunicationUGV2022} is
+described in \autoref{alg:beacon-dubey}. The probing phase consists of taking
+RSSI measurements in place but at various orientations. The decision phase
+consists of moving in the direction where the signal is the strongest. A major
+drawback of this approach is that there may not be appreciable difference in the
+measured RSSI values at the various orientations in the same place, especially
+if the beacon is far away. This could lead to the UGV making arbitrary moves
+instead of converging towards the beacon.
 
 \begin{algorithm}[H]
     \caption{Beacon Tracking Algorithm of \cite{dubeyNavigationCommunicationUGV2022}.}
