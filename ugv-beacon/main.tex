@@ -312,29 +312,30 @@ converging towards the beacon.
 
 To overcome this challenge, we require the UGV to travel a significant distance
 in the probing stage to obtain some differences in the measured RSSI values.
-Thus, in the probing stage of our proposed algorithm, the UGV takes \(N\) steps
-in a straight line in its current orientation, measuring the RSSI at each step.
-In the decision stage, the UGV then moves to the position where the maximum RSSI
-was measured. If this is at the beginning or end of the probing trajectory, the
-UGV moves backward or forward respectively. Otherwise, it turns perpendicular to
-its probing trajectory at that point (either left or right). Our proposed
-algorithm is described in \autoref{alg:beacon}. The main shortcoming of this
-particular algorithm is the amount of movement required in the probing stage for
-making one simple move in the decision stage.
+Thus, in the probing stage of our proposed algorithm, the UGV measures the RSSI
+at \(N\) points in a straight line in its current orientation. In the decision
+stage, the UGV then moves to the position where the maximum RSSI was measured.
+If this is at the beginning or end of the probing trajectory, the UGV moves
+backward or forward respectively. Otherwise, it turns perpendicular to its
+probing trajectory at that point (either left or right). Our proposed algorithm
+is described in \autoref{alg:beacon}. The main shortcoming of this particular
+algorithm is the amount of movement required in the probing stage for making one
+simple move in the decision stage.
 
 \begin{algorithm}[H]
     \caption{Proposed Beacon Tracking Algorithm}
     \label{alg:beacon}
     \begin{algorithmic}[1]
-        \Ensure{RSSI threshold \(T\), number of steps \(N\)}
+        \Ensure{RSSI threshold \(T\), number of points \(N\)}
         \While{\textsc{GetRSSI()} \(< T\)}
-            \For{i = 0 to \(N\)}
-                \State \(r_i \gets \textsc{GetRSSI()}\).
+            \State \(r_0 \gets \textsc{GetRSSI()}\).
+            \For{i = 1 to \(N - 1\)}
                 \State Move forward by one step.
+                \State \(r_i \gets \textsc{GetRSSI()}\).
             \EndFor
             \State \(j \gets \argmax_{i} r_i\).
             \State Move to the position at step \(i\).
-            \If{\(i = N\)}
+            \If{\(i = N - 1\)}
                 \State Move one step forward.
             \ElsIf{\(i = 0\)}
                 \State Move one step backward.
