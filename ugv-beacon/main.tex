@@ -155,13 +155,13 @@ this paper are as follows.
 
 The remainder of this paper is organized as follows. In
 \autoref{sec:related-work}, we present a brief survey of related work in the
-field of indoor beacon tracking. In \autoref{sec:prelims}, we present the
-mathematical formulation of the problem and the key concepts used in our
-approach. In \autoref{sec:implementation}, we present the implementation details
-of the algorithm on the ESP32 microcontroller. In \autoref{sec:results}, we
-present the experimental results and performance evaluation of our proposed
-approach. Finally, in \autoref{sec:conclusion}, we conclude the paper and
-discuss possible extensions of our work.
+field of indoor beacon tracking. In \autoref{sec:proposed-system}, we formulate
+the optimization problem corresponding to this task and describe our approach.
+In \autoref{sec:implementation}, we present the implementation details of the
+algorithm on the ESP32 microcontroller. In \autoref{sec:results}, we present the
+experimental results and performance evaluation of our proposed approach.
+Finally, in \autoref{sec:conclusion}, we conclude the paper and discuss possible
+extensions of our work.
 
 \section{Related Work}
 \label{sec:related-work}
@@ -173,21 +173,21 @@ accuracy, cost and complexity. Some of these technologies are briefly described
 below.
 
 The authors of \cite{narayananFuzzyGuidedAutonomous2022} present a fuzzy
-controller system consisting of three ultrasonic sensors and one camera to
+controller system which consists of three ultrasonic sensors and one camera to
 detect obstacles in the robot's vicinity. The navigation logic is implemented on
-a BLE tag module using the angle of arrival (AOA) method and is suitable for
+BLE tag modules using the angle of arrival (AOA) method and is suitable for
 unmanned nursing in hospitals, especially during pandemic outbreaks. The authors
-of \cite{familiIDROPRobustLocalization2023} propose iDROP, a 3-D localization
+of \cite{familiIDROPRobustLocalization2023} propose iDROP, a 3D localization
 scheme for drones in indoor GPS-denied environments that is robust against noise
 and multipath fading and provides location estimation with high accuracy. The
-authors of \cite{htROSPoweredAutonomous2024} present a UGV powered by the robot
-operating system (ROS) that uses light detection and ranging (LiDAR) for
-accurate navigation even in dynamic conditions, suitable for various indoor
-robotic use cases such as in warehouses or construction sites. The authors of
-\cite{yukhimetsLocalNavigationSystem2024} present a scalable navigation system
-for ESP32 microcontrollers using multiple BLE beacons. A neural network is
-employed to model the position of the robot based on the signal strength
-received from various BLE beacons and the Levenberg-Marquardt method is used to
+authors of \cite{htROSPoweredAutonomous2024} present a UGV implemented on the
+robot operating system (ROS) that uses light detection and ranging (LiDAR) for
+accurate navigation even in dynamic conditions and is suitable for various
+indoor robotic use cases such as in warehouses or construction sites. The
+authors of \cite{yukhimetsLocalNavigationSystem2024} present a scalable
+navigation system using multiple ESP32 microcontrollers acting as BLE beacons. A
+neural network models the position of the robot based on the signal strength
+received from the various beacons and the Levenberg-Marquardt method is used to
 accurately estimate the position of the robot. The authors of
 \cite{stefasUAVLandingUnknown2019} present a strategy for landing a UAV using a
 radio beacon that exploits a special structure occurring when approaching the
@@ -211,29 +211,38 @@ varied environments.
 Many of the above methods are either too complex or too expensive to be
 implemented on cheap hardware such as an ESP32 microcontroller. Furthermore, a
 lot of supporting infrastructure needs to be set up to enable autonomous
-navigation. Our work aims to provide a lightweight and cost-effective solution
-for indoor beacon tracking using easily available wireless-capable
-microcontrollers such as the ESP32. It builds upon the proposed algorithm in
+navigation. Our work aims to address these challenges by providing a lightweight
+and cost-effective solution for indoor beacon tracking using a single wireless
+beacon and easily available wireless-capable microcontrollers such as the ESP32.
+It builds upon the algorithm proposed in
 \cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.
 
-\section{Preliminaries}
-\label{sec:prelims}
+\section{Proposed Navigation System}
+\label{sec:proposed-system}
 
-To estimate (radial) distance to beacon, we use its signal strength. For WiFi,
-this is the \textbf{Received Signal Strength Indicator} (RSSI). The RSSI (in
-dBm) at radial distance of \(r\) metres is given by
+In this section, we formulate the beacon tracking problem as an optimization
+problem. Then, we describe our algorithm for solving this optimization problem
+using gradient ascent and compare it to a similar algorithm proposed in
+\cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.
+
+\subsection{Problem Statement}
+\label{subsec:problem-statement}
+
+To estimate (radial) distance to beacon, we use its signal strength which is
+usually given by the Received Signal Strength Indicator (RSSI). The RSSI (in
+dBm) at radial distance of \(r\) metres is defined as
 \begin{align}
-    R\brak{r} = R\brak{1} - 10\log_{10}\brak{r}
+    R\brak{r} = R\brak{1} - 10\log_{10}\brak{r},
     \label{eq:rssi}
 \end{align}
-where \(R\brak{1}\) is the RSSI at a distance of 1 metre from the beacon. The
-beacon tracking problem can be formulated as the following optimization problem.
+where \(R\brak{1}\) is the RSSI at a distance of 1 metre from the beacon. Using
+this definition, the beacon tracking problem can be formulated as the following
+optimization problem.
 \begin{equation}
     \max_{r} R\brak{r} \text{ s.t. } r > 0.
     \label{eq:rssopt}
 \end{equation}
-
-The derivative and second derivative of \(R\brak{r}\) is given by
+The derivative and second derivative of \(R\brak{r}\) is
 \begin{align}
     R^\prime\brak{r} &= -\frac{10}{\ln{10}}\frac{1}{r}, \label{eq:rssid} \\
     R^{\prime\prime}\brak{r} &= \frac{10}{\ln{10}}\frac{1}{r^2} > 0. \label{eq:rssidd}
@@ -241,34 +250,90 @@ The derivative and second derivative of \(R\brak{r}\) is given by
 Notice that for \(r > 0\), \(R^\prime\brak{r} < 0\), thus \(R\brak{r}\) is a
 decreasing function of \(r\). This implies that the maximum RSSI is at \(r =
 0\), as expected. Since \(R\brak{r}\) is a convex function of \(r\), we can use
-gradient ascent to recursively find the point where the RSSI is maximum, which
-would correspond to the location of the beacon. Using \eqref{eq:rssid}, the
-gradient ascent update equation is given by
+gradient ascent \cite{boydConvexOptimization2004a} to recursively find the point
+where the RSSI is maximum, which would correspond to the location of the beacon.
+Using \eqref{eq:rssid}, the gradient ascent update equation for the radial
+distance \(r\) is given by
 \begin{equation}
     r_{n+1} = r_n + \alpha R^\prime\brak{r_n} = r_n - \frac{10\alpha}{r_n\ln{10}}
     \label{eq:gradient-ascent-upd}
 \end{equation}
 where \(r_i\) is the radial distance at the \(i\)-th step and \(\alpha\) is the
-step size. Since \(r_n > 0\), we can see that \(r_{n+1} < r_n\) for all \(n\).
-In other words, the radial distance to the beacon is decreasing with each step.
-This means that the UGV will converge towards the beacon. However, due to the
-explosion of the gradient in \eqref{eq:rssid}, the update steps become larger as
-\(r_n\) decreases, which could lead to overshooting the beacon. To prevent this,
-the UGV uses a recursive algorithm to update its position using this principle
-until it is close enough to the beacon based on the RSSI measurements it takes
-at various points in the vicinity of its current position. The algorithm is
-described in \autoref{alg:beacon}.
+step size and \(r_0\) is the initial radial distance of the UGV. Since \(r_n >
+0\), we can see that \(r_{n+1} < r_n\) for all \(n\). In other words, the radial
+distance to the beacon is decreasing with each step. This means that the UGV
+will converge towards the beacon. However, due to the explosion of the gradient
+in \eqref{eq:rssid} at \(r = 0\), the update steps become larger as \(r_n\)
+decreases, which could lead to overshooting the beacon. We now compare two
+algorithms that overcome this limitation by using a recursive approach that
+keeps the step size constant.
+
+\subsection{Beacon Tracking Algorithm}
+\label{subsec:beacon-tracking-algorithm}
+
+The proposed beacon tracking algorithm broadly be divided into two stages at
+each step. The first stage is the \emph{probing stage}, where the UGV measures
+the RSSI at various points in its vicinity. The second stage is the
+\emph{decision stage}, where the UGV decides its direction of movement based on
+the RSSI measurements.
+
+The algorithm proposed in
+\cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022} is described in
+\autoref{alg:beacon-dubey}. The probing phase consists of taking RSSI
+measurements in place but at various orientations. The decision phase consists
+of moving in the direction where the signal is the strongest. A major drawback
+of this approach is that there may not be appreciable difference in the measured
+RSSI values at the various orientations in the same place, especially if the
+beacon is far away. This could lead to the UGV making arbitrary moves instead of
+converging towards the beacon.
 
 \begin{algorithm}[H]
-    \caption{Beacon Tracking Algorithm}
+    \caption{Beacon Tracking Algorithm of \cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.}
+    \label{alg:beacon-dubey}
+    \begin{algorithmic}[1]
+        \Ensure{RSSI threshold \(T\), number of steps \(N\)}
+        \While{\textsc{GetRSSI()} \(< T\)}
+            \State \(r_F \gets \textsc{GetRSSI()}\).
+            \State Turn left by 90 degrees in place.
+            \State \(r_L \gets \textsc{GetRSSI()}\).
+            \State Turn right (from initial orientation) by 90 degrees in place.
+            \State \(r_R \gets \textsc{GetRSSI()}\).
+            \If{\(r_F \geq r_L\) and \(r_F \geq r_R\)}
+                \State Turn to the initial direction in place.
+            \ElsIf{\(r_L \geq r_F\) and \(r_L \geq r_R\)}
+                \State Turn to the left direction in place.
+            \Else{\(r_R \geq r_F\) and \(r_R \geq r_L\)}
+                \State Turn to the right direction in place.
+            \EndIf
+            \State Move forward in the chosen direction by one step.
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+To overcome this challenge, we require the UGV to travel a significant distance
+in the probing stage to obtain some differences in the measured RSSI values.
+Thus, in the probing stage of our proposed algorithm, the UGV takes \(N\) steps
+in a straight line in its current orientation, measuring the RSSI at each step.
+In the decision stage, the UGV then moves to the position where the maximum RSSI
+was measured. If this is at the beginning or end of the probing trajectory, the
+UGV moves backward or forward respectively. Otherwise, it turns perpendicular to
+its probing trajectory at that point (either left or right). Our proposed
+algorithm is described in \autoref{alg:beacon}. The main shortcoming of this
+particular algorithm is the amount of movement required in the probing stage for
+making one simple move in the decision stage.
+
+\begin{algorithm}[H]
+    \caption{Proposed Beacon Tracking Algorithm}
     \label{alg:beacon}
     \begin{algorithmic}[1]
         \Ensure{RSSI threshold \(T\), number of steps \(N\)}
         \While{\textsc{GetRSSI()} \(< T\)}
-            \State Take \(N\) steps in a straight line and measure the RSSI at 
-            each step.
-            \State Suppose the maximum RSSI is measured at step \(i\).
-            \State Move to the position at step \(i\)
+            \For{i = 0 to \(N\)}
+                \State \(r_i \gets \textsc{GetRSSI()}\).
+                \State Move forward by one step.
+            \EndFor
+            \State \(j \gets \argmax_{i} r_i\).
+            \State Move to the position at step \(i\).
             \If{\(i = N\)}
                 \State Move one step forward.
             \ElsIf{\(i = 0\)}
@@ -284,7 +349,7 @@ described in \autoref{alg:beacon}.
 \label{sec:implementation}
 
 The code for the beacon tracking algorithm is implemented in C++ using the
-PlatformIO framework. They are open sourced on
+PlatformIO framework. They are openly available on
 \href{https://github.com/goats-9/ee2802/main/ugv-beacon/codes}{GitHub}.
 
 \subsection{Assets}
