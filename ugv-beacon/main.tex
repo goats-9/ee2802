@@ -215,7 +215,7 @@ navigation. Our work aims to address these challenges by providing a lightweight
 and cost-effective solution for indoor beacon tracking using a single wireless
 beacon and easily available wireless-capable microcontrollers such as the ESP32.
 It builds upon the algorithm proposed in
-\cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.
+\cite{dubeyNavigationCommunicationUGV2022}.
 
 \section{Proposed Navigation System}
 \label{sec:proposed-system}
@@ -223,7 +223,7 @@ It builds upon the algorithm proposed in
 In this section, we formulate the beacon tracking problem as an optimization
 problem. Then, we describe our algorithm for solving this optimization problem
 using gradient ascent and compare it to a similar algorithm proposed in
-\cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.
+\cite{dubeyNavigationCommunicationUGV2022}.
 
 \subsection{Problem Statement}
 \label{subsec:problem-statement}
@@ -278,7 +278,7 @@ the RSSI at various points in its vicinity. The second stage is the
 the RSSI measurements.
 
 The algorithm proposed in
-\cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022} is described in
+\cite{dubeyNavigationCommunicationUGV2022} is described in
 \autoref{alg:beacon-dubey}. The probing phase consists of taking RSSI
 measurements in place but at various orientations. The decision phase consists
 of moving in the direction where the signal is the strongest. A major drawback
@@ -288,7 +288,7 @@ beacon is far away. This could lead to the UGV making arbitrary moves instead of
 converging towards the beacon.
 
 \begin{algorithm}[H]
-    \caption{Beacon Tracking Algorithm of \cite{sachinkumaromprakashdubeyNavigationCommunicationUGV2022}.}
+    \caption{Beacon Tracking Algorithm of \cite{dubeyNavigationCommunicationUGV2022}.}
     \label{alg:beacon-dubey}
     \begin{algorithmic}[1]
         \Ensure{RSSI threshold \(T\), number of steps \(N\)}
