@@ -271,10 +271,16 @@ keeps the step size constant.
 \subsection{Beacon Tracking Algorithm}
 \label{subsec:beacon-tracking-algorithm}
 
-The proposed beacon tracking algorithm consists of stages at each step. The
+The proposed beacon tracking algorithm consists of two stages at each step. The
 first stage is the \emph{probing stage}, where the UGV measures the RSSI at
 various points in its vicinity. The second stage is the \emph{decision stage},
 where the UGV decides its direction of movement based on the RSSI measurements.
+We now discuss an existing algorithm that follows this approach of recursively
+probing and subsequent decision making and compare it with our proposed
+algorithm.
+
+\subsubsection{Existing Algorithm}
+\label{subsubsec:existing-algorithm}
 
 The algorithm proposed in \cite{dubeyNavigationCommunicationUGV2022} is
 described in \autoref{alg:beacon-dubey}. The probing phase consists of taking
@@ -296,11 +302,11 @@ instead of converging towards the beacon.
             \State \(r_L \gets \textsc{GetRSSI()}\).
             \State Turn right (from initial orientation) by 90 degrees in place.
             \State \(r_R \gets \textsc{GetRSSI()}\).
-            \If{\(r_F \geq r_L\) and \(r_F \geq r_R\)}
+            \If{\(r_F \ge r_L\) and \(r_F \ge r_R\)}
                 \State Turn to the initial direction in place.
-            \ElsIf{\(r_L \geq r_F\) and \(r_L \geq r_R\)}
+            \ElsIf{\(r_L \ge r_F\) and \(r_L \ge r_R\)}
                 \State Turn to the left direction in place.
-            \Else{\(r_R \geq r_F\) and \(r_R \geq r_L\)}
+            \Else{\(r_R \ge r_F\) and \(r_R \ge r_L\)}
                 \State Turn to the right direction in place.
             \EndIf
             \State Move forward in the chosen direction by one step.
@@ -308,17 +314,22 @@ instead of converging towards the beacon.
     \end{algorithmic}
 \end{algorithm}
 
-To overcome this challenge, we require the UGV to travel a significant distance
-in the probing stage to obtain some differences in the measured RSSI values.
-Thus, in the probing stage of our proposed algorithm, the UGV measures the RSSI
-at \(N\) points in a straight line in its current orientation. In the decision
-stage, the UGV then moves to the position where the maximum RSSI was measured.
-If this is at the beginning or end of the probing trajectory, the UGV moves
-backward or forward respectively. Otherwise, it turns perpendicular to its
-probing trajectory at that point (either left or right). Our proposed algorithm
-is described in \autoref{alg:beacon}. The main shortcoming of this particular
-algorithm is the amount of movement required in the probing stage for making one
-simple move in the decision stage.
+\subsubsection{Proposed Algorithm}
+\label{subsubsec:proposed-algorithm}
+
+To overcome the issue of arbitrary movement when placed at a large distance from
+the beacon, the UGV must travel a significant distance in the probing stage to
+obtain differences in the measured RSSI values so that there is enough
+information to make a decision that is better than movement in a randomly chosen
+direction. Thus, in the probing stage of our proposed algorithm, the UGV
+measures the RSSI at \(N\) points in a straight line in its current orientation.
+In the decision stage, the UGV then moves to the position where the maximum RSSI
+was measured. If this is at the beginning or end of the probing trajectory, the
+UGV moves backward or forward respectively. Otherwise, it turns perpendicular to
+its probing trajectory at that point (either left or right). Our proposed
+algorithm is described in \autoref{alg:beacon}. The main shortcoming of this
+particular algorithm is the amount of movement required in the probing stage for
+making one simple move in the decision stage.
 
 \begin{algorithm}[H]
     \caption{Proposed Beacon Tracking Algorithm}
@@ -347,8 +358,8 @@ simple move in the decision stage.
 \section{Implementation}
 \label{sec:implementation}
 
-The code for the beacon tracking algorithm is implemented in C++ using the
-PlatformIO framework. They are openly available on
+Source codes for both of the beacon tracking algorithms discussed above are
+implemented in C++. They are available on
 \href{https://github.com/goats-9/ee2802/main/ugv-beacon/codes}{GitHub}.
 
 \subsection{Assets}
@@ -404,10 +415,14 @@ the signal interference may be too high.
 In this paper, we presented a cost-effective and robust beacon tracking
 algorithm that uses RSSI measurements to approach the beacon at each step. Our
 work uses easily available hardware and software tools to implement the
-algorithm on an ESP32 microcontroller mounted on a UGV chassis. A further
-extension to this work could be to use additional sensors such as a gyroscope or
-an accelerometer to improve the accuracy of the UGV's position and prevent
-deviations from the intended path of the UGV.
+algorithm on an ESP32 microcontroller mounted on a UGV chassis. A simple
+extension to our proposed algorithm could be to reduce the time and total number
+of steps taken by adjusting the value of \(N\) as the UGV converges to the
+beacon. This could be done using various heuristics such as the total number of
+probes or current RSSI measurements. A further extension of this work could be
+to use additional sensors such as a gyroscope or an accelerometer to improve the
+accuracy of the UGV's position and prevent deviations from the intended path of
+the UGV.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
