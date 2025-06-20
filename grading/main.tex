@@ -1,4 +1,5 @@
-\documentclass[journal,12pt,twocolumn]{IEEEtran}
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
 \usepackage{setspace}
 \usepackage{gensymb}
 \singlespacing
@@ -43,6 +44,8 @@
 \hyphenation{op-tical net-works semi-conduc-tor}
 \def\inputGnumericTable{}                                 %%
 
+\renewcommand{\sectionautorefname}{Section}
+
 \lstset{
 %language=C,
 frame=single, 
@@ -68,7 +71,6 @@ columns=fullflexible
 \newcommand{\BEQA}{\begin{eqnarray}}
 \newcommand{\EEQA}{\end{eqnarray}}
 \newcommand{\define}{\stackrel{\triangle}{=}}
-\bibliographystyle{IEEEtran}
 \providecommand{\mbf}{\mathbf}
 \providecommand{\pr}[1]{\ensuremath{\Pr\left(#1\right)}}
 \providecommand{\qfunc}[1]{\ensuremath{Q\left(#1\right)}}
@@ -103,12 +105,12 @@ columns=fullflexible
      \def\topbox#1{\raisebox{-\baselineskip}[0in][0in]{#1}}
      \def\midbox#1{\raisebox{-0.5\baselineskip}[0in][0in]{#1}}
 
-\vspace{3cm}
-\title{Machine Learning for Grading Students}
-\author{Gautam Singh}
+\title{Unsupervised Learning for Grading Students}
+\author{
+    \IEEEauthorblockN{Gautam Singh, G. V. V. Sharma}
+    \IEEEauthorblockA{Indian Institute of Technology, Hyderabad}
+}
 \maketitle
-\tableofcontents
-\bigskip
 
 \begin{abstract}
     This document is a report which compares the grade distribution obtained by
@@ -117,17 +119,104 @@ columns=fullflexible
 \end{abstract}
 
 \section{Introduction}
-We test the utility of the $K$-means algorithm in assigning grades
-as compared to estimating the grades using the standard normal 
-distribution.
+\label{sec:intro}
+In recent times, especially during and after the COVID-19 pandemic, there has
+been an increase in the amount of e-learning resources. Many educational
+institutions have embraced online learning by using platforms such as Moodle and
+have also invested in infrastructure to facilitate hybrid (both online and
+in-person) classrooms. There has also been a marked increase in the number of
+and amount of traffic on learning platforms such as Coursera, Udemy and edX
+\cite{royEmergingTrendsApplications2017}. This boom in e-learning has led to the
+collection of unique and large-scale data related to educational settings. This
+has led to the emergence of the two closely related research areas of
+educational data mining (EDM) and learning analytics (LA). EDM is mainly
+concerned with developing methods for exploring this data, while LA is mainly
+concerned with the analysis and interpretation of data about learners
+\cite{romeroEducationalDataMining2020}. Both fields strive to gain actionable
+insights for improving learning experiences in the form of personalized
+feedback, prompt academic support, better learning strategies and holistic
+evaluation methods.
 
-We consider the scores of $N = 94$ students who have taken a course in the 
-Indian Institute of Technology, Hyderabad (IITH) as our dataset.
+In this paper, we explore the utility of unsupervised machine learning (ML)
+methods for fair grading of students in a course where students performances are
+skewed. We test the utility of the $K$-means clustering algorithm in assigning
+letter grades as compared to grading using the Z score. We use the scores of
+$94$ students who have taken a course in our institute. The main contributions
+of this paper are as follows.
 
-\section{Fitting a Gaussian Curve}
-Since $N$ is not very large, given the scores of each student 
-$x_i,\ 1 \le i \le N$, we can compute the population mean and population 
-variance as
+\begin{enumerate}
+    \item Evaluate the utility of unsupervised learning methods as compared to
+    standard methods for grading students such as using Z scores.
+    \item Analyze the impact of skewed performance distributions on the fairness
+    of grading.
+\end{enumerate}
+
+The remainder of this paper is structured as follows. \autoref{sec:related-work}
+provides an overview of prior works related to grading of students and
+assignments. \autoref{sec:methodology} describes the methods used to solve this
+problem. \autoref{sec:implementation} describes the implementation details of
+our approach. \autoref{sec:results} presents the results of our approach.
+Finally, \autoref{sec:conclusion} concludes the paper and discusses future work.
+
+\section{Related Work}
+\label{sec:related-work}
+
+EDM and LA encompass a wide range of fields such as education research,
+educational technology, statistics, data science and artificial intelligence
+\cite{WhatLearningAnalytics}. We present a brief overview of some of the works
+related to grading of students using traditional methods and newer ML methods.
+
+The most common statistic used for grading students is the \emph{Z score}
+\cite{spiegelSchaumsOutlineStatistics2018}, which is defined as the number of
+standard deviations a score is from the mean of the population. Apart from
+scoring in standardized tests
+\cite{santhanakrishnanParallelDistributedCluster2022}, the Z score is also used
+to predict the financial status of companies
+\cite{jagannathanPredictingBankruptcyCompanies2023} and outlier detection
+\cite{yaroOutlierDetectionPerformance2024,aggarwalDetectionSpatialOutlier2019}.
+However, the Z score is not a very effective measure in situations where there
+are fewer students or when the performance is skewed. This leads to unfair
+grading where students with similar scores end up with different grades just
+because they lie on either side of a predefined boundary. Further, the Z score
+can adversely impact learning experiences by intensifying academic competition
+\cite{kleinAssessingUniversityStudents2014a}.
+
+To overcome the limitations of using the Z score, researchers have appealed to
+supervised and unsupervised ML methods for grading. Many studies
+\cite{badalPredictiveModellingAnalytics2023,
+palkhiwalaAnalysisMachineLearning2022, bujangMulticlassPredictionModel2021,
+gullImprovingLearningExperience2020} have compared the performance of various
+supervised and unsupervised ML algorithms for grading students in various
+course, assignment and examination settings. In recent times, there has been a
+marked increase in the use of unsupervised classification methods for grading
+since there may not be enough labeled data for a particular course or exam
+collected to sufficiently train a supervised model. In particular, clustering
+methods have become a key technology for EDM and LA
+\cite{zhangBriefAnalysisKey2018}. A particularly popular clustering method used
+in many studies is the $K$-means clustering algorithm
+\cite{macqueenMethodsClassificationAnalysis1967}. The authors of
+\cite{bucosStudentClusterAnalysis2020} were able to use the $K$-means algorithm
+to identify students at risk of failing to complete coursework by collecting
+data pertaining to a single course offered over many years. The authors of
+\cite{wangAlgorithmStudentGrade2022} used the $K$-means algorithm to promptly
+identify and guide students at the edge of the grading classification. Variants
+of the original $K$-means algorithm have also been used for grading students.
+The $K$-means++ algorithm was used by the authors of
+\cite{jimenez-maciasStudentClusteringKMeans2024} to enhance the quality of
+assignments given to students. The authors of
+\cite{bhartiCentroidBasedClustering2024} evaluated the utility of the
+$K$-medians algorithm along with the $K$-means algorithm for determining the
+rankings of schools in a common examination. However, the aforementioned studies
+do not evaluate the performance of clustering algorithms in scenarios where the
+performance of students is skewed. We aim to fill this gap by comparing the
+utility of $K$-means clustering in assigning grades in such a scenario.
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Z Score}
+Since $N$ is not very large, given the marks of each student $x_i,\ 1 \le i \le
+N$, we can compute the population mean and population variance as
 
 \begin{align}
     \mu &= \mean{x} \\
@@ -141,7 +230,7 @@ $Z$-scores as
     Z = \frac{x-\mu}{\sigma}
 \end{align}
 
-The grades are assigned as per Table \ref{tab:grade-scheme}.
+The grades are assigned as per \autoref{tab:grade-scheme}.
 \begin{table}[!ht]
     \centering
     \input{tables/grades.tex}
@@ -153,7 +242,7 @@ The Python code \texttt{codes/grades\_norm.py} takes the given input
 population dataset \texttt{marks.xlsx} and assigns grades appropriately. 
 The grades are output to \texttt{grades.xlsx}.
 
-\section{K-Means Clustering}
+\subsection{K-Means Clustering}
 $K$-Means clustering is an unsupervised classification model, which attempts to 
 cluster unlabeled data in order to gain more structure from it. 
 
@@ -204,9 +293,13 @@ each iteration consists of two steps.
     for $1 \le k \le K$.
 \end{enumerate}
 
+\section{Implementation}
+\label{sec:implementation}
+
 \section{Results}
-The grade distribution using each method is shown in Fig. \ref{fig:gauss-dist}
-and Fig. \ref{fig:kmeans-dist}.
+\label{sec:results}
+The grade distribution using each method is shown in \autoref {fig:gauss-dist}
+and \autoref{fig:kmeans-dist}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\columnwidth]{figs/grades_gauss.png}
@@ -234,4 +327,12 @@ Based on the results, we can make the following observations:
     used for a fairer assignment of the grades, no matter how skewed the 
     performance of students in a course is.
 \end{enumerate}
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+
+\nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
 \end{document}
