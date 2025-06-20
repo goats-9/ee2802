@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
-from math import isnan
-import matplotlib.pyplot as plt
-import os
+
 data = pd.read_excel('marks.xlsx')      #reading input
 df1 = data.loc[:,"Total" or "Marks"]    #storing marks column
 x = np.array(df1)
@@ -42,4 +40,3 @@ ax.set_ylabel('Number of Students')
 ax.grid()
 fig.tight_layout()
 fig.savefig('../figs/grades_gauss.png')
-os.system('termux-open ../figs/grades_gauss.png')
