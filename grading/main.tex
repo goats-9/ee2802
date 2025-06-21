@@ -140,9 +140,9 @@ evaluation methods.
 In this paper, we explore the utility of unsupervised machine learning (ML)
 methods for fair grading of students in a course where students performances are
 skewed. We test the utility of the $K$-means clustering algorithm in assigning
-letter grades as compared to grading using the Z score. We use the scores of
-$94$ students who have taken a course in our institute. The main contributions
-of this paper are as follows.
+letter grades as compared to grading using the Z score. We use the scores of 94
+students who have taken a course in our institute. The main contributions of
+this paper are as follows.
 
 \begin{enumerate}
     \item Evaluate the utility of unsupervised learning methods as compared to
@@ -215,22 +215,23 @@ utility of $K$-means clustering in assigning grades in such a scenario.
 \label{sec:methodology}
 
 \subsection{Z Score}
-Since $N$ is not very large, given the marks of each student $x_i,\ 1 \le i \le
-N$, we can compute the population mean and population variance as
-
+For a given dataset, we can compute the population mean and population variance
+using the following equations, where $N$ is the number of data points in the
+population and $x_i$ is the $i$-th data point in the population.
 \begin{align}
-    \mu &= \mean{x} \\
-    \sigma^2 &= \mean{\brak{x-\mu}^2}
+    \mu = \mean{x} &= \frac{1}{N}\sum_{i=1}^N x_i \\
+    \sigma^2 = \mean{\brak{x-\mu}^2} &= \frac{1}{N}\sum_{i=1}^N\brak{x_i-\mu}^2
     \label{eq:pop-param}
 \end{align}
 
-We assume that the scores $x \sim N\brak{\mu,\sigma^2}$. Thus, we compute the
-$Z$-scores as
-\begin{align}
-    Z = \frac{x-\mu}{\sigma}
-\end{align}
+Using the central limit theorem \cite{spiegelSchaumsOutlineStatistics2018}, we
+assume that the scores $x \sim N\brak{\mu,\sigma^2}$. Thus, the $Z$-score of $x$
+is given by
+\begin{equation}
+    Z = \frac{x-\mu}{\sigma}.
+\end{equation}
 
-The grades are assigned as per \autoref{tab:grade-scheme}.
+The letter grades are assigned as per \autoref{tab:grade-scheme}.
 \begin{table}[!ht]
     \centering
     \input{tables/grades.tex}
@@ -238,33 +239,35 @@ The grades are assigned as per \autoref{tab:grade-scheme}.
     \label{tab:grade-scheme}
 \end{table}
 
-The Python code \texttt{codes/grades\_norm.py} takes the given input 
-population dataset \texttt{marks.xlsx} and assigns grades appropriately. 
-The grades are output to \texttt{grades.xlsx}.
+The Python code \texttt{codes/grades\_norm.py} takes the given input population
+dataset \texttt{marks.xlsx} and assigns grades appropriately. The grades are
+output to \texttt{grades.xlsx}.
 
 \subsection{K-Means Clustering}
-$K$-Means clustering is an unsupervised classification model, which attempts to 
+$K$-Means clustering is an unsupervised classification model, which attempts to
 cluster unlabeled data in order to gain more structure from it. 
 
-We frame this requirement as an optimization problem. For a set of data points 
-$\cbrak{\vec{x}_i}_{i=1}^N$ and means $\cbrak{\vec{\mu}_i}_{i=1}^K$, we define
-for $1 \le n \le N,\ 1 \le k \le K$,
-\begin{align}
+To find the optimum means for a fixed number of letter grades as per
+\autoref{tab:grade-scheme}, we frame the problem of assigning letter grades as
+an optimization problem. For a set of data points $\cbrak{\vec{x}_i}_{i=1}^N$
+and means $\cbrak{\vec{\mu}_i}_{i=1}^K$, we define for $1 \le n \le N,\ 1 \le k
+\le K$,
+\begin{equation}
     r_{nk} \triangleq
     \begin{cases}
         1 & \argmin_{j}\norm{\vec{x}_n-\vec{\mu}_j} = k \\
         0 & \textrm{otherwise}
     \end{cases}
     \label{eq:rnk-def}
-\end{align}
+\end{equation}
 Thus, we need to find points $\vec{\mu}_k$ minimizing the cost function
-\begin{align}
+\begin{equation}
     J \triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\vec{\mu}_k}^2
     \label{eq:cost}
-\end{align}
+\end{equation}
 Clearly, \eqref{eq:cost} is a quadratic function of $\vec{\mu}_k$.
-Differentiating with respect to $\vec{\mu}_k$ and setting the derivative
-to zero, we get
+Differentiating with respect to $\vec{\mu}_k$ and setting the derivative to
+zero, we get
 \begin{align}
     \sum_{n=1}^N2\vec{\mu}_kr_{nk}\brak{\vec{x}_n-\vec{\mu}_k} = 0 \\
     \implies \vec{{\mu_k}} = \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}} = \frac{\vec{Xr}_k}{\vec{1}^\top\vec{r}_k}
@@ -277,24 +280,30 @@ where
     \vec{1} &\triangleq \myvec{1&1&\ldots&1}^\top
     \label{eq:M-defs}
 \end{align}
-From \eqref{eq:M-step}, we see that the optimum is attained when $\vec{\mu}_k$ 
+From \eqref{eq:M-step}, we see that the optimum is attained when $\vec{\mu}_k$
 is set to the expectation of the $\vec{x}_n$ with respect to $r_{nk}$.
 
-Thus, the $K$-means algorithm is essentially an \textit{EM algorithm}, where 
-each iteration consists of two steps.
+Thus, the $K$-means algorithm is an \emph{expectation maximization} (EM)
+algorithm where each iteration consists of two steps until convergence.
 \begin{enumerate}
-    \item \textit{E Step}: Calculate the $K$-expected values
-    \begin{align}
+    \item \emph{Expectation Step} (E Step): For $1 \le k \le K$, calculate the
+    expected means as below.
+    \begin{equation}
         \tilde{\vec{\mu}_k} \triangleq \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}}
         \label{eq:E-step}
-    \end{align}
-    for $1 \le k \le K$.
-    \item \textit{M Step}: Assign $\vec{\mu}_k \leftarrow \tilde{\vec{\mu}_k}$
-    for $1 \le k \le K$.
+    \end{equation}
+    \item \emph{Maximization Step} (M Step): Set $\vec{\mu}_k \leftarrow
+    \tilde{\vec{\mu}_k}$ for $1 \le k \le K$.
 \end{enumerate}
 
 \section{Implementation}
 \label{sec:implementation}
+
+We implemented the Z score algorithm as well as the EM algorithm for the
+$K$-means clustering algorithm in Python using the \texttt{numpy} and
+\texttt{pandas} libraries. The raw data is collected in the \texttt{marks.xlsx}
+file. The source codes and dataset are openly available on
+\href{https://github.com/goats-9/ee2802/tree/main/grading/codes}{GitHub}.
 
 \section{Results}
 \label{sec:results}
@@ -303,7 +312,7 @@ and \autoref{fig:kmeans-dist}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\columnwidth]{figs/grades_gauss.png}
-    \caption{Grade distribution using a Gaussian curve.}
+    \caption{Grade distribution using Z scores.}
     \label{fig:gauss-dist}
 \end{figure}
 \begin{figure}[!ht]
@@ -314,18 +323,15 @@ and \autoref{fig:kmeans-dist}.
 \end{figure}
 Based on the results, we can make the following observations:
 \begin{enumerate}
-    \item Grading using the Gaussian distribution would lead to many students
-    failing the course, while this is not the case using the $K$-means
-    algorithm.
-    \item Using the Gaussian distribution is quite unfair, since there could
-    be students with quite similar marks but with a difference in grade, just
+    \item Using the Gaussian distribution is quite unfair, since there could be
+    students with quite similar marks but with a difference in grade, just
     because they lie on either side of a predefined boundary.
     \item The $K$-means algorithm allows for better decision boundaries,
-    depending on how skewed the performance of the students is, accordingly
-    to the difficulty of the course.
-    \item Unlike the Gaussian distribution, the $K$-means algorithm can be
-    used for a fairer assignment of the grades, no matter how skewed the 
-    performance of students in a course is.
+    depending on how skewed the performance of the students is, accordingly to
+    the difficulty of the course.
+    \item Unlike the Gaussian distribution, the $K$-means algorithm can be used
+    for a fairer assignment of the grades, no matter how skewed the performance
+    of students in a course is.
 \end{enumerate}
 
 \section{Conclusion and Future Work}
