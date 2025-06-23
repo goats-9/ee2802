@@ -239,10 +239,6 @@ The letter grades are assigned as per \autoref{tab:grade-scheme}.
     \label{tab:grade-scheme}
 \end{table}
 
-The Python code \texttt{codes/grades\_norm.py} takes the given input population
-dataset \texttt{marks.xlsx} and assigns grades appropriately. The grades are
-output to \texttt{grades.xlsx}.
-
 \subsection{K-Means Clustering}
 $K$-Means clustering is an unsupervised classification model, which attempts to
 cluster unlabeled data in order to gain more structure from it. 
@@ -304,6 +300,12 @@ $K$-means clustering algorithm in Python using the \texttt{numpy} and
 \texttt{pandas} libraries. The raw data is collected in the \texttt{marks.xlsx}
 file. The source codes and dataset are openly available on
 \href{https://github.com/goats-9/ee2802/tree/main/grading/codes}{GitHub}.
+
+The Python code \texttt{codes/grades\_norm.py} takes the given input population
+dataset \texttt{marks.xlsx} and assigns grades appropriately. The grades are
+output to \texttt{grades\_norm.xlsx}. A similar task is performed by the
+\texttt{codes/grades\_kmeans.py} code, which uses the $K$-means algorithm to
+assign grades and outputs the results to \texttt{grades\_kmeans.xlsx}.
 
 \section{Results}
 \label{sec:results}
