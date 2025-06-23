@@ -215,20 +215,19 @@ utility of $K$-means clustering in assigning grades in such a scenario.
 \label{sec:methodology}
 
 \subsection{Z Score}
-For a given dataset, we can compute the population mean and population variance
-using the following equations, where $N$ is the number of data points in the
-population and $x_i$ is the $i$-th data point in the population.
+For a given dataset $\cbrak{X_1, X_2, \ldots, X_N}$ of size $N$, we can compute
+the population mean and population variance using the following equations.
 \begin{align}
-    \mu = \mean{x} &= \frac{1}{N}\sum_{i=1}^N x_i \\
-    \sigma^2 = \mean{\brak{x-\mu}^2} &= \frac{1}{N}\sum_{i=1}^N\brak{x_i-\mu}^2
+    \mu = \mean{X} &= \frac{1}{N}\sum_{i=1}^N X_i \\
+    \sigma^2 = \mean{\brak{X-\mu}^2} &= \frac{1}{N}\sum_{i=1}^N\brak{X_i-\mu}^2
     \label{eq:pop-param}
 \end{align}
 
 Using the central limit theorem \cite{spiegelSchaumsOutlineStatistics2018}, we
-assume that the scores $x \sim N\brak{\mu,\sigma^2}$. Thus, the $Z$-score of $x$
+assume that the scores $X \sim N\brak{\mu,\sigma^2}$. Thus, the $Z$-score of $X$
 is given by
 \begin{equation}
-    Z = \frac{x-\mu}{\sigma}.
+    Z = \frac{X-\mu}{\sigma}.
 \end{equation}
 
 The letter grades are assigned as per \autoref{tab:grade-scheme}.
@@ -245,20 +244,20 @@ cluster unlabeled data in order to gain more structure from it.
 
 To find the optimum means for a fixed number of letter grades as per
 \autoref{tab:grade-scheme}, we frame the problem of assigning letter grades as
-an optimization problem. For a set of data points $\cbrak{\vec{x}_i}_{i=1}^N$
+an optimization problem. For a set of data points $\cbrak{\vec{X}_i}_{i=1}^N$
 and means $\cbrak{\vec{\mu}_i}_{i=1}^K$, we define for $1 \le n \le N,\ 1 \le k
 \le K$,
 \begin{equation}
     r_{nk} \triangleq
     \begin{cases}
-        1 & \argmin_{j}\norm{\vec{x}_n-\vec{\mu}_j} = k \\
+        1 & \argmin_{j}\norm{\vec{X}_n-\vec{\mu}_j} = k \\
         0 & \textrm{otherwise}
     \end{cases}
     \label{eq:rnk-def}
 \end{equation}
 Thus, we need to find points $\vec{\mu}_k$ minimizing the cost function
 \begin{equation}
-    J \triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{x}_n-\vec{\mu}_k}^2
+    J \triangleq \sum_{n=1}^N\sum_{k=1}^Kr_{nk}\norm{\vec{X}_n-\vec{\mu}_k}^2
     \label{eq:cost}
 \end{equation}
 Clearly, \eqref{eq:cost} is a quadratic function of $\vec{\mu}_k$.
@@ -271,13 +270,13 @@ zero, we get
 \end{align}
 where
 \begin{align}
-    \vec{X} &\triangleq \myvec{\vec{x}_1&\vec{x}_2&\ldots&\vec{x}_n} \\
+    \vec{X} &\triangleq \myvec{\vec{X}_1&\vec{X}_2&\ldots&\vec{X}_n} \\
     \vec{r}_k &\triangleq \myvec{r_{1k}&r_{2k}&\ldots&r_{nk}}^\top \\
     \vec{1} &\triangleq \myvec{1&1&\ldots&1}^\top
     \label{eq:M-defs}
 \end{align}
 From \eqref{eq:M-step}, we see that the optimum is attained when $\vec{\mu}_k$
-is set to the expectation of the $\vec{x}_n$ with respect to $r_{nk}$.
+is set to the expectation of the $\vec{X}_n$ with respect to $r_{nk}$.
 
 Thus, the $K$-means algorithm is an \emph{expectation maximization} (EM)
 algorithm where each iteration consists of two steps until convergence.
@@ -285,7 +284,7 @@ algorithm where each iteration consists of two steps until convergence.
     \item \emph{Expectation Step} (E Step): For $1 \le k \le K$, calculate the
     expected means as below.
     \begin{equation}
-        \tilde{\vec{\mu}_k} \triangleq \frac{\sum_{n=1}^Nr_{nk}\vec{x}_n}{\sum_{n=1}^Nr_{nk}}
+        \tilde{\vec{\mu}_k} \triangleq \frac{\sum_{n=1}^Nr_{nk}\vec{X}_n}{\sum_{n=1}^Nr_{nk}}
         \label{eq:E-step}
     \end{equation}
     \item \emph{Maximization Step} (M Step): Set $\vec{\mu}_k \leftarrow
@@ -299,7 +298,7 @@ We implemented the Z score algorithm as well as the EM algorithm for the
 $K$-means clustering algorithm in Python using the \texttt{numpy} and
 \texttt{pandas} libraries. The raw data is collected in the \texttt{marks.xlsx}
 file. The source codes and dataset are openly available on
-\href{https://github.com/goats-9/ee2802/tree/main/grading/codes}{GitHub}.
+\href{https://github.com/gadepall/grading/tree/main/codes}{GitHub}.
 
 The Python code \texttt{codes/grades\_norm.py} takes the given input population
 dataset \texttt{marks.xlsx} and assigns grades appropriately. The grades are
